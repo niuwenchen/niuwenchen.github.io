@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>3_N-grams | SpeechAndLanguageProcessing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Language Modeling with N-grams本章主要介绍一些关于预测单词的基本概念 Please turn your homework ... 后面的词或许是in, over 但不可能是refigerator或the essential(要素) 概率是我们在噪音，歧义输入如语音识别，手写识别中区分单词的重要因素  模型：定义概率的模型北城与LM N-gram: 2-gram(big">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3_N-grams">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/01/17/3-N-grams/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="Language Modeling with N-grams本章主要介绍一些关于预测单词的基本概念 Please turn your homework ... 后面的词或许是in, over 但不可能是refigerator或the essential(要素) 概率是我们在噪音，歧义输入如语音识别，手写识别中区分单词的重要因素  模型：定义概率的模型北城与LM N-gram: 2-gram(big">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp03.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp04.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp05.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp06.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp07.png">
+<meta property="og:updated_time" content="2018-01-17T09:19:04.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3_N-grams">
+<meta name="twitter:description" content="Language Modeling with N-grams本章主要介绍一些关于预测单词的基本概念 Please turn your homework ... 后面的词或许是in, over 但不可能是refigerator或the essential(要素) 概率是我们在噪音，歧义输入如语音识别，手写识别中区分单词的重要因素  模型：定义概率的模型北城与LM N-gram: 2-gram(big">
+<meta name="twitter:image" content="http://niuwenchen.github.io/img/nlp03.png">
+  
+    <link rel="alternate" href="/atom.xml" title="SpeechAndLanguageProcessing" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SpeechAndLanguageProcessing</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">translate and learning language model</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://niuwenchen.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-3-N-grams" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/17/3-N-grams/" class="article-date">
+  <time datetime="2018-01-17T05:14:00.000Z" itemprop="datePublished">2018-01-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      3_N-grams
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Language-Modeling-with-N-grams"><a href="#Language-Modeling-with-N-grams" class="headerlink" title="Language Modeling with N-grams"></a>Language Modeling with N-grams</h2><p>本章主要介绍一些关于预测单词的基本概念</p>
+<pre><code>Please turn your homework ...
+后面的词或许是in, over 但不可能是refigerator或the
+essential(要素)
+概率是我们在噪音，歧义输入如语音识别，手写识别中区分单词的重要因素
+
+模型：定义概率的模型北城与LM
+N-gram: 2-gram(bigram) two words &quot;please turn&quot;
+3-gram(trigram): &quot;please turn your &quot;
+</code></pre><h3 id="N-grams"><a href="#N-grams" class="headerlink" title="N-grams"></a>N-grams</h3><pre><code>计算p(w|h) ,历史h，预测单词w出现的概率
+
+p(the|its water is so transparent that)    
+=C(its water is so transparent that the)/C(its water is so transparent that)
+
+一般序列：N， w1...wn,概率P(w1,w2,....wn)
+使用链式概率法则计算
+</code></pre><p><img src="/img/nlp03.png" alt=""></p>
+<pre><code>N-gram 并不是计算整个历史，而是计算最近的历史单词
+P(the|Walden Pond&apos;s water is so transparent that)
+~~ P(the|that)
+
+马尔科夫假设：一个单词仅仅依赖前一个单词，进而计算概率
+N-gram(只关注前面N-1个单词)
+
+怎么估计N-gram的概率：最大似然估计 MLE
+获取次数，归一化次数生成一个概率
+p(wn|w(n-1)) = C(w(n-1)wn)/C(w(n-1)w)
+</code></pre><p><img src="/img/nlp04.png" alt=""></p>
+<pre><code>P(i|&lt;s&gt;) = 0:25 P(english|want) = 0:0011
+P(food|english) = 0:5 P(&lt;/s&gt;|food) = 0:68
+
+P(&lt;s&gt; i want english food &lt;/s&gt;)
+= P(i|&lt;s&gt;)P(want|i)P(english|want)
+P(food|english)P(&lt;/s&gt;|food)
+= :25× :33× :0011× 0:5× 0:68
+= = :000031
+
+计算概率使用对数概率
+p1 × p2 × p3 × p4 = exp(log p1+ log p2+ log p3+ log p4)
+</code></pre><h3 id="Evaluating-LM"><a href="#Evaluating-LM" class="headerlink" title="Evaluating LM"></a>Evaluating LM</h3><pre><code>一种评估方法是 把LM嵌入一个应用中计算应该提高多少
+这种方式叫做外部验证（extrinsic evaluation）
+外部验证方式较为麻烦，内部验证不需要依赖任何应用
+</code></pre><p>Perplexity(PP)</p>
+<p><img src="/img/nlp05.png" alt=""></p>
+<pre><code>根据逆频率，条件概率越高，PP越低
+内部验证方法并不能确保提高外部效果
+</code></pre><h3 id="Generalization-and-Zeros"><a href="#Generalization-and-Zeros" class="headerlink" title="Generalization and Zeros"></a>Generalization and Zeros</h3><pre><code>概率代表特定的事实
+随着N-gram中N的增大，模型表现越来越好
+</code></pre><p>下图展示了根据N-gram模型随机生成样本</p>
+<p><img src="/img/nlp06.png" alt=""></p>
+<pre><code>如果依赖的句子越长，生成的句子越流畅
+是不是训练语料有什么潜在的意义？
+分析WSJ语料的N-gram和Shakespeare，估计两个N-Gram模型会有相似之处。
+</code></pre><p><img src="/img/nlp07.png" alt=""></p>
+<pre><code>但是实际上没有任何相似之处，哪怕一些小短语。
+就是说如果训练集和测试集不同，那么统计模型没有任何用处。
+
+那就确保训练集和测试集有相同的种类，法律模型选择法律训练集就ok了。
+
+概率为0？
+训练集中不存在，测试集中存在。
+加入训练集是:
+    denied the allegations: 5
+    denied the speculation: 2
+    denied the rumors: 1
+    denied the report: 1    
+测试集是：
+    denied the offer
+    denied the loan
+p(offer|denied the )=0!!!
+如果任何单词的概率为0，那么整个句子的概率就是0，perplexity无法计算。根据公式，不能除以0.
+</code></pre><p><strong>Unknown Words</strong></p>
+<pre><code>closed vocabulary: 所有的测试集中的单词都会在训练集中出现
+out of vocabulary: 增加一个&lt;UNK&gt;
+
+1. Choose a vocabulary (word list) that is fixed in advance.
+2. Convert in the training set any word that is not in this set (any OOV word) to the unknown word token &lt;UNK&gt; in a text normalization step.
+3. Estimate the probabilities for &lt;UNK&gt; from its counts just like any other regular word in the training set.
+
+下面一个方法是经常在训练中使用的
+替换训练集中的单词：根据出现次数替换为&lt;UNK&gt;
+替换训练集中所有出现次数小于n的单词为&lt;UNK&gt;
+或者选择前V个单词，其他的都换成UNK
+
+但是&lt;UNK&gt;模型对度量是有影响的，
+</code></pre><h3 id="Smoothing"><a href="#Smoothing" class="headerlink" title="Smoothing"></a>Smoothing</h3><p><a href="http://blog.csdn.net/baimafujinji/article/details/51297802" target="_blank" rel="noopener">平滑方法参考网址</a><br>add-1 smoothing,add-k smoothing,Stupid backoff,Kneser-Ney smoothing</p>
+<p>Laplace Smoothing</p>
+<pre><code>所有的次数加1，
+p(wi)=Ci/N;  ----&gt; P(wi)=Ci+1/N+V  #V words
+</code></pre><p>Add-K </p>
+<pre><code>增加一个k，
+
+反正有很多的平滑方法，需要重新写一篇
+</code></pre><p>###　Summary</p>
+<pre><code>１．Language models offer a way to assign a probability to a sentence or other
+２．sequence of words, and to predict a word from preceding words.
+３．N-grams are Markov models that estimate words from a fixed window of previous words. N-gram probabilities can be estimated by counting in a corpus　and normalizing (the maximum likelihood estimate).
+４．N-gram language models are evaluated extrinsically in some task, or intrinsically using perplexity.
+５．The perplexity of a test set according to a language model is the geometric　mean of the inverse test set probability computed by the model.
+６．Smoothing algorithms provide a more sophisticated way to estimat the probability of N-grams. Commonly used smoothing algorithms for N-grams rely　on lower-order N-gram counts through backoff or interpolation.
+７．Both backoff and interpolation require discounting to create a probability distribution.
+８．Kneser-Ney smoothing makes use of the probability of a word being a novel    continuation. The interpolated Kneser-Ney smoothing algorithm mixes a　discounted probability with a lower-order continuation　probability
+</code></pre><p>###　Exercise<br>NGram 实现</p>
+<pre><code>#encoding:utf-8
+#@Time : 2018/1/17 16:10
+#@Author : JackNiu
+
+from collections import defaultdict as ddict
+import itertools
+import random
+class NGram(object):
+    def __init__(self,max_n,words=None):
+        self._max_n = max_n
+        self._n_range = range(1,max_n+1)  # range(1,3) --&gt; 1,2
+        self._counts = ddict(lambda :0)   # empty dict
+
+        if words is not None:
+            self.update(words)
+
+    def update(self,words):
+        self.splitWords(words)
+        self._counts[()]+=len(self.words)
+
+        # count ngrams of all  the given lengths
+        for i,word in enumerate(self.words):
+            for n in self._n_range:
+                if i+n &lt;= len(self.words):
+                    ngram_range= range(i,i+n)
+                    ngram = [self.words[j] for j in ngram_range]
+                    self._counts[tuple(ngram)] +=1
+        print(self._counts)
+
+    def splitWords(self,words):
+        # 将一个句子分开 成为单词word
+        words_=[]
+
+        for word_0 in words.split(&quot; &quot;):
+            for word_1 in word_0.split(&apos;,&apos;):
+                for word_2 in word_1.split(&apos;.&apos;):
+                    words_.append(word_2)
+        self.words= words_
+
+    def probability(self):
+        if len(self.words) &lt;= self._max_n:
+            return self._probability()
+        else:
+            prob =1.0
+            for i in range(len(self.words)-self._max_n+1):
+                ngram = self.words[i:i+self._max_n]
+                prob *= self._probability(ngram)
+            return prob
+
+    def _probability(self,ngram):
+        print(&quot;prob&quot;,ngram)
+        ngram = tuple(ngram)
+        ngram_count = self._counts[ngram]
+        print(self._counts[ngram[:-1]],ngram[:-1])
+        prefix_count = self._counts[ngram[:-1]]
+        prob =0.0
+        if ngram_count and prefix_count:
+            prob = ngram_count/prefix_count
+        print(prob)
+        return prob
+
+    def generate(self,n_words):
+        ngrams = iter(self._counts)
+        unigrams = [x for x in ngrams if len(x) ==1]
+        while True:
+            try:
+                return self._generate(n_words,unigrams)
+            except Exception as e:
+            pass
+    def _generate(self,n_words,unigrams):
+        &apos;&apos;&apos;
+        产生句子的方法：
+        :param n_words:
+        :param unigrams:
+        :return:
+        &apos;&apos;&apos;
+        words=[]
+        for i in itertools.repeat(self._max_n):
+            print(i)
+            if i==1:
+                prefix=()
+            else:
+                prefix = tuple(words[-i+1:])
+
+            threshold = random.random()
+            total =0.0
+            print(threshold)
+            for unigram in unigrams:
+                total += self._probability(prefix+unigram)
+                if total &gt;= threshold:
+                    words.extend(unigram)
+                    break
+            print(words)
+            if len(words) == n_words:
+                return words
+            if total == 0.0:
+                raise RuntimeError(&apos;impossible sequence&apos;)
+
+
+
+
+
+
+str=&quot;Hello Jack Are you ok?&quot;
+ngram =NGram(3,str)
+print(&quot;结果：&quot;,ngram.generate(2))
+
+3
+0.08865073743798602
+prob (&apos;Jack&apos;,)
+5 ()
+0.2
+[&apos;Jack&apos;]
+3
+0.9364222834379184
+prob (&apos;Jack&apos;, &apos;Jack&apos;)
+1 (&apos;Jack&apos;,)
+0.0
+prob (&apos;Jack&apos;, &apos;you&apos;)
+1 (&apos;Jack&apos;,)
+0.0
+prob (&apos;Jack&apos;, &apos;ok?&apos;)
+1 (&apos;Jack&apos;,)
+0.0
+prob (&apos;Jack&apos;, &apos;Are&apos;)
+1 (&apos;Jack&apos;,)
+1.0
+[&apos;Jack&apos;, &apos;Are&apos;]
+结果： [&apos;Jack&apos;, &apos;Are&apos;]
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://niuwenchen.github.io/2018/01/17/3-N-grams/" data-id="cjciuvup40000o4vhimeud8uy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/15/undirect-graph/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Undirect graph</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algs/">algs</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/algs/" style="font-size: 10px;">algs</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/17/3-N-grams/">3_N-grams</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/15/undirect-graph/">Undirect graph</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/">2 Regular expressions,Text normalization,Edit Distance</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/12/Introduction/">Introduction</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/11/README-md/">说明</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 JackNiu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
