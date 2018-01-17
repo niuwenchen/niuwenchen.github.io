@@ -15,14 +15,14 @@
 <meta property="og:site_name" content="SpeechAndLanguageProcessing">
 <meta property="og:description" content="2.1 Regular Expressions描述一些正则表达式的写法以及demo，因为学不会，所以不写了。 如下是一些使用RE进行机器翻译的过程  s/.* I&amp;apos;M (depressed|sad) .*/I AM SORRY TO HEAR YOU ARE\1/ s/.* I AM (depressed|sad) .*/WHY DO YOU THINK YOU ARE \1/ s/.*">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://niuwenchen.github.io/2018/01/12/img/nlp01.png">
-<meta property="og:image" content="http://niuwenchen.github.io/2018/01/12/img/nlp02.png">
-<meta property="og:image" content="http://niuwenchen.github.io/2018/01/12/img/nlp.png">
-<meta property="og:updated_time" content="2018-01-17T02:56:38.375Z">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp01.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp02.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp.png">
+<meta property="og:updated_time" content="2018-01-17T04:35:47.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2 Regular expressions,Text normalization,Edit Distance">
 <meta name="twitter:description" content="2.1 Regular Expressions描述一些正则表达式的写法以及demo，因为学不会，所以不写了。 如下是一些使用RE进行机器翻译的过程  s/.* I&amp;apos;M (depressed|sad) .*/I AM SORRY TO HEAR YOU ARE\1/ s/.* I AM (depressed|sad) .*/WHY DO YOU THINK YOU ARE \1/ s/.*">
-<meta name="twitter:image" content="http://niuwenchen.github.io/2018/01/12/img/nlp01.png">
+<meta name="twitter:image" content="http://niuwenchen.github.io/img/nlp01.png">
   
     <link rel="alternate" href="/atom.xml" title="SpeechAndLanguageProcessing" type="application/atom+xml">
   
@@ -162,13 +162,11 @@ SSES----&gt;SS (grasses --&gt; grass)
 </code></pre><p>sentence segmentation</p>
 <h3 id="Minimum-Edit-Distance"><a href="#Minimum-Edit-Distance" class="headerlink" title="Minimum Edit Distance"></a>Minimum Edit Distance</h3><p>Edit distance 衡量字符串的相似性。</p>
 <pre><code>最小编辑距离定义为最小编辑操作(插入，删除，替换)
-</code></pre><p align="center"><br><img width="50%" height="50%" src="../img/nlp01.png"><br></p>
-
+</code></pre><p><img src="/img/nlp01.png" alt=""></p>
 <pre><code>Levenshtein距离是最简单的权重因子，可以衡量每个操作的操作。
 </code></pre><p>Minimum Edit Distance Algorithm</p>
 <pre><code>bynamic programming: Viterbi and fordwar algorithms
-</code></pre><p align="center"><br><img width="50%" height="50%" src="../img/nlp02.png"><br></p>
-
+</code></pre><p><img src="/img/nlp02.png" alt=""></p>
 <pre><code>source String: X  n
 target String: Y  m
 D(i,j): X[1..i] and Y[1...j]
@@ -178,8 +176,7 @@ D[i,j]=min{D[i-1,j]+del-cost(source[i]),D[i,j-1]+ins-cost(target[j]),D[i-1,j-1]+
 ins-cost(*)=del-cost(*)=1 
 
 D[i,j]=min{D[i-1,j]+1,D[i,j-1]+1,D[i-1,j-1]+{2: if source[i]!=target[j]; 0: if source[i]= tagrte[j]}}
-</code></pre><p align="center"><br><img width="50%" height="50%" src="../img/nlp.png"><br></p>
-
+</code></pre><p><img src="/img/nlp.png" alt=""></p>
 <p><a href="http://www.dreamxu.com/books/dsa/dp/edit-distance.html" target="_blank" rel="noopener">http://www.dreamxu.com/books/dsa/dp/edit-distance.html</a></p>
 <p><a href="https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm" target="_blank" rel="noopener">https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm</a></p>
 <h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>主要介绍基本工具：</p>
@@ -197,7 +194,7 @@ minimum edit distance:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://niuwenchen.github.io/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/" data-id="cjcij0ci30000fgvhqibnnm8j" class="article-share-link">Share</a>
+      <a data-url="http://niuwenchen.github.io/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/" data-id="cjcikzhvw0001lgvh0cvrpqzr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li></ul>
@@ -212,7 +209,7 @@ minimum edit distance:
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          undirect_graph
+          Undirect graph
         
       </div>
     </a>
@@ -271,7 +268,7 @@ minimum edit distance:
       <ul>
         
           <li>
-            <a href="/2018/01/15/undirect-graph/">undirect_graph</a>
+            <a href="/2018/01/15/undirect-graph/">Undirect graph</a>
           </li>
         
           <li>
