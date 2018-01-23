@@ -1,94 +1,1392 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
+
+
 
   
-  <title>SpeechAndLanguageProcessing</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
 <meta property="og:title" content="SpeechAndLanguageProcessing">
 <meta property="og:url" content="http://niuwenchen.github.io/index.html">
 <meta property="og:site_name" content="SpeechAndLanguageProcessing">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpeechAndLanguageProcessing">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/"/>
+
+
+
+
+
+  <title>SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
-    <link rel="alternate" href="/atom.xml" title="SpeechAndLanguageProcessing" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+
+
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">SpeechAndLanguageProcessing</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">translate and learning language model</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://niuwenchen.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
   
-    <article id="post-3-N-grams" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/17/3-N-grams/" class="article-date">
-  <time datetime="2018-01-17T05:14:00.000Z" itemprop="datePublished">2018-01-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/17/3-N-grams/">3_N-grams</a>
-    </h1>
+    
   
 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/20/HMM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/20/HMM/" itemprop="url">HMM</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-20T12:13:22+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="Language-Modeling-with-N-grams"><a href="#Language-Modeling-with-N-grams" class="headerlink" title="Language Modeling with N-grams"></a>Language Modeling with N-grams</h2><p>本章主要介绍一些关于预测单词的基本概念</p>
+      
+
+      
+        
+          
+            <h2>HMM</h2>
+<h3>1.1 马尔科夫过程</h3>
+<p>随机过程最早是统计物理学的数学方法，起源于对统计力学的研究。一个简单的随机过程可以用一个状态图来描述:
+<img src="/img/nlp16.png" alt=""></p>
+<p>以上状态转移图用3个要素来描述</p>
+<ul>
+<li>状态：指系统中可能出现或存在的状态，也就是图中包含字母的圆圈，随机过程中，表示了系统随机变量的最小数目: a,e,h,i,p,t</li>
+<li>转移：是指当发生只i的那个事件并满足指定条件时，系统由一种状态转移到另一种状态，也就是图中带有数字的箭头。状态转移表示两个状态之间的转换关系，在随机过程中，是指某个状态转移到下一个状态的概率</li>
+<li>约束：从一个状态发出的所有箭头的概率总和为1</li>
+</ul>
+<p>整个状态转移过程可以用转移矩阵来表示。
+<img src="/img/nlp17.png" alt="">
+T表示当前状态，T+1表示下一时间状态。</p>
+<h3>马尔可夫链及其概念</h3>
+<p>马尔科夫过程是随机过程的一种，该过程具有如下特性：在已知系统当前状态的条件下，未来的演变与依赖过去的演变。也就是说，一个马尔科夫过程可以表示为系统在状态转移过程中，第T+1次结果只受第T次结果的影响，即只与当前状态有关，而与过去状态，即与系统的初始状态和此次转移前的所有状态无关。</p>
+<p>下面给出形式化的定义。</p>
+<p>设有随机过程<img src="/img/nlp18.png" alt="">,对于任意的整数<img src="/img/nlp19.png" alt="">，条件概率满足:
+<img src="/img/nlp20.png" alt=""></p>
+<p>称为马尔可夫链，简称马氏链。</p>
+<p>马氏链的一步转移概率可以定义为:
+<img src="/img/nlp21.png" alt=""></p>
+<h3>应用举例</h3>
+<p>任意相继两天中，雨天转晴天概率1/3,晴天转雨天1/2,0表示晴天状态，1表示雨天状态，一只5月1日为晴天，问5月3日为晴天，5月5日为雨天的概率
+<img src="/img/nlp22.png" alt="">
+则5月1日为晴天，5月3日为晴天的概率为5/12
+继续求转移矩阵的4次方，即可得出雨天的概率为0.5995。</p>
+<p>0时刻为已知状态，确定1 时刻的初始状态，确定一步转移矩阵，求2时刻的概率可以用 转移矩阵的平方。
+<img src="/img/nlp23.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/18/6-Naive-Bayes-Classification-and-Sentiment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/6-Naive-Bayes-Classification-and-Sentiment/" itemprop="url">6 Naive Bayes Classification and Sentiment</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-18T16:44:48+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Naive Bayes  and Sentiment Classification</h2>
+<p>贝叶斯是一个概率分类器，一个文本d，在所有类别C中，给出一个该文档属于某一个类别概率最大的类别。</p>
+<p>$$ \widehat{c}=\underset{c\in C}{armax}P(c|d)=\underset{c\in C}{armax}\frac{P(d|c)P(c)}{P(d)} $$</p>
+<p>化简该公式，P(d)概率对于每一个类都是一样的，对同一个文档d计算其最大概率，因此P(d)是一样的。</p>
+<p>计算$\hat{c}$的过程: prior probabilities(先验概率)，P(d|c)的似然概率。</p>
+<p>$$\widehat{c}=\underset{c\in C}{armax}\overset{likelihood}{P(d|c)}\overset{prior}{P(c)}$$</p>
+<p>一个文档可以用一系列特征来替代</p>
+<p>$$\widehat{c}=\underset{c\in C}{armax}\overset{likelihood}{P(f1,f2,fn|c)}\overset{prior}{P(c)}$$</p>
+<p>对于上面的等式，如果没有一些简化假设，无法计算（对于每一个单词和位置都有可能）。</p>
+<p>第一种方式是BOW假设：不考虑位置，只关注单词，无论love这个单词出现在di1位或者第20位都有相同的意义或影响力。因此，假设特征f1,f2,...fn仅仅编码单词的id，不考虑位置。</p>
+<p>第二种方式通常被称为贝叶斯假设： 条件独立性假设，$P(f_{i}|c)$独立分布，并且上面的计算公式可以被假设为以下:</p>
+<p>$$P(f_{1},f_{2},f_{n}|c)=P(f_{1}|c)P(f_{2}|c)...P(f_{n}|c)$$</p>
+<p>最后的公式可以如下:</p>
+<p>$$c_{NB}=\underset{c\in C}{argmax}P(c)\prod P(f|c)$$</p>
+<p>为了将NB分类器应用到文本中，需要考虑单词位置，简单的给文档中的每一个单词给一个下标</p>
+<p>positions &lt;--all word positions in ttest document；</p>
+<p>NB分类器计算方式是对数形式，避免underflow和increase speed,</p>
+<p>$$c_{NB}=\underset{c\in C}{argmax}logP(c)+\sum_{i\in positions}P(w_{i}|c)$$</p>
+<p>通过在对数空间中计算特征，上面等式将输入特征作为一个线性函数来预测类别。 分类似使用一个线性组合计算分类---类似NB和LR等---都被称为线性分类器。</p>
+<p>也就是说: 贝叶斯分类器最后是一个线性分类器。</p>
+<h2>训练贝叶斯分类器。</h2>
+<p>计算先验概率$P(c)$，</p>
+<p>$\hat{P(c)}=\frac{N_{c}}{N_{doc}}$。</p>
+<p>计算条件概率$P(f_{i}|c)$</p>
+<p>假设每一个在文档中的单词是一个特征，因此计算的是 $P(w_{i}|c)$,</p>
+<p>计算在所有文档中单词$w_{i}$作为某一个类别c出现的次数，</p>
+<p>$$\hat{P(w_{i}|c)}=\frac{count(w_{i},c)}{\sum_{w\in V} count(w,c)}$$</p>
+<p>V是所有类别中出现的词汇，不仅仅是在类别c中出现的词汇。</p>
+<pre><code>这里有个疑问? 类别1，计算类别1中单词w出现的次数，分母是确定的，分母是计算所有类别1中所有单词出现的次数，而不仅仅是特定的w。
+</code></pre>
+<p>还需要对这个公式做一些平滑处理，最简单的方式是add-one 平滑方法。</p>
+<p>$$\hat{P(w_{i}|c)}=\frac{count(w_{i},c)+1}{(\sum_{w\in V} count(w,c))+|V|}$$</p>
+<p>一些系统选择完全忽略一些单词的类别: stop words,非常常见的单词如the和a。将词汇表按照顺序排序，定义top10~100的单词为定用词，或者选择一些已经定义好的停用词。然后这些停用词将从训练集和测试集中删除。</p>
+<h2>Worked example</h2>
+<p><img src="/img/nlp6_1.png" alt=""></p>
+<p>计算过程
+<img src="/img/nlp6_2.png" alt=""></p>
+<pre><code>计算P(w|c)出现一些疑惑？
+计算count(w,c)
+for d in document_of_c:	
+	count(w,c) 这里的计数过程是统计每一个文档中该单词出现的次数，还是统计出现该单词的文档次数。
+	目前暂定为出现的单词次数。
+</code></pre>
+<p>上面的数据P(-)=3/5=0.6; P(+)=2/5=0.4</p>
+<pre><code>计算label为- 中的单词条件概率，
+	总的词汇是20个，negative中出现的单词是14个，分母是count(w,c)=14，对于该类不变。分子变化
+	predictable： 1次
+	no: 1
+	fun: 1
+计算label为+中的条件概率
+	总的词汇是20个，positive中为9个，分母为9保持不变
+	predictable： 0次
+	no: 0
+	fun:1
+</code></pre>
+<p><img src="/img/nlp6_3.png" alt=""></p>
+<p>$$P(-)P(S|-)=3/5\times 2/34 \times 2/34 \times 1/34 = 6.1 \times 10^{-5}$$
+$$P(+)P(S|+)=2/5\times 1/29 \times 1/29 \times 2/29 = 3.2 \times 10^{-5}$$</p>
+<p>因此这个模型预测这个句子是class negative。</p>
+<pre><code>从上面的计算过程可以看出，贝叶斯分类器实际上根本不用训练分类器，只是将测试数据
+和训练数据用某种方式计算概率即可。
+根据类别的定义，实际上在计算过程中，训练语料的先验概率，似然值中属于某一个类的
+分母都是确定的，只是分子不同而已。
+但是在这个例子中还是没有说明对于句子中出现相同词的计算方式，现在就按照词的次数
+进行计算，如果在一个文档中出现多次，那就累加多次。
+</code></pre>
+<h2>Optimizing for Sentiment Analysis</h2>
+<p>情感分类器中，一个单词是否出现的影响力远远高于它出现的频率。因此在情感分类器中，通过对一个文档中进行单词去重。</p>
+<p><img src="/img/nlp6_4.png" alt=""></p>
+<p>第一种方式是单词去重，对于情感分析而言，只要其出现就行，不要求数量</p>
+<p>另一种方式是对于negation样本的处理。</p>
+<pre><code>I really like this movie 
+I didn't like this movie
+</code></pre>
+<p>负样本通过一个didn't 完全的将整个语境改变。因此，负样本完全可以通过修改一个单词使该样本变成正样本。</p>
+<p>一种非常简单的方法在情绪分析中是将negation中的单词全部加上NOT_前缀，</p>
+<pre><code>didn't like this movie, but I
+didn't NOT_like NOT_this NOT_movie, but I
+</code></pre>
+<p>新形式大单词像NOT_like ,NOT_recommend 将会在负样本中出现多次，并且是negative情绪的关键指示，但是像NOT_bored,NOT_dismiss 将会表现为positive情绪。</p>
+<p>sentiment lexicons（情绪字典），General Inquirer，LIWC，MPQA。</p>
+<p>MPQA字典有6885个单词，2718个正例，4912个反例。</p>
+<pre><code>+: admirable,beautiful,condident,dazzling,ecstatic,favor,glee,great
+-: awful,bad,bias,catastroph,cheat,deny,envious,foul,harsh,hate
+</code></pre>
+<p>18章将会介绍如何自动分类这些单词。</p>
+<h2>Naive Bayes as a Language Model</h2>
+<p>贝叶斯分类可以使用任何特征:字典，url，email，网络特征，短语，解析树等等。但是如果按照前面介绍的，仅使用独立的单词特征，使用在文档中的所有特征，贝叶斯分类器和LM模型很相似。特别的，一个贝叶斯分类器可以被看作一个限定类别的unigram 语言模型，对于每一个类别而言都会生成一个语言模型</p>
+<p>对于每一个单词,概率 P(word|c), 这个模型也会对每一个句子赋予一个概率</p>
+<p>$$P(s|c)=\prod <em>{i \in sentence} P(w</em>{i}|c)$$</p>
+<p><img src="/img/nlp6_5.png" alt=""></p>
+<pre><code>P(&quot;I love this fun film&quot;|+)= 0.1*0.1*0.01*0.05*0.1 = 0.0000005
+P(&quot;I love this fun film&quot;|-)=...=0.0000000010
+
+P(s|pos) &gt;P(s|neg).
+</code></pre>
+<h2>Evaluation:Precision,Recall,F-measure</h2>
+<p><img src="/img/nlp6_6.png" alt=""></p>
+<p>accuracy有局限，很简单的例子，</p>
+<pre><code>假如100万封邮件，只有100封邮件在表达喜欢或讨厌
+假设一个分类器将所有的邮件都标成&quot;不谈论公司&quot;。这个分类器将会有999900个正确的分类并且只有
+100个错误分类，那么准确率是99.99%。
+准确率很高，但是实际上这个分类器是无效的。
+准确性度量指标对于发现一些特殊的，或者不均衡的样本来说不是最好的、
+Precision: 度量系统认为正样本中，被判断准确的概率（以系统为衡量基准）
+</code></pre>
+<p>$$Precision = \frac{true \ positives}{true \ positiive + false\ positives}$$</p>
+<pre><code>Recall: measures the percentage of items actually present in the input that were identified by the system
+度量所有正样本被判断准确的概率，（以原始数据为衡量基准）
+</code></pre>
+<p>$$Recall = \frac{true \ positives}{true \ positiive + false\ negatives}$$</p>
+<p>实际中，将Precision和Recall结合起来使用，F-measure</p>
+<p>$$F_{\beta } =\frac{(\beta ^2+1)PR}{\beta ^2P+R}$$</p>
+<p>F-measure度量有个倾向性，$\beta &gt;1$ 倾向于recall，小于1 倾向于precision，相等的话则两者均衡。F1度量方式。</p>
+<p>$$F_{1} = \frac{2PR}{P+R}$$</p>
+<h2>More than two classes</h2>
+<h2>Test sets and Cross-validation</h2>
+<p>用training训练模型，用devset调整参数，用test生成性能报告。</p>
+<p>cv: 随机选择训练集和测试集，训练模型，然后计算错误率。然后重复随机选择数据。重复10次会得到10次错误率， 10折交叉验证法。</p>
+<p><img src="/img/nlp6_7.png" alt=""></p>
+<h2>Statistical Significance Testing(统计显著性检验)</h2>
+<h2>总结</h2>
+<p>介绍贝叶斯分类器，在情绪分类中使用。</p>
+<ul>
+<li>Many language processing tasks can be viewed as tasks of classification. learn to model the class given the observation</li>
+<li>Text categorization,in which an entire text is assigned a class from a finite set, comprises such tasks as sentiment analysis,spam detection,email classification,and authorship attribution.</li>
+<li>Sentiment analyssis classifis a text as reflecting the positive or negative orientation that a weiter expresses toward some object</li>
+<li>Naive Bayes is a generative model that make the bag of words assumption and conditional independence assumption</li>
+<li>Naive Bayes with binarized features seems to work better for many text classificatoin tasks</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/18/5-Spelling-Correction-and-the-Noisy-Channel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/5-Spelling-Correction-and-the-Noisy-Channel/" itemprop="url">5 Spelling Correction and the Noisy Channel</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-18T14:46:35+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##	Spelling Correction and the Noisy Channel
+主要介绍拼写检查和改正的问题。拼写检查从两方面来看，Non-word spelling correction(非单词拼写纠正)是检查和修正拼写错误导致不存在的单词(graffe giraffe)。real word spelling correction是关于真实存在单词的检查和纠正的任务，可能由于意外的发生(插入，删除，替换)导致一个另外的单词(there three). cognitive errors(认知错误)是作者使用同音词导致错误拼写(dessert--&gt;desert, piece =&gt;peace)</p>
+<p>Non-Word errors: 检查字典可以完成</p>
+<pre><code>1. 生成正确拼写候选集: graffe-&gt;(giraffe,graf,grail)
+2. 排序: 可以使用最小编辑距离算法
+3. giraffe 更加接近于graffe
+</code></pre>
+<p>Real-word spelling error: 更加困难，噪声信道发现候选集，进而排序</p>
+<h3>The Noisy Channel Model</h3>
+<p>噪声信道模型应用于拼写改正任务。</p>
+<p><img src="/img/nlp08.png" alt="">
+噪声信道把错误拼写的单词当作一个正确拼写的代词，只不过这个单词是经过一个噪声通信信道之后被扭曲了。这个信道通过将字母替换或其他方式引入噪声，难以识别正确单词。我们的目的是建立这样一个噪声信道，通过输入每一个单词到噪声模型以观察哪一个生成的单词是最接近错误的单词。</p>
+<pre><code>贝叶斯定理
+错误单词: y
+输入单词: w
+w= argmaxP(w|y), 产生结果y，最可能的输入w。
+p(a|b) = p(b|a)p(a)/p(b)
+
+则: w = argmax{p(y|w)p(w)/p(x)}
+p(x)对于每个单词都是一样，w=argmax{p(y|w)p(w)}
+p(y|w) 是信道模型，p(w)是先验模型
+</code></pre>
+<p>下面一个例子说明过程 acress</p>
+<pre><code>function Noisy Channel Spelling(word x,dict D,lm,editprob) returns correction
+
+if x not in D
+	candidates,edits &lt;---All strings at edit distance 1 from x that are in D,and theri edit
+	for each c,e in candidates,edits
+		channel &lt;--- editprob(e)
+		priot &lt;---lm(x)
+		score[c] = log channel + log prior
+	return argmax score[c]
+
+发现相似单词：最简单的是查找编辑距离为1的单词
+含交换的编辑距离是Damerau-Levenshtein 编辑距离算法
+</code></pre>
+<p><img src="/img/nlp09.png" alt=""></p>
+<pre><code>已经找出所有的候选集，开始计算概率
+P(w) 是语言模型概率，肯定是根据训练语料库统计候选集中出现单词的概率
+</code></pre>
+<p><img src="/img/nlp10.png" alt=""></p>
+<pre><code>计算信道模型
+一种最简单的估计模型，p(acress|across)使用字母e被用作字母o的出现次数的概率。为了使用这种方式需要混淆矩阵，4个。
+
+del[x,y]:count(xy typed as x)
+ins[x,y]:count(x typed as xy)
+sub[x,y]:count(x typed as y)
+trans[x,y]:count(xy typed as yx)
+
+如何获取混淆矩阵? 从错误拼写中抽取
+
+	additional: addional,additonal
+	environments:envirnments,enviorments,enviroments
+	preceded: preceeded
+	....
+</code></pre>
+<p>错误拼写语料库
+<a href="http://www.dcs.bbk.ac.uk/~ROGER/corpora.html" target="_blank" rel="noopener">http://www.dcs.bbk.ac.uk/~ROGER/corpora.html</a>,<a href="http://norvig.com/ngrams/" target="_blank" rel="noopener">http://norvig.com/ngrams/</a></p>
+<pre><code>混淆矩阵建立算法:
+迭代算法：
+	初始化矩阵：相同值
+	每一个字母都能被删除，替换，插入，交换等等
+	拼写错误修正算法开始运行在一个拼写错误的数据集中；
+	给定错别字集合和预测修正对，再次运算混淆矩阵，拼写算法再次运行....
+	EM 算法(chapter 9)
+</code></pre>
+<p><img src="/img/nlp11.png" alt=""></p>
+<p><img src="/img/nlp12.png" alt=""></p>
+<p><img src="/img/nlp13.png" alt=""></p>
+<p>across 是最好的修正，接下来是actress,但是原文：</p>
+<pre><code>stellar and versatile acress whose combination of sass and glamour has defined her. . .
+实际上需要的是actress，unigram模型出错，使用二元模型
+
+P(actressjversatile) = :000021
+P(acrossjversatile) = :000021
+P(whosejactress) = :0010
+P(whosejacross) = :000006
+
+P(“versatile actress whose”) = :000021∗ :0010 = 210× 10−10
+P(“versatile across whose”) = :000021∗ :000006 = 1× 10−10
+
+将这个二元模型的概率和噪声模型概率相乘，得到的是正确的结果。
+</code></pre>
+<h3>Real-word Spelling errors</h3>
+<p>使用噪声信道开始进行真实单词的拼写错误检查。</p>
+<pre><code>输入句子: X={x1,x2,x3....xk,....xn}
+生成候选集正确句子: C(X)
+选择最高语言模型概率的句子作为结果
+
+X= Only two of thew apples 
+候选集:
+
+only two of thew apples
+oily two of thew apples
+only too of thew apples
+only to of thew apples
+only tao of the apples
+only two on thew apples
+only two off thew apples
+only two of the apples
+only two of threw apples
+only two of thew applies
+only two of thew dapples
+
+W = argmaxP(X|W)P(W)
+</code></pre>
+<p><img src="/img/nlp14.png" alt=""></p>
+<pre><code>假设: two of thew
+假设: thew 是错误的，候选集: the,thae,thew,threw,thwe
+计算语言模型概率
+P(the|two of) = 0.476012
+P(thew|two of) = 9.95051 ×10−8
+P(thaw|two of) = 2.09267 ×10−7
+P(threw|two of) = 8.9064 ×10−7
+P(them|two of) = 0.00144488
+P(thwe|two of) = 5.18681 ×10−9
+
+正确单词模型和错误单词模型不同，这里计算的是整个句子的概率，因此还要计算 two of the people 这个句子的概率，即P(people | of the),p(people|of thew)...
+
+取alpha是0.05,p(w|w) = 0.95
+</code></pre>
+<p><img src="/img/nlp15.png" alt=""></p>
+<p>对于这个错误的句子，模型选择了正确的句子，the</p>
+<h3>Noisy Channel Model: The State of The Art</h3>
+<p><a href="http://www.aclweb.org/anthology/C90-2036" target="_blank" rel="noopener">噪声信道模型</a>
+<a href="https://www.youtube.com/watch?v=RgHr2KVXtiE" target="_blank" rel="noopener">视频</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/18/维特比分词/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/维特比分词/" itemprop="url">维特比分词</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-18T11:28:41+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3>维特比算法理解</h3>
+<p>维特比算法就是动态规划实现最短路径，只要知道“动态规划可以降低复杂度”这点即可。</p>
+<pre><code>维特比算法是一个特殊但应用最广的动态规划算法，利用动态规划，可
+以解决任何一个图中的最短路径问题。而维特比算法是针对一个特殊的
+图——篱笆网络的有向图（Lattice )的最短路径问题而提出的。 它之
+所以重要，是因为凡是使用隐含马尔可夫模型描述的问题都可以用它来
+解码，包括今天的数字通信、语音识别、机器翻译、拼音转汉字、分词等。——《数学之美》 吴军
+</code></pre>
+<p>篱笆网络有向图的特点是同一列节点有多个，并且和上一列节点交错地连接起来。同一列节点代表同一个时间点上不同的状态的并列，大概因为这种一列一列整齐的节点和交错的边很像篱笆而得名。</p>
+<p><img src="/img/nlp_a.png" alt=""></p>
+<p>类似神经网络连接图<a href="http://playground.tensorflow.org" target="_blank" rel="noopener">神经网络游乐场</a></p>
+<p>加上上图每一列分别有n1....nn个节点，那么计算复杂度就是O(n1*n2...nn),每条路径都走一遍</p>
+<p>而维特比算法的精髓就是，既然知道到第i列所有节点Xi{j=123…}的最短路径，那么到第i+1列节点的最短路径就等于到第i列j个节点的最短路径+第i列j个节点到第i+1列各个节点的距离的最小值。</p>
+<p>复杂度: 假设篱笆有向图中每一列节点最多有D个，一共有N列，那么，每次计算最多D*D次，最多计算N次，复杂度O(NDD),远远小于O(D^N)。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/18/Wordnet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/18/Wordnet/" itemprop="url">Wordnet</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-18T09:29:02+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>WordNet介绍</h2>
+<h3>1.1 简介</h3>
+<p>WordNet是一个由普林斯顿大学认识科学实验室在心理学教授乔治·A·米勒的指导下建立和维护的大型的英语词典，WordNet的开发有两个目的：</p>
+<pre><code>1. 它既是一个字典，又是一个辞典，它比单纯的辞典或词典都更加易于使用。
+2. 支持自动的文本分析以及人工智能应用。
+</code></pre>
+<p>WordNet 将英语的名词、动词、形容词、和副词组织为(同义词网络)Synsets，每一个Synset表示一个基本的词汇概念，并在这些概念之间建立了包括同义关系（synonymy）、反义关系（antonymy） 、上下位关系（hypernymy &amp; hyponymy） 、部分关系（meronymy）等多种语义关系。</p>
+<h3>NLTK WordNet Interface</h3>
+<pre><code>from nltk.corpus import wordnet as wn
+</code></pre>
+<p><strong>Words</strong></p>
+<pre><code>Look up a word using synsets(); this function has an
+optional pos argument which lets you constrain the 
+part of speech of the word:
+
+&gt;&gt;&gt; wn.synsets('dog')
+[Synset('dog.n.01'), Synset('frump.n.01'), Synset('dog.n.03'), Synset('cad.n.01'),
+Synset('frank.n.02'), Synset('pawl.n.01'), Synset('andiron.n.01'), Synset('chase.v.01')]
+&gt;&gt;&gt; wn.synsets('dog', pos=wn.VERB)
+[Synset('chase.v.01')]
+
+The other parts of speech are NOUN, ADJ and ADV. A synset is identified with a 3-part name of the form: word.pos.nn:
+
+&gt;&gt;&gt; wn.synset('dog.n.01')
+Synset('dog.n.01')
+&gt;&gt;&gt; print(wn.synset('dog.n.01').definition())
+a member of the genus Canis (probably descended from the common wolf) that has been domesticated by man since prehistoric times; occurs in many breeds
+
+&gt;&gt;&gt; len(wn.synset('dog.n.01').examples())
+1
+&gt;&gt;&gt; print(wn.synset('dog.n.01').examples()[0])
+the dog barked all night
+&gt;&gt;&gt; wn.synset('dog.n.01').lemmas()
+[Lemma('dog.n.01.dog'), Lemma('dog.n.01.domestic_dog'), Lemma('dog.n.01.Canis_familiaris')](家犬)
+
+&gt;&gt;&gt; [str(lemma.name()) for lemma in wn.synset('dog.n.01').lemmas()]
+['dog', 'domestic_dog', 'Canis_familiaris']
+&gt;&gt;&gt; wn.lemma('dog.n.01.dog').synset()
+Synset('dog.n.01')
+
+The WordNet corpus reader gives access to the Open Multilingual WordNet, using ISO-639 language codes.
+
+&gt;&gt; sorted(wn.langs())
+['als', 'arb', 'cat', 'cmn', 'dan', 'eng', 'eus', 'fas','fin', 'fra', 'fre', 'glg', 'heb', 'ind', 'ita', 'jpn', 'nno','nob', 'pol', 'por', 'spa', 'tha', 'zsm']
+&gt;&gt;&gt; wn.synsets(b'\xe7\x8a\xac'.decode('utf-8'), lang='jpn')
+[Synset('dog.n.01'), Synset('spy.n.01')]
+&gt;&gt;&gt; wn.synset('spy.n.01').lemma_names('jpn')
+['\u3044\u306c', '\u307e\u308f\u3057\u8005', '\u30b9\u30d1	\u30a4', '\u56de\u3057\u8005',
+'\u56de\u8005', '\u5bc6\u5075', '\u5de5\u4f5c\u54e1', '\u5efb\u3057\u8005',
+'\u5efb\u8005', '\u63a2', '\u63a2\u308a', '\u72ac', '\u79d8\u5bc6\u635c\u67fb\u54e1',
+'\u8adc\u5831\u54e1', '\u8adc\u8005', '\u9593\u8005', '\u9593\u8adc', '\u96a0\u5bc6']
+&gt;&gt;&gt; wn.synset('dog.n.01').lemma_names('ita')
+['cane', 'Canis_familiaris']
+&gt;&gt;&gt; wn.lemmas('cane', lang='ita')
+[Lemma('dog.n.01.cane'), Lemma('hammer.n.01.cane'), Lemma('cramp.n.02.cane'),
+Lemma('bad_person.n.01.cane'), Lemma('incompetent.n.01.cane')]
+&gt;&gt;&gt; sorted(wn.synset('dog.n.01').lemmas('dan'))
+[Lemma('dog.n.01.hund'), Lemma('dog.n.01.k\xf8ter'),
+Lemma('dog.n.01.vovhund'), Lemma('dog.n.01.vovse')]
+&gt;&gt;&gt; sorted(wn.synset('dog.n.01').lemmas('por'))
+[Lemma('dog.n.01.cachorro'), Lemma('dog.n.01.c\xe3es'),
+Lemma('dog.n.01.c\xe3o'), Lemma('dog.n.01.c\xe3o')]
+&gt;&gt;&gt; dog_lemma = wn.lemma(b'dog.n.01.c\xc3\xa3o'.decode('utf-8'), lang='por')
+&gt;&gt;&gt; dog_lemma
+Lemma('dog.n.01.c\xe3o')
+&gt;&gt;&gt; dog_lemma.lang()
+'por'
+&gt;&gt;&gt; len(wordnet.all_lemma_names(pos='n', lang='jpn'))
+66027
+</code></pre>
+<h3>Synsets</h3>
+<pre><code>Synset: a set of synonyms that share a common meaning.
+&gt;&gt;&gt; dog = wn.synset('dog.n.01')
+&gt;&gt;&gt; dog.hypernyms()
+[Synset('canine.n.02'), Synset('domestic_animal.n.01')]
+&gt;&gt;&gt; dog.hyponyms()  # doctest: +ELLIPSIS
+[Synset('basenji.n.01'), Synset('corgi.n.01'), Synset('cur.n.01'), Synset('dalmatian.n.02'), ...]
+&gt;&gt;&gt; dog.member_holonyms()
+[Synset('canis.n.01'), Synset('pack.n.06')]
+&gt;&gt;&gt; dog.root_hypernyms()
+[Synset('entity.n.01')]
+&gt;&gt;&gt; wn.synset('dog.n.01').lowest_common_hypernyms(wn.synset('cat.n.01'))
+[Synset('carnivore.n.01')]
+</code></pre>
+<p>Each synset contains one or more lemmas, which represent a specific sense of a specific word.</p>
+<p>Note that some relations are defined by WordNet only over Lemmas:</p>
+<pre><code>&gt;&gt;&gt; good = wn.synset('good.a.01')
+&gt;&gt;&gt; good.antonyms()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'Synset' object has no attribute 'antonyms'
+&gt;&gt;&gt; good.lemmas()[0].antonyms()
+[Lemma('bad.a.01.bad')]
+
+good = wn.synset('good.a.01')
+good.lemmas()
+Out[40]: [Lemma('good.a.01.good')]
+good.lemmas()[0]
+Out[41]: Lemma('good.a.01.good')
+good.lemmas()[0].antonyms()  反义词
+Out[42]: [Lemma('bad.a.01.bad')]
+</code></pre>
+<h3>Lemmas</h3>
+<pre><code>eat= wn.lemma('eat.v.03.eat')
+Out[47]: Lemma('feed.v.06.eat')
+eat = wn.lemma('eat.v.03.eat')
+eat
+Out[49]: Lemma('feed.v.06.eat')
+
+print(eat.key())
+eat%2:34:02::
+</code></pre>
+<h3>Verb Frams</h3>
+<pre><code>&gt;&gt;&gt; wn.synset('think.v.01').frame_ids()
+[5, 9]
+&gt;&gt;&gt; for lemma in wn.synset('think.v.01').lemmas():
+...     print(lemma, lemma.frame_ids())
+...     print(&quot; | &quot;.join(lemma.frame_strings()))
+...
+Lemma('think.v.01.think') [5, 9]
+Something think something Adjective/Noun | Somebody think somebody
+Lemma('think.v.01.believe') [5, 9]
+Something believe something Adjective/Noun | Somebody believe somebody
+Lemma('think.v.01.consider') [5, 9]
+Something consider something Adjective/Noun | Somebody consider somebody
+Lemma('think.v.01.conceive') [5, 9]
+Something conceive something Adjective/Noun | Somebody conceive somebody
+</code></pre>
+<h3>Similarity</h3>
+<pre><code>dog = wn.synset('dog.n.01')
+cat = wn.synset('cat.n.01')
+hit = wn.synset('hit.v.01')
+slap = wn.synset('slap.v.01')
+dog.path_similarity(cat)
+Out[62]: 0.2
+hit.path_similarity(slap)
+Out[63]: 0.14285714285714285
+wn.path_similarity(hit, slap)
+Out[64]: 0.14285714285714285
+print(hit.path_similarity(slap, simulate_root=False))
+None
+</code></pre>
+<h3>HanLP 中的WordNet</h3>
+<pre><code>public WordNet(char[] charArray)
+按照句子的分析过程，每一个词都可能有引申。
+每一个词作为一个节点，其都是一个链表形式。
+头尾为B ,E
+
+刚开始所有的顶点都是空的，
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[]
+2:[]
+3:[]
+4:[]
+5:[]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+public WordNet(char[] charArray, List&lt;Vertex&gt; vertexList)
+初始构造，只是往里面添加了顶点，也就是为顶点链表添加节点的过程
+
+添加的过程是按照 初始句子中给出的所有顶点进行添加。
+
+商品和服务: 
+vertext[0].add(商)
+</code></pre>
+<p>GenerateWordNet 生成一元词网</p>
+<pre><code>按照上面的描述将所有的可以成词的词组成词网，具体过程就是查询词典
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+2:[WordNode{word='品', realWord='品', attribute=ng 563 }]
+3:[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+4:[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+5:[WordNode{word='务', realWord='务', attribute=vg 209 }]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+里面的顶点是:
+按照句子的长度，分成length个顶点，每个顶点都是一个链表
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+[WordNode{word='品', realWord='品', attribute=ng 563 }]
+[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+[WordNode{word='务', realWord='务', attribute=vg 209 }]
+[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+词网生成。
+</code></pre>
+<p>开始分词</p>
+<pre><code>首先建立vertex之间的联系，就是首尾相连，之前是所有的顶点各自为一个list，现在是一个总的list。每个vertex之间多了约束
+
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }, WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }, WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/17/3-N-grams/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/17/3-N-grams/" itemprop="url">3_N-grams</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-17T13:14:00+08:00">
+                2018-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Language Modeling with N-grams</h2>
+<p>本章主要介绍一些关于预测单词的基本概念</p>
 <pre><code>Please turn your homework ...
 后面的词或许是in, over 但不可能是refigerator或the
 essential(要素)
@@ -97,16 +1395,19 @@ essential(要素)
 模型：定义概率的模型北城与LM
 N-gram: 2-gram(bigram) two words &quot;please turn&quot;
 3-gram(trigram): &quot;please turn your &quot;
-</code></pre><h3 id="N-grams"><a href="#N-grams" class="headerlink" title="N-grams"></a>N-grams</h3><pre><code>计算p(w|h) ,历史h，预测单词w出现的概率
+</code></pre>
+<h3>N-grams</h3>
+<pre><code>计算p(w|h) ,历史h，预测单词w出现的概率
 
-p(the|its water is so transparent that)    
+p(the|its water is so transparent that)	
 =C(its water is so transparent that the)/C(its water is so transparent that)
 
 一般序列：N， w1...wn,概率P(w1,w2,....wn)
 使用链式概率法则计算
-</code></pre><p><img src="/img/nlp03.png" alt=""></p>
+</code></pre>
+<p><img src="/img/nlp03.png" alt=""></p>
 <pre><code>N-gram 并不是计算整个历史，而是计算最近的历史单词
-P(the|Walden Pond&apos;s water is so transparent that)
+P(the|Walden Pond's water is so transparent that)
 ~~ P(the|that)
 
 马尔科夫假设：一个单词仅仅依赖前一个单词，进而计算概率
@@ -115,7 +1416,8 @@ N-gram(只关注前面N-1个单词)
 怎么估计N-gram的概率：最大似然估计 MLE
 获取次数，归一化次数生成一个概率
 p(wn|w(n-1)) = C(w(n-1)wn)/C(w(n-1)w)
-</code></pre><p><img src="/img/nlp04.png" alt=""></p>
+</code></pre>
+<p><img src="/img/nlp04.png" alt=""></p>
 <pre><code>P(i|&lt;s&gt;) = 0:25 P(english|want) = 0:0011
 P(food|english) = 0:5 P(&lt;/s&gt;|food) = 0:68
 
@@ -127,21 +1429,28 @@ P(food|english)P(&lt;/s&gt;|food)
 
 计算概率使用对数概率
 p1 × p2 × p3 × p4 = exp(log p1+ log p2+ log p3+ log p4)
-</code></pre><h3 id="Evaluating-LM"><a href="#Evaluating-LM" class="headerlink" title="Evaluating LM"></a>Evaluating LM</h3><pre><code>一种评估方法是 把LM嵌入一个应用中计算应该提高多少
+</code></pre>
+<h3>Evaluating LM</h3>
+<pre><code>一种评估方法是 把LM嵌入一个应用中计算应该提高多少
 这种方式叫做外部验证（extrinsic evaluation）
 外部验证方式较为麻烦，内部验证不需要依赖任何应用
-</code></pre><p>Perplexity(PP)</p>
+</code></pre>
+<p>Perplexity(PP)</p>
 <p><img src="/img/nlp05.png" alt=""></p>
 <pre><code>根据逆频率，条件概率越高，PP越低
 内部验证方法并不能确保提高外部效果
-</code></pre><h3 id="Generalization-and-Zeros"><a href="#Generalization-and-Zeros" class="headerlink" title="Generalization and Zeros"></a>Generalization and Zeros</h3><pre><code>概率代表特定的事实
+</code></pre>
+<h3>Generalization and Zeros</h3>
+<pre><code>概率代表特定的事实
 随着N-gram中N的增大，模型表现越来越好
-</code></pre><p>下图展示了根据N-gram模型随机生成样本</p>
+</code></pre>
+<p>下图展示了根据N-gram模型随机生成样本</p>
 <p><img src="/img/nlp06.png" alt=""></p>
 <pre><code>如果依赖的句子越长，生成的句子越流畅
 是不是训练语料有什么潜在的意义？
 分析WSJ语料的N-gram和Shakespeare，估计两个N-Gram模型会有相似之处。
-</code></pre><p><img src="/img/nlp07.png" alt=""></p>
+</code></pre>
+<p><img src="/img/nlp07.png" alt=""></p>
 <pre><code>但是实际上没有任何相似之处，哪怕一些小短语。
 就是说如果训练集和测试集不同，那么统计模型没有任何用处。
 
@@ -150,16 +1459,17 @@ p1 × p2 × p3 × p4 = exp(log p1+ log p2+ log p3+ log p4)
 概率为0？
 训练集中不存在，测试集中存在。
 加入训练集是:
-    denied the allegations: 5
-    denied the speculation: 2
-    denied the rumors: 1
-    denied the report: 1    
+	denied the allegations: 5
+	denied the speculation: 2
+	denied the rumors: 1
+	denied the report: 1	
 测试集是：
-    denied the offer
-    denied the loan
+	denied the offer
+	denied the loan
 p(offer|denied the )=0!!!
 如果任何单词的概率为0，那么整个句子的概率就是0，perplexity无法计算。根据公式，不能除以0.
-</code></pre><p><strong>Unknown Words</strong></p>
+</code></pre>
+<p><strong>Unknown Words</strong></p>
 <pre><code>closed vocabulary: 所有的测试集中的单词都会在训练集中出现
 out of vocabulary: 增加一个&lt;UNK&gt;
 
@@ -173,15 +1483,20 @@ out of vocabulary: 增加一个&lt;UNK&gt;
 或者选择前V个单词，其他的都换成UNK
 
 但是&lt;UNK&gt;模型对度量是有影响的，
-</code></pre><h3 id="Smoothing"><a href="#Smoothing" class="headerlink" title="Smoothing"></a>Smoothing</h3><p><a href="http://blog.csdn.net/baimafujinji/article/details/51297802" target="_blank" rel="noopener">平滑方法参考网址</a><br>add-1 smoothing,add-k smoothing,Stupid backoff,Kneser-Ney smoothing</p>
+</code></pre>
+<h3>Smoothing</h3>
+<p><a href="http://blog.csdn.net/baimafujinji/article/details/51297802" target="_blank" rel="noopener">平滑方法参考网址</a>
+add-1 smoothing,add-k smoothing,Stupid backoff,Kneser-Ney smoothing</p>
 <p>Laplace Smoothing</p>
 <pre><code>所有的次数加1，
 p(wi)=Ci/N;  ----&gt; P(wi)=Ci+1/N+V  #V words
-</code></pre><p>Add-K </p>
+</code></pre>
+<p>Add-K</p>
 <pre><code>增加一个k，
 
 反正有很多的平滑方法，需要重新写一篇
-</code></pre><p>###　Summary</p>
+</code></pre>
+<p>###　Summary</p>
 <pre><code>１．Language models offer a way to assign a probability to a sentence or other
 ２．sequence of words, and to predict a word from preceding words.
 ３．N-grams are Markov models that estimate words from a fixed window of previous words. N-gram probabilities can be estimated by counting in a corpus　and normalizing (the maximum likelihood estimate).
@@ -189,8 +1504,10 @@ p(wi)=Ci/N;  ----&gt; P(wi)=Ci+1/N+V  #V words
 ５．The perplexity of a test set according to a language model is the geometric　mean of the inverse test set probability computed by the model.
 ６．Smoothing algorithms provide a more sophisticated way to estimat the probability of N-grams. Commonly used smoothing algorithms for N-grams rely　on lower-order N-gram counts through backoff or interpolation.
 ７．Both backoff and interpolation require discounting to create a probability distribution.
-８．Kneser-Ney smoothing makes use of the probability of a word being a novel    continuation. The interpolated Kneser-Ney smoothing algorithm mixes a　discounted probability with a lower-order continuation　probability
-</code></pre><p>###　Exercise<br>NGram 实现</p>
+８．Kneser-Ney smoothing makes use of the probability of a word being a novel	continuation. The interpolated Kneser-Ney smoothing algorithm mixes a　discounted probability with a lower-order continuation　probability
+</code></pre>
+<p>###　Exercise
+NGram 实现</p>
 <pre><code>#encoding:utf-8
 #@Time : 2018/1/17 16:10
 #@Author : JackNiu
@@ -199,95 +1516,95 @@ from collections import defaultdict as ddict
 import itertools
 import random
 class NGram(object):
-    def __init__(self,max_n,words=None):
-        self._max_n = max_n
-        self._n_range = range(1,max_n+1)  # range(1,3) --&gt; 1,2
-        self._counts = ddict(lambda :0)   # empty dict
+	def __init__(self,max_n,words=None):
+    	self._max_n = max_n
+    	self._n_range = range(1,max_n+1)  # range(1,3) --&gt; 1,2
+    	self._counts = ddict(lambda :0)   # empty dict
 
-        if words is not None:
-            self.update(words)
+    	if words is not None:
+    	    self.update(words)
 
-    def update(self,words):
-        self.splitWords(words)
-        self._counts[()]+=len(self.words)
+	def update(self,words):
+    	self.splitWords(words)
+    	self._counts[()]+=len(self.words)
 
-        # count ngrams of all  the given lengths
-        for i,word in enumerate(self.words):
-            for n in self._n_range:
-                if i+n &lt;= len(self.words):
-                    ngram_range= range(i,i+n)
-                    ngram = [self.words[j] for j in ngram_range]
-                    self._counts[tuple(ngram)] +=1
-        print(self._counts)
+    	# count ngrams of all  the given lengths
+    	for i,word in enumerate(self.words):
+        	for n in self._n_range:
+            	if i+n &lt;= len(self.words):
+                	ngram_range= range(i,i+n)
+                	ngram = [self.words[j] for j in ngram_range]
+                	self._counts[tuple(ngram)] +=1
+    	print(self._counts)
 
-    def splitWords(self,words):
-        # 将一个句子分开 成为单词word
-        words_=[]
+	def splitWords(self,words):
+    	# 将一个句子分开 成为单词word
+    	words_=[]
 
-        for word_0 in words.split(&quot; &quot;):
-            for word_1 in word_0.split(&apos;,&apos;):
-                for word_2 in word_1.split(&apos;.&apos;):
-                    words_.append(word_2)
-        self.words= words_
+    	for word_0 in words.split(&quot; &quot;):
+        	for word_1 in word_0.split(','):
+            	for word_2 in word_1.split('.'):
+                	words_.append(word_2)
+    	self.words= words_
 
-    def probability(self):
-        if len(self.words) &lt;= self._max_n:
-            return self._probability()
-        else:
-            prob =1.0
-            for i in range(len(self.words)-self._max_n+1):
-                ngram = self.words[i:i+self._max_n]
-                prob *= self._probability(ngram)
-            return prob
+	def probability(self):
+    	if len(self.words) &lt;= self._max_n:
+        	return self._probability()
+    	else:
+        	prob =1.0
+        	for i in range(len(self.words)-self._max_n+1):
+            	ngram = self.words[i:i+self._max_n]
+            	prob *= self._probability(ngram)
+        	return prob
 
-    def _probability(self,ngram):
-        print(&quot;prob&quot;,ngram)
-        ngram = tuple(ngram)
-        ngram_count = self._counts[ngram]
-        print(self._counts[ngram[:-1]],ngram[:-1])
-        prefix_count = self._counts[ngram[:-1]]
-        prob =0.0
-        if ngram_count and prefix_count:
-            prob = ngram_count/prefix_count
-        print(prob)
-        return prob
+	def _probability(self,ngram):
+    	print(&quot;prob&quot;,ngram)
+    	ngram = tuple(ngram)
+    	ngram_count = self._counts[ngram]
+    	print(self._counts[ngram[:-1]],ngram[:-1])
+    	prefix_count = self._counts[ngram[:-1]]
+    	prob =0.0
+    	if ngram_count and prefix_count:
+        	prob = ngram_count/prefix_count
+    	print(prob)
+    	return prob
 
-    def generate(self,n_words):
-        ngrams = iter(self._counts)
-        unigrams = [x for x in ngrams if len(x) ==1]
-        while True:
-            try:
-                return self._generate(n_words,unigrams)
-            except Exception as e:
+	def generate(self,n_words):
+    	ngrams = iter(self._counts)
+    	unigrams = [x for x in ngrams if len(x) ==1]
+    	while True:
+        	try:
+            	return self._generate(n_words,unigrams)
+        	except Exception as e:
             pass
-    def _generate(self,n_words,unigrams):
-        &apos;&apos;&apos;
-        产生句子的方法：
-        :param n_words:
-        :param unigrams:
-        :return:
-        &apos;&apos;&apos;
-        words=[]
-        for i in itertools.repeat(self._max_n):
-            print(i)
-            if i==1:
-                prefix=()
-            else:
-                prefix = tuple(words[-i+1:])
+	def _generate(self,n_words,unigrams):
+    	'''
+    	产生句子的方法：
+    	:param n_words:
+    	:param unigrams:
+    	:return:
+    	'''
+    	words=[]
+    	for i in itertools.repeat(self._max_n):
+        	print(i)
+        	if i==1:
+            	prefix=()
+        	else:
+            	prefix = tuple(words[-i+1:])
 
-            threshold = random.random()
-            total =0.0
-            print(threshold)
-            for unigram in unigrams:
-                total += self._probability(prefix+unigram)
-                if total &gt;= threshold:
-                    words.extend(unigram)
-                    break
-            print(words)
-            if len(words) == n_words:
-                return words
-            if total == 0.0:
-                raise RuntimeError(&apos;impossible sequence&apos;)
+        	threshold = random.random()
+        	total =0.0
+        	print(threshold)
+        	for unigram in unigrams:
+            	total += self._probability(prefix+unigram)
+            	if total &gt;= threshold:
+                	words.extend(unigram)
+                	break
+        	print(words)
+        	if len(words) == n_words:
+            	return words
+        	if total == 0.0:
+            	raise RuntimeError('impossible sequence')
 
 
 
@@ -300,72 +1617,156 @@ print(&quot;结果：&quot;,ngram.generate(2))
 
 3
 0.08865073743798602
-prob (&apos;Jack&apos;,)
+prob ('Jack',)
 5 ()
 0.2
-[&apos;Jack&apos;]
+['Jack']
 3
 0.9364222834379184
-prob (&apos;Jack&apos;, &apos;Jack&apos;)
-1 (&apos;Jack&apos;,)
+prob ('Jack', 'Jack')
+1 ('Jack',)
 0.0
-prob (&apos;Jack&apos;, &apos;you&apos;)
-1 (&apos;Jack&apos;,)
+prob ('Jack', 'you')
+1 ('Jack',)
 0.0
-prob (&apos;Jack&apos;, &apos;ok?&apos;)
-1 (&apos;Jack&apos;,)
+prob ('Jack', 'ok?')
+1 ('Jack',)
 0.0
-prob (&apos;Jack&apos;, &apos;Are&apos;)
-1 (&apos;Jack&apos;,)
+prob ('Jack', 'Are')
+1 ('Jack',)
 1.0
-[&apos;Jack&apos;, &apos;Are&apos;]
-结果： [&apos;Jack&apos;, &apos;Are&apos;]
+['Jack', 'Are']
+结果： ['Jack', 'Are']
 </code></pre>
+
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://niuwenchen.github.io/2018/01/17/3-N-grams/" data-id="cjciuvup40000o4vhimeud8uy" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-undirect-graph" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/15/undirect-graph/" class="article-date">
-  <time datetime="2018-01-15T12:07:25.000Z" itemprop="datePublished">2018-01-15</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/15/undirect-graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/15/undirect-graph/">Undirect graph</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/15/undirect-graph/" itemprop="url">Undirect graph</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T20:07:25+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h3 id="Graphs"><a href="#Graphs" class="headerlink" title="Graphs"></a>Graphs</h3><p>A graph is a set of <em>vertices</em> and a collection of <em>edges</em> that each connect a pair of vertices. We use the names 0 through V-1 for the vertices in a V-vertex graph</p>
+      
+
+      
+        
+          
+            <h3>Graphs</h3>
+<p>A graph is a set of <em>vertices</em> and a collection of <em>edges</em> that each connect a pair of vertices. We use the names 0 through V-1 for the vertices in a V-vertex graph</p>
 <p><img src="/pict/graph.png" alt=""></p>
-<h3 id="Glossary-Here-are-some-definitions-that-we-use"><a href="#Glossary-Here-are-some-definitions-that-we-use" class="headerlink" title="Glossary:Here are some definitions that we use"></a>Glossary:Here are some definitions that we use</h3><ul>
+<h3>Glossary:Here are some definitions that we use</h3>
+<ul>
 <li>A self-loop is an edge that connects a vertex to itself</li>
 <li>Two edges are parallel if they connect the same pair of vertices</li>
 <li>When an edge connects two vertices, we say that the vertices are adjacent to one another and that the edge is incident on both vertices.</li>
 <li>The degree of a vertex is the number of edges incident on it.</li>
-<li>A subgraph is a subset of graph’s( and associated vertices) that constitutes a graph.</li>
+<li>A subgraph is a subset of graph's( and associated vertices) that constitutes a graph.</li>
 <li>A cycle is a path (with at least one edge) whose first and last vertices are the same. A simple cycle is a cycle with no repeated edges or vertices (expect thr requisite repetition of the first and last vertices)</li>
 <li>The length of a path or a cycle is its number of edges.</li>
 <li>We say that one vertex is connected to another if there exists a path that contains both of them.</li>
@@ -374,47 +1775,69 @@ prob (&apos;Jack&apos;, &apos;Are&apos;)
 <li>An acyclic(无环) graph is a graph with no cycles.</li>
 <li>A tree is an acyclic connected graph.</li>
 <li>A forest is a disjoint set of trees.</li>
-<li>A spanning tree of a connected graph is a subgraph that contains all of that graph’s vertices and is a single tree. A spanning forest of a graph is the union of the spanning trees of its connected components.</li>
-<li>A bipartite graph is a graph whose vertices we can divide into two sets such that all edges connect a vertex in one set with a vertex in the other set. </li>
+<li>A spanning tree of a connected graph is a subgraph that contains all of that graph's vertices and is a single tree. A spanning forest of a graph is the union of the spanning trees of its connected components.</li>
+<li>A bipartite graph is a graph whose vertices we can divide into two sets such that all edges connect a vertex in one set with a vertex in the other set.</li>
 </ul>
-<p><img src="/pict/graph-anatomy.png" alt=""><br><img src="/pict/tree.png" alt=""><br><img src="/pict/forest.png" alt=""></p>
-<h3 id="Undirected-graph-data-type"><a href="#Undirected-graph-data-type" class="headerlink" title="Undirected graph data type."></a>Undirected graph data type.</h3><p>We implement the following undirected graph API. </p>
+<p><img src="/pict/graph-anatomy.png" alt="">
+<img src="/pict/tree.png" alt="">
+<img src="/pict/forest.png" alt=""></p>
+<h3>Undirected graph data type.</h3>
+<p>We implement the following undirected graph API.</p>
 <p><img src="/pict/graph-api.png" alt=""></p>
 <p>The key method adj() allows client code to iteratr through the vertices adjacent to a given vertex. Remarkably, we can build all of the algorithms that we consider in this section on the basic abtraction embodied in adj()</p>
 <p>we prepare the test data <a href="https://algs4.cs.princeton.edu/41graph/tinyG.txt" target="_blank" rel="noopener">tinyG.txt</a>,<a href="https://algs4.cs.princeton.edu/41graph/mediumG.txt" target="_blank" rel="noopener">mediumG.txt</a>,and <a href="https://algs4.cs.princeton.edu/41graph/largeG.txt" target="_blank" rel="noopener">largeG.txt</a>,using the following input file format</p>
 <p><img src="/pict/graph-input.png" alt=""></p>
-<p><a href="https://algs4.cs.princeton.edu/41graph/GraphClient.java.html" target="_blank" rel="noopener">GraphClient.java</a> contains typical graph-processing code. </p>
-<h3 id="Graph-representation"><a href="#Graph-representation" class="headerlink" title="Graph representation."></a>Graph representation.</h3><p>We use the adjacency-lists representation, where we maintain a vertex-indexed array of lists of the vertices connected by an edge to each vertex. </p>
+<p><a href="https://algs4.cs.princeton.edu/41graph/GraphClient.java.html" target="_blank" rel="noopener">GraphClient.java</a> contains typical graph-processing code.</p>
+<h3>Graph representation.</h3>
+<p>We use the adjacency-lists representation, where we maintain a vertex-indexed array of lists of the vertices connected by an edge to each vertex.</p>
 <p><img src="/pict/adjacency-lists.png" alt=""></p>
-<p><a href="https://algs4.cs.princeton.edu/41graph/Graph.java.html" target="_blank" rel="noopener">Graph.java</a> implements the graph API using the adjacency-lists representation. <a href="">AdjMatrixGraph.java</a> implements the same API using the adjacency-matrix representation. </p>
-<h3 id="Depth-first-search"><a href="#Depth-first-search" class="headerlink" title="Depth-first search."></a>Depth-first search.</h3><p>Depth-first search is a classic recursive method for systematically examining each of  the vertices and edges in a graoh. To visit a vertex </p>
+<p><a href="https://algs4.cs.princeton.edu/41graph/Graph.java.html" target="_blank" rel="noopener">Graph.java</a> implements the graph API using the adjacency-lists representation. <a href="">AdjMatrixGraph.java</a> implements the same API using the adjacency-matrix representation.</p>
+<h3>Depth-first search.</h3>
+<p>Depth-first search is a classic recursive method for systematically examining each of  the vertices and edges in a graoh. To visit a vertex</p>
 <ul>
 <li>Matk it as having been visited</li>
 <li>Visit(recursively) all the vertices that are adjacent to it and that have not yet been marked.</li>
 </ul>
 <p><a href="">DepthFirstSearch.java</a> implements this approach and the following API:</p>
-<p><img src="/pict/search-api.png" alt=""><br><img src="/pict/02.jpg" alt=""></p>
-<h3 id="Finding-Paths"><a href="#Finding-Paths" class="headerlink" title="Finding Paths"></a>Finding Paths</h3><p>It is easy to modify depth-first search to not only determine whether there exists a path between two given vertices but to find such a path<br>(if one exists). we seek to implements the following API:</p>
+<p><img src="/pict/search-api.png" alt="">
+<img src="/pict/02.jpg" alt=""></p>
+<h3>Finding Paths</h3>
+<p>It is easy to modify depth-first search to not only determine whether there exists a path between two given vertices but to find such a path
+(if one exists). we seek to implements the following API:</p>
 <p><img src="/pict/paths-api.png" alt=""></p>
-<p>To accomplish this,we remember the edge v-w that takes us to each vertex w for the first time by setting edgeTo[w] to v.In other words,<br>v-w is the last edge on the known path from s to w. The result of search is a tree rooted at the source; edgeTo[] is a parent-link representation of that tree.<br><a href="">DepthFirstPaths.java</a> implement this approach.</p>
-<h3 id="Breadth-first-search"><a href="#Breadth-first-search" class="headerlink" title="Breadth-first search"></a>Breadth-first search</h3><p>Depth-first search finds some pat from a source verrex s to a target vertex v. We are often interested in finding the shortest such<br>path(one with a minimal number of edges). Breadth-first search is a classic method based on this goal. To find a shortest path from<br>s to v, we start at s and check for v among all the vertices that we can reach by following one edge, then we check for v among all the vertices<br>that we can reach from s by following two edges,and so forth.</p>
-<p>To implement this strategy, we maintain a queue of all vertices that have been marked but whose adjacency lists have not been checked. we<br>put the source vertex on the queue,then perform the following steps until the queue is empty:</p>
+<p>To accomplish this,we remember the edge v-w that takes us to each vertex w for the first time by setting edgeTo[w] to v.In other words,
+v-w is the last edge on the known path from s to w. The result of search is a tree rooted at the source; edgeTo[] is a parent-link representation of that tree.
+<a href="">DepthFirstPaths.java</a> implement this approach.</p>
+<h3>Breadth-first search</h3>
+<p>Depth-first search finds some pat from a source verrex s to a target vertex v. We are often interested in finding the shortest such
+path(one with a minimal number of edges). Breadth-first search is a classic method based on this goal. To find a shortest path from
+s to v, we start at s and check for v among all the vertices that we can reach by following one edge, then we check for v among all the vertices
+that we can reach from s by following two edges,and so forth.</p>
+<p>To implement this strategy, we maintain a queue of all vertices that have been marked but whose adjacency lists have not been checked. we
+put the source vertex on the queue,then perform the following steps until the queue is empty:</p>
 <ul>
 <li>remove the next vertex v from the queue</li>
-<li>put onto the queue all unmarked vertices that are adjacent to v and mark them.<br><a href="">BreadthFirstPaths.java</a> is an implememntation of the Paths API that finds a shotest paths. It relies on <a href="">Queue.java</a> for the FIFO queue.</li>
+<li>put onto the queue all unmarked vertices that are adjacent to v and mark them.
+<a href="">BreadthFirstPaths.java</a> is an implememntation of the Paths API that finds a shotest paths. It relies on <a href="">Queue.java</a> for the FIFO queue.</li>
 </ul>
-<h3 id="联通图"><a href="#联通图" class="headerlink" title="联通图"></a>联通图</h3><p><a href="">Connected components</a>. Our next direct application of depth-first search is to find the connected components of a graph. Recall from Section 1.5 that “is connected to” is an equivalence relation that divides the vertices into equivalence classes (the connected components).<br>For this task, we define the following API: </p>
+<h3>联通图</h3>
+<p><a href="">Connected components</a>. Our next direct application of depth-first search is to find the connected components of a graph. Recall from Section 1.5 that &quot;is connected to&quot; is an equivalence relation that divides the vertices into equivalence classes (the connected components).
+For this task, we define the following API:</p>
 <p><img src="/pict/cc-api.png" alt=""></p>
-<h3 id="Symbol-graphs"><a href="#Symbol-graphs" class="headerlink" title="Symbol graphs."></a>Symbol graphs.</h3><p>Typical applications involve processing graphs using strings, not integer indices, to define and refer to vertices.<br>To accommodate such applications, we define an input format with the following properties: </p>
+<h3>Symbol graphs.</h3>
+<p>Typical applications involve processing graphs using strings, not integer indices, to define and refer to vertices.
+To accommodate such applications, we define an input format with the following properties:</p>
 <ul>
 <li>Vertex names are strings.</li>
 <li>A specified delimiter separates vertex names (to allow for the possibility of spaces in names).</li>
-<li>Each line represents a set of edges, connecting the first vertex name on the line to each of the other vertices named on the line. </li>
+<li>Each line represents a set of edges, connecting the first vertex name on the line to each of the other vertices named on the line.</li>
 </ul>
-<p>The input file <a href="https://algs4.cs.princeton.edu/41graph/routes.txt" target="_blank" rel="noopener">routes.txt</a> is a small example. </p>
-<p><img src="/pict/routes.png" alt=""><br>The input file <a href="https://algs4.cs.princeton.edu/41graph/movies.txt" target="_blank" rel="noopener">movies.txt</a> is a larger example from the Internet Movie Database.<br>This file consists of lines listing a movie name followed by a list of the performers in the movie. </p>
+<p>The input file <a href="https://algs4.cs.princeton.edu/41graph/routes.txt" target="_blank" rel="noopener">routes.txt</a> is a small example.</p>
+<p><img src="/pict/routes.png" alt="">
+The input file <a href="https://algs4.cs.princeton.edu/41graph/movies.txt" target="_blank" rel="noopener">movies.txt</a> is a larger example from the Internet Movie Database.
+This file consists of lines listing a movie name followed by a list of the performers in the movie.</p>
 <p><img src="/pict/movies.png" alt=""></p>
-<p>API. The following API allows us to use our graph-processing routines for such input files. </p>
+<p>API. The following API allows us to use our graph-processing routines for such input files.</p>
 <p><img src="/pict/symbol-graph-api.png" alt=""></p>
 <p>Implementation. <a href="https://algs4.cs.princeton.edu/41graph/SymbolGraph.java.html" target="_blank" rel="noopener">SymbolGraph.java</a> implements the API. It builds three data structures:</p>
 <pre><code>A symbol table st with String keys (vertex names) and int values (indices)
@@ -422,80 +1845,170 @@ prob (&apos;Jack&apos;, &apos;Are&apos;)
 An array keys[] that serves as an inverted index, giving the vertex 
 name associated with each integer index
 A Graph G built using the indices to refer to vertices
-</code></pre><p><img src="/pict/symbol-graph.png" alt=""></p>
+</code></pre>
+<p><img src="/pict/symbol-graph.png" alt=""></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://niuwenchen.github.io/2018/01/15/undirect-graph/" data-id="cjciuvurc000bo4vhp4r605hf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algs/">algs</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-2-Regular-expressions-Text-normalization-Edit-Distance" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/" class="article-date">
-  <time datetime="2018-01-12T08:05:19.000Z" itemprop="datePublished">2018-01-12</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/">2 Regular expressions,Text normalization,Edit Distance</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/" itemprop="url">2 Regular expressions,Text normalization,Edit Distance</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-12T16:05:19+08:00">
+                2018-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h3 id="2-1-Regular-Expressions"><a href="#2-1-Regular-Expressions" class="headerlink" title="2.1 Regular Expressions"></a>2.1 Regular Expressions</h3><p>描述一些正则表达式的写法以及demo，因为学不会，所以不写了。</p>
+      
+
+      
+        
+          
+            <h3>2.1 Regular Expressions</h3>
+<p>描述一些正则表达式的写法以及demo，因为学不会，所以不写了。</p>
 <pre><code>如下是一些使用RE进行机器翻译的过程
 
-s/.* I&apos;M (depressed|sad) .*/I AM SORRY TO HEAR YOU ARE\1/
+s/.* I'M (depressed|sad) .*/I AM SORRY TO HEAR YOU ARE\1/
 s/.* I AM (depressed|sad) .*/WHY DO YOU THINK YOU ARE \1/
 s/.* all .*/IN WHAY WAY/
 s/.* always .*/ CAN YOU THINK OF A SPECIFIC EXAMPLE/
 
 因为多种替换方式的存在，这些候选集翻译需要被评分并且排序
-</code></pre><h3 id="Words-and-Corpora-资料"><a href="#Words-and-Corpora-资料" class="headerlink" title="Words and Corpora(资料)"></a>Words and Corpora(资料)</h3><pre><code>lemmatization(词形还原)
+</code></pre>
+<h3>Words and Corpora(资料)</h3>
+<pre><code>lemmatization(词形还原)
 tokens,即文本的词总数 
 types, 即文本的不同词形总数
-</code></pre><h3 id="Text-Normalization"><a href="#Text-Normalization" class="headerlink" title="Text Normalization"></a>Text Normalization</h3><pre><code>自然语言处理过程中，文本需要被正规化
+</code></pre>
+<h3>Text Normalization</h3>
+<pre><code>自然语言处理过程中，文本需要被正规化
 1. 分割/标记单词
 2. 规范单词格式
 3. 分隔句子
-</code></pre><p>Unix 工具</p>
+</code></pre>
+<p>Unix 工具</p>
 <pre><code>Shapespare  sh.txt
-tr -sc &apos;A-Za-z&apos; &apos;\n&apos; &lt; sh.txt
+tr -sc 'A-Za-z' '\n' &lt; sh.txt
 分隔句子，按照单词进行分隔
-tr -sc &apos;A-Za-z&apos; &apos;\n&apos; &lt;sh.txt |sort | uniq -c
-</code></pre><p>单词标记规范</p>
+tr -sc 'A-Za-z' '\n' &lt;sh.txt |sort | uniq -c
+</code></pre>
+<p>单词标记规范</p>
 <pre><code>tokenization: 分隔标记
 normalization: 将单词转换成标准格式
-clitic: 附着词素we&apos;re --&gt; we are
+clitic: 附着词素we're --&gt; we are
 
 Penn Treebank tokenization: 标准分隔
 
-Input: &quot;The San Francisco-based restaurant,&quot;they said,&quot;doesn&apos;t charge $10&quot;.
-Output: &quot;/The/San/Fransisco-based/restaruant/,/&quot;/they/said/,/&quot;/does/n&apos;t/charge/$/10/&quot;/.
+Input: &quot;The San Francisco-based restaurant,&quot;they said,&quot;doesn't charge $10&quot;.
+Output: &quot;/The/San/Fransisco-based/restaruant/,/&quot;/they/said/,/&quot;/does/n't/charge/$/10/&quot;/.
 
 Case folding 
 
 在实际中，tokenization/normalization 使用基于RE的确定算法。
-</code></pre><p>word Segmentation in chinses: MaxMatch 算法</p>
+</code></pre>
+<p>word Segmentation in chinses: MaxMatch 算法</p>
 <pre><code>greedy search: maximum matching, MaxMatch
 
 
@@ -503,12 +2016,12 @@ Case folding
 function MaxMatch(sentence,dictionary D) returns word sequence W
 
 if sentence if empty
-    return empty list
+	return empty list
 for i &lt;- length(sentence) downto l
-    firstword = first i chars of sentence
-    remainder = rest of sentence
-    if InDictionary(firstword,D)
-        return list(firstword,MaxMatch(remainder,dictionary))
+	firstword = first i chars of sentence
+	remainder = rest of sentence
+	if InDictionary(firstword,D)
+		return list(firstword,MaxMatch(remainder,dictionary))
 
 # no word was found , so make a one-character word
 firstword = first char of sentence
@@ -520,19 +2033,25 @@ Output: 他   特别   喜欢    北京烤鸭
 
 可以通过word error rate 度量准确度
 MaxMatch在汉语中表现良好，但是对于未登录词的效果就比较一般了。
-</code></pre><p>Lemmatization and Stemming (词干)</p>
+</code></pre>
+<p>Lemmatization and Stemming (词干)</p>
 <p>The Porter Stemmer（波特词干分析器）</p>
 <pre><code>ATIONAL--&gt;ATE(relational --&gt; relate)
 ING--&gt; e  motoring --&gt;moitor
 SSES----&gt;SS (grasses --&gt; grass)
-</code></pre><p>sentence segmentation</p>
-<h3 id="Minimum-Edit-Distance"><a href="#Minimum-Edit-Distance" class="headerlink" title="Minimum Edit Distance"></a>Minimum Edit Distance</h3><p>Edit distance 衡量字符串的相似性。</p>
+</code></pre>
+<p>sentence segmentation</p>
+<h3>Minimum Edit Distance</h3>
+<p>Edit distance 衡量字符串的相似性。</p>
 <pre><code>最小编辑距离定义为最小编辑操作(插入，删除，替换)
-</code></pre><p><img src="/img/nlp01.png" alt=""></p>
+</code></pre>
+<p><img src="/img/nlp01.png" alt=""></p>
 <pre><code>Levenshtein距离是最简单的权重因子，可以衡量每个操作的操作。
-</code></pre><p>Minimum Edit Distance Algorithm</p>
+</code></pre>
+<p>Minimum Edit Distance Algorithm</p>
 <pre><code>bynamic programming: Viterbi and fordwar algorithms
-</code></pre><p><img src="/img/nlp02.png" alt=""></p>
+</code></pre>
+<p><img src="/img/nlp02.png" alt=""></p>
 <pre><code>source String: X  n
 target String: Y  m
 D(i,j): X[1..i] and Y[1...j]
@@ -542,14 +2061,17 @@ D[i,j]=min{D[i-1,j]+del-cost(source[i]),D[i,j-1]+ins-cost(target[j]),D[i-1,j-1]+
 ins-cost(*)=del-cost(*)=1 
 
 D[i,j]=min{D[i-1,j]+1,D[i,j-1]+1,D[i-1,j-1]+{2: if source[i]!=target[j]; 0: if source[i]= tagrte[j]}}
-</code></pre><p><img src="/img/nlp.png" alt=""></p>
+</code></pre>
+<p><img src="/img/nlp.png" alt=""></p>
 <p><a href="http://www.dreamxu.com/books/dsa/dp/edit-distance.html" target="_blank" rel="noopener">http://www.dreamxu.com/books/dsa/dp/edit-distance.html</a></p>
 <p><a href="https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm" target="_blank" rel="noopener">https://people.cs.pitt.edu/~kirk/cs1501/Pruhs/Spring2006/assignments/editdistance/Levenshtein%20Distance.htm</a></p>
-<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>主要介绍基本工具：</p>
+<h3>Summary</h3>
+<p>主要介绍基本工具：</p>
 <pre><code>RE
 text normalization: word segmentation/normalization/sentence segmentation/stem
 minimum edit distance:
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>The regular expression language is a powerful tool for pattern-matching</li>
 <li>Basic oprtations in regular expressions include concatenation of symbols, disjunction of symbols,counters ,anchors</li>
 <li>Word tokenization and normalization are generally done by cascades of simple regular expressions or finite automata</li>
@@ -557,222 +2079,627 @@ minimum edit distance:
 <li>The minimum edit distance between two strings is the minimum number of operations is takes to edit one into other. Minimum edit distance can be computed by dynamic programming,which also results in an alignment of the two strings.</li>
 </ul>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://niuwenchen.github.io/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/" data-id="cjciuvuq90004o4vhdfan8elc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-Introduction" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/12/Introduction/" class="article-date">
-  <time datetime="2018-01-12T03:32:58.000Z" itemprop="datePublished">2018-01-12</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/12/Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/Introduction/">Introduction</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/12/Introduction/" itemprop="url">Introduction</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-12T11:32:58+08:00">
+                2018-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="Introudction"><a href="#Introudction" class="headerlink" title="Introudction"></a>Introudction</h2><p>computer speech and language processing or human language technology or natural language processing or computational linguistics.</p>
-<h3 id="1-1-Knowledge-In-Speech-And-language-Processing"><a href="#1-1-Knowledge-In-Speech-And-language-Processing" class="headerlink" title="1.1  Knowledge In Speech And language Processing"></a>1.1  Knowledge In Speech And language Processing</h3><p>HAL must use structural knowledge to properly string together the words that consitute its response. For example,HAL must know that the following sequence of words will not make sense to Dave, despite the fact that it contains precisely the same set of words as the original.</p>
-<pre><code>I&apos;am I do, sorry that afraid Dave I can&apos;t
-</code></pre><p>The knowledge needed to order and group words together comes under the hedaing of syntax(句法)</p>
+      
+
+      
+        
+          
+            <h2>Introudction</h2>
+<p>computer speech and language processing or human language technology or natural language processing or computational linguistics.</p>
+<h3>1.1  Knowledge In Speech And language Processing</h3>
+<p>HAL must use structural knowledge to properly string together the words that consitute its response. For example,HAL must know that the following sequence of words will not make sense to Dave, despite the fact that it contains precisely the same set of words as the original.</p>
+<pre><code>I'am I do, sorry that afraid Dave I can't
+</code></pre>
+<p>The knowledge needed to order and group words together comes under the hedaing of syntax(句法)</p>
 <pre><code>Now consider a question awsering dealing with the following question:
 How much Chinese silk was exported to Western Europe by the end of the 18th century?
-</code></pre><p>we need lexical semantics(词汇语义学)</p>
+</code></pre>
+<p>we need lexical semantics(词汇语义学)</p>
 <p>To summarize, engaging in complex language behavior various kinds of knowledge of language:</p>
-<p>##</p>
+<h2></h2>
 <ul>
 <li>Phonetics and Phonology- knowledge about linguistic sounds(语音学和音韵学-关于语言声音的知识)</li>
 <li>Morphology - knowledge of the meaningful components of words(形态学-词汇意义成分的知识 )</li>
 <li>Syntax- knowledge of the structural relationships between words(句法-词汇结构关系的知识)</li>
 <li>Semantics - knowledge of meaning(语义学——意义的知识)</li>
 <li>Pragmatics - knowledge of the relationship of meaning to the goals and intentions of the speaker(语用学——理解意义与说话者意图和意图的关系)</li>
-<li>Discource - knowledge about linguistic units larger than a single utterance（话语<br>##</li>
+<li>Discource - knowledge about linguistic units larger than a single utterance（话语</li>
 </ul>
-<p>###1.2 Ambiguity （歧义）<br>we say some input is <strong><em>ambiguous</em></strong> if there are multiple alternative linguistic structures that can be built for it.</p>
-<h3 id="1-3-Models-and-algorithms"><a href="#1-3-Models-and-algorithms" class="headerlink" title="1.3 Models and algorithms"></a>1.3 Models and algorithms</h3><p>Among the most important models are <strong>State Machines,rule systems,logic,probabilistic models, vector-space models</strong><br>…..</p>
-<h3 id="1-4-Language-Thought-and-Understanding"><a href="#1-4-Language-Thought-and-Understanding" class="headerlink" title="1.4 Language,Thought,and Understanding"></a>1.4 Language,Thought,and Understanding</h3><h3 id="1-5-The-State-of-the-Art"><a href="#1-5-The-State-of-the-Art" class="headerlink" title="1.5 The State of the Art"></a>1.5 The State of the Art</h3><h3 id="1-6-Some-Brief-History"><a href="#1-6-Some-Brief-History" class="headerlink" title="1.6  Some Brief History"></a>1.6  Some Brief History</h3><p>…..</p>
+<h2></h2>
+<p>###1.2 Ambiguity （歧义）
+we say some input is <strong><em>ambiguous</em></strong> if there are multiple alternative linguistic structures that can be built for it.</p>
+<h3>1.3 Models and algorithms</h3>
+<p>Among the most important models are <strong>State Machines,rule systems,logic,probabilistic models, vector-space models</strong>
+.....</p>
+<h3>1.4 Language,Thought,and Understanding</h3>
+<h3>1.5 The State of the Art</h3>
+<h3>1.6  Some Brief History</h3>
+<p>.....</p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://niuwenchen.github.io/2018/01/12/Introduction/" data-id="cjciuvuq00003o4vhjyjxpcl9" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+      
 
   
-    <article id="post-README-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/11/README-md/" class="article-date">
-  <time datetime="2018-01-11T10:46:40.000Z" itemprop="datePublished">2018-01-11</time>
-</a>
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/11/README-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/11/README-md/">说明</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/11/README-md/" itemprop="url">说明</a></h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-11T18:46:40+08:00">
+                2018-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>根据《speech and language processing 2》 和第三版样本进行学习。</p>
+      
+
+      
+        
+          
+            <p>根据《speech and language processing 2》 和第三版样本进行学习。</p>
 <p><a href="https://web.stanford.edu/~jurafsky/slp3/" target="_blank" rel="noopener">第三版链接</a></p>
 <p><a href="http://www.cs.cmu.edu/afs/cs/user/tbergkir/www/11711fa17/" target="_blank" rel="noopener">NLP算法</a></p>
 
+          
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://niuwenchen.github.io/2018/01/11/README-md/" data-id="cjciuvupf0001o4vhzqv8hsn4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li></ul>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
     </footer>
   </div>
   
-</article>
+  
+  
+  </article>
 
+
+    
+  </section>
 
   
 
 
-</section>
+          </div>
+          
+
+
+          
+
+        </div>
         
-          <aside id="sidebar">
+          
   
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/NLP/">NLP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algs/">algs</a></li></ul>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
 
-
-  
+  <aside id="sidebar" class="sidebar">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/NLP/" style="font-size: 20px;">NLP</a> <a href="/tags/algs/" style="font-size: 10px;">algs</a>
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">Tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
     </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">归档</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul>
-    </div>
-  </div>
+  </aside>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/01/17/3-N-grams/">3_N-grams</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/15/undirect-graph/">Undirect graph</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/12/2-Regular-expressions-Text-normalization-Edit-Distance/">2 Regular expressions,Text normalization,Edit Distance</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/12/Introduction/">Introduction</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/11/README-md/">说明</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
-      <footer id="footer">
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 JackNiu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
+    
 
   </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
 </body>
 </html>

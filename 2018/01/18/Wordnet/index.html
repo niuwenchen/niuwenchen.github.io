@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ALGS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="WordNet介绍 1.1 简介 WordNet是一个由普林斯顿大学认识科学实验室在心理学教授乔治·A·米勒的指导下建立和维护的大型的英语词典，WordNet的开发有两个目的： 1. 它既是一个字典，又是一个辞典，它比单纯的辞典或词典都更加易于使用。 2. 支持自动的文本分析以及人工智能应用。  WordNet 将英语的名词、动词、形容词、和副词组织为(同义词网络)Synsets，每一个Synse">
+<meta name="keywords" content="ALGS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wordnet">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/01/18/Wordnet/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="WordNet介绍 1.1 简介 WordNet是一个由普林斯顿大学认识科学实验室在心理学教授乔治·A·米勒的指导下建立和维护的大型的英语词典，WordNet的开发有两个目的： 1. 它既是一个字典，又是一个辞典，它比单纯的辞典或词典都更加易于使用。 2. 支持自动的文本分析以及人工智能应用。  WordNet 将英语的名词、动词、形容词、和副词组织为(同义词网络)Synsets，每一个Synse">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-01-18T02:55:12.811Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wordnet">
+<meta name="twitter:description" content="WordNet介绍 1.1 简介 WordNet是一个由普林斯顿大学认识科学实验室在心理学教授乔治·A·米勒的指导下建立和维护的大型的英语词典，WordNet的开发有两个目的： 1. 它既是一个字典，又是一个辞典，它比单纯的辞典或词典都更加易于使用。 2. 支持自动的文本分析以及人工智能应用。  WordNet 将英语的名词、动词、形容词、和副词组织为(同义词网络)Synsets，每一个Synse">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/01/18/Wordnet/"/>
+
+
+
+
+
+  <title>Wordnet | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/18/Wordnet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Wordnet</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-18T09:29:02+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2>WordNet介绍</h2>
+<h3>1.1 简介</h3>
+<p>WordNet是一个由普林斯顿大学认识科学实验室在心理学教授乔治·A·米勒的指导下建立和维护的大型的英语词典，WordNet的开发有两个目的：</p>
+<pre><code>1. 它既是一个字典，又是一个辞典，它比单纯的辞典或词典都更加易于使用。
+2. 支持自动的文本分析以及人工智能应用。
+</code></pre>
+<p>WordNet 将英语的名词、动词、形容词、和副词组织为(同义词网络)Synsets，每一个Synset表示一个基本的词汇概念，并在这些概念之间建立了包括同义关系（synonymy）、反义关系（antonymy） 、上下位关系（hypernymy &amp; hyponymy） 、部分关系（meronymy）等多种语义关系。</p>
+<h3>NLTK WordNet Interface</h3>
+<pre><code>from nltk.corpus import wordnet as wn
+</code></pre>
+<p><strong>Words</strong></p>
+<pre><code>Look up a word using synsets(); this function has an
+optional pos argument which lets you constrain the 
+part of speech of the word:
+
+&gt;&gt;&gt; wn.synsets('dog')
+[Synset('dog.n.01'), Synset('frump.n.01'), Synset('dog.n.03'), Synset('cad.n.01'),
+Synset('frank.n.02'), Synset('pawl.n.01'), Synset('andiron.n.01'), Synset('chase.v.01')]
+&gt;&gt;&gt; wn.synsets('dog', pos=wn.VERB)
+[Synset('chase.v.01')]
+
+The other parts of speech are NOUN, ADJ and ADV. A synset is identified with a 3-part name of the form: word.pos.nn:
+
+&gt;&gt;&gt; wn.synset('dog.n.01')
+Synset('dog.n.01')
+&gt;&gt;&gt; print(wn.synset('dog.n.01').definition())
+a member of the genus Canis (probably descended from the common wolf) that has been domesticated by man since prehistoric times; occurs in many breeds
+
+&gt;&gt;&gt; len(wn.synset('dog.n.01').examples())
+1
+&gt;&gt;&gt; print(wn.synset('dog.n.01').examples()[0])
+the dog barked all night
+&gt;&gt;&gt; wn.synset('dog.n.01').lemmas()
+[Lemma('dog.n.01.dog'), Lemma('dog.n.01.domestic_dog'), Lemma('dog.n.01.Canis_familiaris')](家犬)
+
+&gt;&gt;&gt; [str(lemma.name()) for lemma in wn.synset('dog.n.01').lemmas()]
+['dog', 'domestic_dog', 'Canis_familiaris']
+&gt;&gt;&gt; wn.lemma('dog.n.01.dog').synset()
+Synset('dog.n.01')
+
+The WordNet corpus reader gives access to the Open Multilingual WordNet, using ISO-639 language codes.
+
+&gt;&gt; sorted(wn.langs())
+['als', 'arb', 'cat', 'cmn', 'dan', 'eng', 'eus', 'fas','fin', 'fra', 'fre', 'glg', 'heb', 'ind', 'ita', 'jpn', 'nno','nob', 'pol', 'por', 'spa', 'tha', 'zsm']
+&gt;&gt;&gt; wn.synsets(b'\xe7\x8a\xac'.decode('utf-8'), lang='jpn')
+[Synset('dog.n.01'), Synset('spy.n.01')]
+&gt;&gt;&gt; wn.synset('spy.n.01').lemma_names('jpn')
+['\u3044\u306c', '\u307e\u308f\u3057\u8005', '\u30b9\u30d1	\u30a4', '\u56de\u3057\u8005',
+'\u56de\u8005', '\u5bc6\u5075', '\u5de5\u4f5c\u54e1', '\u5efb\u3057\u8005',
+'\u5efb\u8005', '\u63a2', '\u63a2\u308a', '\u72ac', '\u79d8\u5bc6\u635c\u67fb\u54e1',
+'\u8adc\u5831\u54e1', '\u8adc\u8005', '\u9593\u8005', '\u9593\u8adc', '\u96a0\u5bc6']
+&gt;&gt;&gt; wn.synset('dog.n.01').lemma_names('ita')
+['cane', 'Canis_familiaris']
+&gt;&gt;&gt; wn.lemmas('cane', lang='ita')
+[Lemma('dog.n.01.cane'), Lemma('hammer.n.01.cane'), Lemma('cramp.n.02.cane'),
+Lemma('bad_person.n.01.cane'), Lemma('incompetent.n.01.cane')]
+&gt;&gt;&gt; sorted(wn.synset('dog.n.01').lemmas('dan'))
+[Lemma('dog.n.01.hund'), Lemma('dog.n.01.k\xf8ter'),
+Lemma('dog.n.01.vovhund'), Lemma('dog.n.01.vovse')]
+&gt;&gt;&gt; sorted(wn.synset('dog.n.01').lemmas('por'))
+[Lemma('dog.n.01.cachorro'), Lemma('dog.n.01.c\xe3es'),
+Lemma('dog.n.01.c\xe3o'), Lemma('dog.n.01.c\xe3o')]
+&gt;&gt;&gt; dog_lemma = wn.lemma(b'dog.n.01.c\xc3\xa3o'.decode('utf-8'), lang='por')
+&gt;&gt;&gt; dog_lemma
+Lemma('dog.n.01.c\xe3o')
+&gt;&gt;&gt; dog_lemma.lang()
+'por'
+&gt;&gt;&gt; len(wordnet.all_lemma_names(pos='n', lang='jpn'))
+66027
+</code></pre>
+<h3>Synsets</h3>
+<pre><code>Synset: a set of synonyms that share a common meaning.
+&gt;&gt;&gt; dog = wn.synset('dog.n.01')
+&gt;&gt;&gt; dog.hypernyms()
+[Synset('canine.n.02'), Synset('domestic_animal.n.01')]
+&gt;&gt;&gt; dog.hyponyms()  # doctest: +ELLIPSIS
+[Synset('basenji.n.01'), Synset('corgi.n.01'), Synset('cur.n.01'), Synset('dalmatian.n.02'), ...]
+&gt;&gt;&gt; dog.member_holonyms()
+[Synset('canis.n.01'), Synset('pack.n.06')]
+&gt;&gt;&gt; dog.root_hypernyms()
+[Synset('entity.n.01')]
+&gt;&gt;&gt; wn.synset('dog.n.01').lowest_common_hypernyms(wn.synset('cat.n.01'))
+[Synset('carnivore.n.01')]
+</code></pre>
+<p>Each synset contains one or more lemmas, which represent a specific sense of a specific word.</p>
+<p>Note that some relations are defined by WordNet only over Lemmas:</p>
+<pre><code>&gt;&gt;&gt; good = wn.synset('good.a.01')
+&gt;&gt;&gt; good.antonyms()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'Synset' object has no attribute 'antonyms'
+&gt;&gt;&gt; good.lemmas()[0].antonyms()
+[Lemma('bad.a.01.bad')]
+
+good = wn.synset('good.a.01')
+good.lemmas()
+Out[40]: [Lemma('good.a.01.good')]
+good.lemmas()[0]
+Out[41]: Lemma('good.a.01.good')
+good.lemmas()[0].antonyms()  反义词
+Out[42]: [Lemma('bad.a.01.bad')]
+</code></pre>
+<h3>Lemmas</h3>
+<pre><code>eat= wn.lemma('eat.v.03.eat')
+Out[47]: Lemma('feed.v.06.eat')
+eat = wn.lemma('eat.v.03.eat')
+eat
+Out[49]: Lemma('feed.v.06.eat')
+
+print(eat.key())
+eat%2:34:02::
+</code></pre>
+<h3>Verb Frams</h3>
+<pre><code>&gt;&gt;&gt; wn.synset('think.v.01').frame_ids()
+[5, 9]
+&gt;&gt;&gt; for lemma in wn.synset('think.v.01').lemmas():
+...     print(lemma, lemma.frame_ids())
+...     print(&quot; | &quot;.join(lemma.frame_strings()))
+...
+Lemma('think.v.01.think') [5, 9]
+Something think something Adjective/Noun | Somebody think somebody
+Lemma('think.v.01.believe') [5, 9]
+Something believe something Adjective/Noun | Somebody believe somebody
+Lemma('think.v.01.consider') [5, 9]
+Something consider something Adjective/Noun | Somebody consider somebody
+Lemma('think.v.01.conceive') [5, 9]
+Something conceive something Adjective/Noun | Somebody conceive somebody
+</code></pre>
+<h3>Similarity</h3>
+<pre><code>dog = wn.synset('dog.n.01')
+cat = wn.synset('cat.n.01')
+hit = wn.synset('hit.v.01')
+slap = wn.synset('slap.v.01')
+dog.path_similarity(cat)
+Out[62]: 0.2
+hit.path_similarity(slap)
+Out[63]: 0.14285714285714285
+wn.path_similarity(hit, slap)
+Out[64]: 0.14285714285714285
+print(hit.path_similarity(slap, simulate_root=False))
+None
+</code></pre>
+<h3>HanLP 中的WordNet</h3>
+<pre><code>public WordNet(char[] charArray)
+按照句子的分析过程，每一个词都可能有引申。
+每一个词作为一个节点，其都是一个链表形式。
+头尾为B ,E
+
+刚开始所有的顶点都是空的，
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[]
+2:[]
+3:[]
+4:[]
+5:[]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+public WordNet(char[] charArray, List&lt;Vertex&gt; vertexList)
+初始构造，只是往里面添加了顶点，也就是为顶点链表添加节点的过程
+
+添加的过程是按照 初始句子中给出的所有顶点进行添加。
+
+商品和服务: 
+vertext[0].add(商)
+</code></pre>
+<p>GenerateWordNet 生成一元词网</p>
+<pre><code>按照上面的描述将所有的可以成词的词组成词网，具体过程就是查询词典
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+2:[WordNode{word='品', realWord='品', attribute=ng 563 }]
+3:[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+4:[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+5:[WordNode{word='务', realWord='务', attribute=vg 209 }]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+里面的顶点是:
+按照句子的长度，分成length个顶点，每个顶点都是一个链表
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+[WordNode{word='品', realWord='品', attribute=ng 563 }]
+[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+[WordNode{word='务', realWord='务', attribute=vg 209 }]
+[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+词网生成。
+</code></pre>
+<p>开始分词</p>
+<pre><code>首先建立vertex之间的联系，就是首尾相连，之前是所有的顶点各自为一个list，现在是一个总的list。每个vertex之间多了约束
+
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }, WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }, WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ALGS/" rel="tag"># ALGS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/17/3-N-grams/" rel="next" title="3_N-grams">
+                <i class="fa fa-chevron-left"></i> 3_N-grams
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/18/维特比分词/" rel="prev" title="维特比分词">
+                维特比分词 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">Tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">WordNet介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">NLTK WordNet Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">Synsets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.4.</span> <span class="nav-text">Lemmas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.5.</span> <span class="nav-text">Verb Frams</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.6.</span> <span class="nav-text">Similarity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.7.</span> <span class="nav-text">HanLP 中的WordNet</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
