@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DL," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="谷歌机器翻译系统 机器翻译是一个端对端学习方法。NMT系统在训练和翻译推断的方面都很昂贵，有时候需要很大的数据和很大的模型。GNMT模型包含8个encoder和8个decoder的LSTM网络，使用residual连接和attention连接在encoder和decoder之间。为了提高对稀有单词的处理，将单词分成一个有限的通用sub-word units(wordpieces)。 This me">
+<meta name="keywords" content="DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Attention Model">
-<meta property="og:url" content="http://niuwenchen.github.io/2018/02/02/Attention-Model/index.html">
+<meta property="og:title" content="Google&#39;s Neural Machine Translation System">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/02/02/Google-s-Neural-Machine-Translation-System/index.html">
 <meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="谷歌机器翻译系统 机器翻译是一个端对端学习方法。NMT系统在训练和翻译推断的方面都很昂贵，有时候需要很大的数据和很大的模型。GNMT模型包含8个encoder和8个decoder的LSTM网络，使用residual连接和attention连接在encoder和decoder之间。为了提高对稀有单词的处理，将单词分成一个有限的通用sub-word units(wordpieces)。 This me">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-02-02T05:59:05.066Z">
+<meta property="og:updated_time" content="2018-02-26T03:48:46.936Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Attention Model">
+<meta name="twitter:title" content="Google&#39;s Neural Machine Translation System">
+<meta name="twitter:description" content="谷歌机器翻译系统 机器翻译是一个端对端学习方法。NMT系统在训练和翻译推断的方面都很昂贵，有时候需要很大的数据和很大的模型。GNMT模型包含8个encoder和8个decoder的LSTM网络，使用residual连接和attention连接在encoder和decoder之间。为了提高对稀有单词的处理，将单词分成一个有限的通用sub-word units(wordpieces)。 This me">
 
 
 
@@ -116,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://niuwenchen.github.io/2018/02/02/Attention-Model/"/>
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/02/02/Google-s-Neural-Machine-Translation-System/"/>
 
 
 
 
 
-  <title>Attention Model | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Google's Neural Machine Translation System | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -229,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Attention-Model/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Google-s-Neural-Machine-Translation-System/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -246,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Attention Model</h1>
+          <h1 class="post-title" itemprop="name headline">Google's Neural Machine Translation System</h1>
         
 
         <div class="post-meta">
@@ -258,7 +262,7 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T13:59:04+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T11:27:18+08:00">
                 2018-02-02
               </time>
             
@@ -296,7 +300,18 @@
       
 
       
-        
+        <h2>谷歌机器翻译系统</h2>
+<p>机器翻译是一个端对端学习方法。NMT系统在训练和翻译推断的方面都很昂贵，有时候需要很大的数据和很大的模型。GNMT模型包含8个encoder和8个decoder的LSTM网络，使用residual连接和attention连接在encoder和decoder之间。为了提高对稀有单词的处理，将单词分成一个有限的通用sub-word units(wordpieces)。</p>
+<p>This method provides a good balance between the flexibility of &quot;character&quot;-delimited models and the efficiency of &quot;word&quot;-delimited models,naturally haandles translation of rare words,and ultimately improves the overall acuracy of the system.</p>
+<p>Our beam search technique employs a length-normalization procedure and uses a coverage penalty,which encourages generation of an output sentence that is most likely to cover all the words in the source sentence.</p>
+<p>To directly optimize the translation BLEU scores, we consider refining the modlels by using reinforcement learning, but we found that the improvment in the BLEU scores did not reflect in the human evaluation.</p>
+<p>On the WMT'14 English-to-French and English-to-German benchmarks,GN&lt;T achieves competitive results to start-of-the-art.</p>
+<p>Using a human side-by-side evaluation on a set of isolated simple sentences, it reduces translation errors b an average 60% compared to Google's phrased-based production system</p>
+<h2>1 Introduction</h2>
+<p>Its architecture typically consists of two recurrent neural networks(RNNS),one to consume the input text sequence and one to generate translated output text. NMT is often accompanied by an attention mechanism which helps it cope effectively tirh long input sequences.</p>
+<h2>2 Realted Work</h2>
+<h2>3 Model Architecture</h2>
+
       
     </div>
     
@@ -311,6 +326,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+        </div>
+      
 
       
       
@@ -320,8 +341,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/02/Google-s-Neural-Machine-Translation-System/" rel="next" title="Google's Neural Machine Translation System">
-                <i class="fa fa-chevron-left"></i> Google's Neural Machine Translation System
+              <a href="/2018/01/31/8-Neural-Networks-and-Neural/" rel="next" title="8 Neural Networks and Neural">
+                <i class="fa fa-chevron-left"></i> 8 Neural Networks and Neural
               </a>
             
           </div>
@@ -330,8 +351,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/02/Seq2Seq基本模型/" rel="prev" title="Seq2Seq基本模型">
-                Seq2Seq基本模型 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/02/Attention-Model/" rel="prev" title="Attention Model">
+                Attention Model <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -384,8 +405,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -436,6 +466,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">谷歌机器翻译系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">2 Realted Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">3 Model Architecture</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
