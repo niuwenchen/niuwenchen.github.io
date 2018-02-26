@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HanLP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="分词技术 HanLP 中的WordNet public WordNet(char[] charArray) 按照句子的分析过程，每一个词都可能有引申。 每一个词作为一个节点，其都是一个链表形式。 头尾为B ,E  刚开始所有的顶点都是空的， 0:[WordNode{word=&apos;始##始&apos;, realWord=&apos; &apos;, attribute=begin 2514605 }] 1:[] 2:[] 3:[">
+<meta name="keywords" content="HanLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hanlp分词技术">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/02/05/Hanlp分词技术/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="分词技术 HanLP 中的WordNet public WordNet(char[] charArray) 按照句子的分析过程，每一个词都可能有引申。 每一个词作为一个节点，其都是一个链表形式。 头尾为B ,E  刚开始所有的顶点都是空的， 0:[WordNode{word=&apos;始##始&apos;, realWord=&apos; &apos;, attribute=begin 2514605 }] 1:[] 2:[] 3:[">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://niuwenchen.github.io/img/hanlp_0.png">
+<meta property="og:updated_time" content="2018-02-09T05:41:54.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hanlp分词技术">
+<meta name="twitter:description" content="分词技术 HanLP 中的WordNet public WordNet(char[] charArray) 按照句子的分析过程，每一个词都可能有引申。 每一个词作为一个节点，其都是一个链表形式。 头尾为B ,E  刚开始所有的顶点都是空的， 0:[WordNode{word=&apos;始##始&apos;, realWord=&apos; &apos;, attribute=begin 2514605 }] 1:[] 2:[] 3:[">
+<meta name="twitter:image" content="http://niuwenchen.github.io/img/hanlp_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/02/05/Hanlp分词技术/"/>
+
+
+
+
+
+  <title>Hanlp分词技术 | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/Hanlp分词技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hanlp分词技术</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T23:14:50+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2>分词技术</h2>
+<h3>HanLP 中的WordNet</h3>
+<pre><code>public WordNet(char[] charArray)
+按照句子的分析过程，每一个词都可能有引申。
+每一个词作为一个节点，其都是一个链表形式。
+头尾为B ,E
+
+刚开始所有的顶点都是空的，
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[]
+2:[]
+3:[]
+4:[]
+5:[]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+public WordNet(char[] charArray, List&lt;Vertex&gt; vertexList)
+初始构造，只是往里面添加了顶点，也就是为顶点链表添加节点的过程
+
+添加的过程是按照 初始句子中给出的所有顶点进行添加。
+
+商品和服务: 
+vertext[0].add(商)
+</code></pre>
+<p>GenerateWordNet 生成一元词网</p>
+<pre><code>按照上面的描述将所有的可以成词的词组成词网，具体过程就是查询词典
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+2:[WordNode{word='品', realWord='品', attribute=ng 563 }]
+3:[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+4:[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+5:[WordNode{word='务', realWord='务', attribute=vg 209 }]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+里面的顶点是:
+按照句子的长度，分成length个顶点，每个顶点都是一个链表
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+[WordNode{word='品', realWord='品', attribute=ng 563 }]
+[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+[WordNode{word='务', realWord='务', attribute=vg 209 }]
+[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+词网生成。
+</code></pre>
+<p>开始分词</p>
+<pre><code>首先建立vertex之间的联系，就是首尾相连，之前是所有的顶点各自为一个list，现在是一个总的list。每个vertex之间多了约束
+
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }, WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }, WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+</code></pre>
+<p>上面是一些基本的介绍过程，下面结合具体的分词算法进行分析</p>
+<h2>分词算法</h2>
+<pre><code> List&lt;Term&gt; termList = HanLP.segment(&quot;南京市长江大桥&quot;);
+ System.out.println(termList);
+
+return new ViterbiSegment();   // Viterbi分词器是目前效率和效果的最佳平衡
+</code></pre>
+<p>Viterbi</p>
+<p><img src="/img/hanlp_0.png" alt=""></p>
+<pre><code>best_score[0]=0
+for each node in the graph(ascending order)
+	best_score[node] = inf
+	for each incoming edge of node:
+		score = best_score[edge.prev_node]+ edge.score
+		if score &lt; best_score[node]
+			best_score[node] = score
+			best_edge[node]=edge
+
+最后得出的
+best_score =(0.0,2.5,1.4,3.7) 是每一个节点的分数
+best_edge = (null, e1,e2,e5),以node为准，进入这个节点的边
+
+Backward Step
+
+best_path=[]
+next_edge = best_edge[best_edge.length -1]
+while next_edge !=NULL
+	add next_edge to best_path
+	next_edge = best_edge[next_edgee.prev_node]
+reverse best_path
+
+best_path=[e2,e5]
+</code></pre>
+<p><a href="http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf" target="_blank" rel="noopener">http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf</a></p>
+<pre><code>private static  List&lt;Vertex&gt; viterbi(WordNet wordNet)
+{
+    LinkedList&lt;Vertex&gt; nodes[] = wordNet.getVertexes();
+    LinkedList&lt;Vertex&gt; vertexList = new LinkedList&lt;&gt;();
+    for(Vertex node : nodes[1])
+    {
+        // 更新初始节点到首节点的联系。其他的不用更新吗
+        node.updateFrom(nodes[0].getFirst());
+    }
+    for (int i = 1; i &lt; nodes.length - 1; ++i)
+    {
+        LinkedList&lt;Vertex&gt; nodeArray = nodes[i];
+        if (nodeArray == null) continue;
+        for (Vertex node : nodeArray)
+        {
+            if (node.from == null) continue;
+            for (Vertex to : nodes[i + node.realWord.length()])
+            {
+//                    double weight = from.weight + MathTools.calculateWeight(from, this);
+//                    if (this.from == null || this.weight &gt; weight)
+//                    {
+//                        this.from = from;
+//                        this.weight = weight;
+//                    }
+                to.updateFrom(node);
+            }
+        }
+    }
+    System.out.println(&quot; 这里应该有一个best_score, 和best_path, 然后从backward上寻找最佳路径&quot; +
+            &quot;forward 方式已经更新了前后连接方式&quot;);
+    Vertex from = nodes[nodes.length - 1].getFirst();
+    System.out.println(&quot;from:0 &quot;+from);
+    while (from != null)
+    {
+        vertexList.addFirst(from);
+        from = from.from;
+        System.out.println(&quot;from:1 &quot;+from);
+    }
+    return vertexList;
+}
+</code></pre>
+<p>根据前向算法计算best_score和best_path,然后根据后向算法计算best_path,注意 Viterbi算法一定是按照node来进行算法的持续，不是边</p>
+<p>NLP分词</p>
+<pre><code>List&lt;Term&gt; termList = NLPTokenizer.segment(&quot;中国科学院计算技术研究所的宗成庆教授正在教授自然语言处理课程&quot;);
+System.out.println(termList);
+
+
+public static final Segment SEGMENT = HanLP.newSegment().enableNameRecognize(true).enableTranslatedNameRecognize(true)
+        .enableJapaneseNameRecognize(true).enablePlaceRecognize(true).enableOrganizationRecognize(true)
+        .enablePartOfSpeechTagging(true);
+
+
+
+NLP分词实际上也是HMM分词，只是增加了全部命名实体识别和词性标注过程，速度比较慢，并且有误识别的情况。
+</code></pre>
+<p>索引分词</p>
+<pre><code>索引分词 IndexTokenizer 是面向搜索引擎的分词器，能够对长词全切分，另外通过 term.offset 可以获取单词在文本中的偏移量。调用方法如下:
+
+	List&lt;Term&gt; termList = IndexTokenizer.segment(&quot;南京市长江大桥&quot;);
+    for (Term term : termList)
+    {
+        System.out.println(term + &quot; [&quot; + term.offset + &quot;:&quot; + (term.offset + term.word.length()) + &quot;]&quot;);
+    }
+南京市/ns [0:3]
+南京/ns [0:2]
+长江/ns [3:5]
+大桥/n [5:7]
+
+
+也是在HMM-Viterbi的基础上进行了其他扩展
+
+public static final Segment SEGMENT = HanLP.newSegment().enableIndexMode(true);
+</code></pre>
+<p>繁体分词</p>
+<pre><code>繁体分词 TraditionalChineseTokenizer 可以直接对繁体进行分词，输出切分后的繁体词语。调用方法如下:
+
+List&lt;Term&gt; termList = TraditionalChineseTokenizer.segment(&quot;大衛貝克漢不僅僅是名著名球員，球場以外，其妻為前辣妹合唱團成員維多利亞·碧咸，亦由於他擁有突出外表、百變髮型及正面的形象，以至自己品牌的男士香水等商品，及長期擔任運動品牌Adidas的代言人，因此對大眾傳播媒介和時尚界等方面都具很大的影響力，在足球圈外所獲得的認受程度可謂前所未見。&quot;);
+System.out.println(termList);
+</code></pre>
+<p>极速词典分词</p>
+<pre><code>极速分词是词典最长分词，速度极其快，精度一般。调用方法如下:
+
+使用的算法是 《Aho Corasick自动机结合DoubleArrayTrie极速多模式匹配》
+
+String text = &quot;江西鄱阳湖干枯，中国最大淡水湖变成大草原&quot;;
+System.out.println(SpeedTokenizer.segment(text));
+</code></pre>
+<p>N-最短路径分词</p>
+<pre><code>最短路分词器 NShortSegment 比最短路分词器( DijkstraSegment )慢，但是效果稍微好一些，对命名实体识别能力更强。调用方法如下:
+</code></pre>
+<p>Dijkstra分词</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HanLP/" rel="tag"># HanLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/05/专题推荐0205/" rel="next" title="专题推荐0205">
+                <i class="fa fa-chevron-left"></i> 专题推荐0205
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/9-Hidden-Markov-Models/" rel="prev" title="9 Hidden Markov Models">
+                9 Hidden Markov Models <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">Tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">分词技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">HanLP 中的WordNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">分词算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

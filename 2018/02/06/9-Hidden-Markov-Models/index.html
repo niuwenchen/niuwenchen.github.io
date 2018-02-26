@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NLP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="##Hidden Markov Models HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。 本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。 Markov Chains  Q=q1q2">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9 Hidden Markov Models">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="##Hidden Markov Models HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。 本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。 Markov Chains  Q=q1q2">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_0.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_1.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_2.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_3.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_4.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/01.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_5.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/02.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_6.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/03.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/04.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_7.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_8.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_9.png">
+<meta property="og:image" content="http://niuwenchen.github.io/img/nlp9_10.png">
+<meta property="og:updated_time" content="2018-02-06T07:57:59.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="9 Hidden Markov Models">
+<meta name="twitter:description" content="##Hidden Markov Models HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。 本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。 Markov Chains  Q=q1q2">
+<meta name="twitter:image" content="http://niuwenchen.github.io/img/nlp9_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/"/>
+
+
+
+
+
+  <title>9 Hidden Markov Models | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">9 Hidden Markov Models</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T10:59:53+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##Hidden Markov Models
+HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。</p>
+<p>本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。</p>
+<h2>Markov Chains</h2>
+<p><img src="/img/nlp9_0.png" alt=""></p>
+<pre><code>Q=q1q2....qN    a set of N states
+A=a01a02...an1...ann  a trainsation probability matrix A, each aij representing the probability of moving from state i to state j . 
+q0,qF 		a special start state and end state that are not associaed with observations
+</code></pre>
+<p><strong>Markov Assumption:</strong></p>
+<p>$$ P(q_{i}|q_1..q_{i-1})=P(q_{i}|q_{i-1})$$</p>
+<p>$$ \pi =\pi_{1},\pi_{2},..\pi_{N}$$ , an initial probability distribution over states.也就是说马尔科夫链从状态i开始，其余的状态将会是0.</p>
+<p>因此，state 1 是第一个状态，可以被表示为a01 或者$\pi_{1}$。每一个$\pi_{i}$代表概率 P(qi|START)。</p>
+<p><img src="/img/nlp9_1.png" alt=""></p>
+<h2>The Hidden Markoc Model</h2>
+<p><img src="/img/nlp9_2.png" alt=""></p>
+<p>HMM 有两个特殊的假设</p>
+<pre><code>马尔科夫假设，状态转移概率只依赖于前一个状态
+输出假设: 观察状态的概率只依赖与当前的隐含状态
+</code></pre>
+<p><img src="/img/nlp9_3.png" alt=""></p>
+<p>HMM三个问题, 隐马隐含状态序列，概率矩阵参数，输出序列</p>
+<ul>
+<li>Likelihood</li>
+<li>Decoding</li>
+<li>Learning</li>
+</ul>
+<h2>Likelihood Computation: The Forward Algorithm</h2>
+<p>第一个问题计算一个特定的观测序列的概率。比如，给出ice-cream eating HMM，那么序列 3 1 3 出现的概率是多少</p>
+<p>**Computing Likelihood **</p>
+<p>Given an HMM $\lambda =(A,B)$,and an observation sequence O,determine the likelihood $P(O|\lambda) $</p>
+<p>首先，对于HMM来说，每一个隐藏状态仅仅产生一个观测，因此，隐含状态和观测状态有相同的长度。</p>
+<p><img src="/img/nlp9_4.png" alt=""></p>
+<p>但是实际上，上面的计算过程都是在我们基于已经知道隐含状态序列的情况下进行的，实际上是不知道的。 我们需要计算的是ice-cream 出现的概率。</p>
+<p><img src="/img/01.png" alt=""></p>
+<p>按照上式的理解，如果需要一个结果，需要将整个遍历以便，一种可能的状态如下</p>
+<p>$$P(3 1 3,hot hot cold)=P(hot|start)\times P(hot|hot) \times P(cold|hot) \times P(3|hot) \times P(1|hot)\times P(3|cold)$$</p>
+<p>计算了一种假设的，那么对于一个序列可能出现的所有情况做一个总和</p>
+<p>$$P(3,1,3)=P(3,1,3,cold cold cold)+P(3 1 3,cold cold hot)+P(3 1 3,hot hot cold)+...$$</p>
+<p>对于一个HMM 有N个hidden 状态和T个观测状态，有$N^{T}$ 个可能的隐含序列。</p>
+<p>使用一种高效的算法 <strong>forward algorithm.</strong>,是<strong>dynamic programing</strong>算法。</p>
+<p>每一个前向算法的单元格$\alpha _{t}(j)$代表看到t时刻观察值时处于状态j的概率，</p>
+<p>$$\alpha_{t}(j)= P(o_{1},...o_{t},q_{t}=j|\lambda )$$</p>
+<p>qt=j 代表&quot;第t时刻的状态是state j&quot;。</p>
+<pre><code>we compute this probability at(j) 是对所有路径上可以到达这个网格的路径进行求和。
+</code></pre>
+<p><img src="/img/nlp9_5.png" alt=""></p>
+<p>根据图片的描述，整个公式可以重写为</p>
+<p><img src="/img/02.png" alt=""></p>
+<p>$\alpha_{t-1}(i)$ previous forward path probability</p>
+<p>$a_{ij}$ transition probability</p>
+<p>$b_{j}(o_{t})$ state observation likelihood</p>
+<p><img src="/img/nlp9_6.png" alt=""></p>
+<p>计算过程</p>
+<p>1 Initialization:</p>
+<p>$\alpha_{1}(j)=a_{oj}b_{j}(o_{1})$，例如上式中的$\alpha_1(2)=P(3|H)*P(H|START)$,这里的a01 就是start--&gt;1的转变</p>
+<p>2 递归计算</p>
+<p><img src="/img/03.png" alt=""></p>
+<p>3 决策</p>
+<p><img src="/img/04.png" alt=""></p>
+<p>前向算法实现
+<img src="/img/nlp9_7.png" alt=""></p>
+<h2>Decoding: The Viterbi Algorithm</h2>
+<pre><code>Decoding: Given as input an HMM ,and a sequence of observation O,find
+the most probable sequence of states Q=q1q2...qT
+</code></pre>
+<p>需要发现最好的隐含序列，对于可能的隐藏状态序列(HHH,HHC,HCH,etc.)，可以运行前向算法，计算最后的概率，概率最大的就是最好的序列。</p>
+<p>但是，最好的decoding方法是Viterbi算法。Viterbi也是一个动态编程过程。
+<img src="/img/nlp9_8.png" alt=""></p>
+<pre><code>t=1 时刻就可以用max，从t=2时刻开始进行max选择。
+</code></pre>
+<p><img src="/img/nlp9_9.png" alt=""></p>
+<p><img src="/img/nlp9_10.png" alt=""></p>
+<h2>HMM Training:The Forward-Backward Algorithm</h2>
+<p>HMM 的参数计算。</p>
+<pre><code>Learning: Given an observation sequence O and the set of possible 
+states in the HMM ,learn the HMM parameters A and B
+The algorithm will let us train both the transition probabilities A 
+and the emission probabilities B of the HMM
+</code></pre>
+<p>EM算法就暂时先不看了。</p>
+<h2>Summary</h2>
+<pre><code>This chapter introducted the hidden Markov model for probabilistic 
+sequence classification.
+
+hidden Markov models are a way of relating a sequence of 
+observations to a sequence of hidden classes or hidden states that 
+explain the observations
+
+The process of discovering the sequence of hidden states,given the 
+sequence of observations, is known as decoding or inference. The 
+Viterbi algorithm is commonly used for decoding 
+
+The parameters of an HMM are the A transition probability matrix and 
+the B  observation likelihood matrix. Both can be trained with the
+Baum-Welch or forward-backward algorithm.
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/05/Hanlp分词技术/" rel="next" title="Hanlp分词技术">
+                <i class="fa fa-chevron-left"></i> Hanlp分词技术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/10-part-of-speech-Tagging/" rel="prev" title="10 part of speech Tagging">
+                10 part of speech Tagging <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">Tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Markov Chains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">The Hidden Markoc Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">Likelihood Computation: The Forward Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">Decoding: The Viterbi Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">HMM Training:The Forward-Backward Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
