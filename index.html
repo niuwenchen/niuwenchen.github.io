@@ -182,7 +182,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -192,7 +192,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/RandomForest/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/21/Solidity-Localtion/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/26/RandomForest/" itemprop="url">RandomForest</a></h1>
+                <a class="post-title-link" href="/2018/03/21/Solidity-Localtion/" itemprop="url">Solidity Localtion </a></h1>
         
 
         <div class="post-meta">
@@ -258,10 +258,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T10:43:16+08:00">
-                2018-02-26
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T11:18:46+08:00">
+                2018-03-21
               </time>
             
 
@@ -300,1566 +300,874 @@
       
         
           
-            <h2>随机森林</h2>
-<p>随机森林非常像机器学习实践中的AdaBoost算法，但区别在于没有迭代，随机森林的树长度不限制。</p>
-<p>因为没有迭代过程，不像AdaBoost那样需要迭代，不断更新每个样本机器子分类器的权重。因此模型相对简单，不容易出现过拟合。</p>
-<p><img src="/img/ml01.png" alt="">
-随机森林可以理解成CART树森林，是由多个CART树分类器构成的集成学习模式。其中每个Cart树可以理解为一个议员，从样本集里面随机有放回的抽取一部分进行训练，这样，多个树分类器就构成了一个训练模型，可以理解为一个议会。</p>
-<p>然后将要分类的样本带入每一个树分类器，然后以少数服从多数的原则，表决出这个样本的最终分类类型。</p>
-<p>设有N个样本，M个变量个数，具体流程如下；</p>
-<p>1 确定一个值吗，用来表述每个树分类器选取多少个变量</p>
-<p>2 从数据集中有放回的抽取k个样本集，用他们来创建k个树分类器。另外还伴随生成了k个逮外数据，用来后面做检测。</p>
-<p>3 输入待分类样本之后，每个树分类器会进行分类，选举。</p>
-<p>参数</p>
-<pre><code>预选变量个数
-随机森林中树的个数
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/MachineLearning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/MachineLearning/" itemprop="url">MachineLearning</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T09:18:23+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>there are 3 types of Machine Learning Algorithms..</p>
-<ol>
-<li>
-<p>Supervised Learning</p>
-<p>How it works: This algorithm consist of a target / outcome variable (or dependent variable) which is to be predicted from a given set of predictors (independent variables). Using these set of variables, we generate a function that map inputs to desired outputs. The training process continues until the model achieves a desired level of accuracy on the training data. Examples of Supervised Learning: Regression, Decision Tree, Random Forest, KNN, Logistic Regression etc.</p>
-</li>
-<li>
-<p>Unsupervised Learning</p>
-<p>How it works: In this algorithm, we do not have any target or outcome variable to predict / estimate.  It is used for clustering population in different groups, which is widely used for segmenting customers in different groups for specific intervention. Examples of Unsupervised Learning: Apriori algorithm, K-means.</p>
-</li>
-<li>
-<p>Reinforcement Learning:</p>
-<p>How it works:  Using this algorithm, the machine is trained to make specific decisions. It works this way: the machine is exposed to an environment where it trains itself continually using trial and error. This machine learns from past experience and tries to capture the best possible knowledge to make accurate business decisions. Example of Reinforcement Learning: Markov Decision Process</p>
-</li>
-</ol>
-<p>List of Common Machine Learning Algorithms</p>
-<pre><code>Linear Regression
-Logistic Regression
-Decision Tree
-SVM
-Naive Bayes
-kNN
-K-Means
-Random Forest
-Dimensionality Reduction Algorithms
-Gradient Boosting algorithms
-GBM
-XGBoost
-LightGBM
-CatBoost
-</code></pre>
-<h2>1 Linear Regression</h2>
-<p>It is used to estimate real values (cost of houses, number of calls, total sales etc.) based on continuous variable(s). Here, we establish relationship between independent and dependent variables by fitting a best line. This best fit line is known as regression line and represented by a linear equation Y= a *X + b.</p>
-<p>Look at the below example. Here we have identified the best fit line having linear equation y=0.2811x+13.9. Now using this equation, we can find the weight, knowing the height of a person.</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/Linear_Regression.png" alt=""></p>
-<p>Multiple Linear Regression(多变量线性回归)，采用多个参数来定义模型，Polynomial Regression多项式回归</p>
-<p>While finding best fit line, you can fit a polynomial or curvilinear regression. And these are known as polynomial or curvilinear regression.</p>
-<p>Python Code</p>
-<pre><code>#Import Library
-#Import other necessary libraries like pandas, numpy...
-from sklearn import linear_model
-#Load Train and Test datasets
-#Identify feature and response variable(s) and values must be numeric and numpy arrays
-x_train=input_variables_values_training_datasets
-y_train=target_variables_values_training_datasets
-x_test=input_variables_values_test_datasets
-# Create linear regression object
-linear = linear_model.LinearRegression()
-# Train the model using the training sets and check score
-linear.fit(x_train, y_train)
-linear.score(x_train, y_train)
-#Equation coefficient and Intercept
-print('Coefficient: \n', linear.coef_)
-print('Intercept: \n', linear.intercept_)
-#Predict Output
-predicted= linear.predict(x_test)
-</code></pre>
-<p>R Code</p>
-<pre><code>#Load Train and Test datasets
-#Identify feature and response variable(s) and values must be numeric and numpy arrays
-x_train &lt;- input_variables_values_training_datasets
-y_train &lt;- target_variables_values_training_datasets
-x_test &lt;- input_variables_values_test_datasets
-x &lt;- cbind(x_train,y_train)
-# Train the model using the training sets and check score
-linear &lt;- lm(y_train ~ ., data = x)
-summary(linear)
-#Predict Output
-predicted= predict(linear,x_test) 
-</code></pre>
-<h2>2 Logistic Regression</h2>
-<p>Don’t get confused by its name! It is a classification not a regression algorithm. It is used to estimate discrete values ( Binary values like 0/1, yes/no, true/false ) based on given set of independent variable(s). In simple words, it predicts the probability of occurrence of an event by fitting data to a logit function.（它预测一个事件发生的概率通过一个logit 函数）。Hence, it is also known as logit regression. Since, it predicts the probability, its output values lies between 0 and 1 (as expected).</p>
-<p>Again, let us try and understand this through a simple example.</p>
-<p>Let’s say your friend gives you a puzzle to solve. There are only 2 outcome scenarios – either you solve it or you don’t. Now imagine, that you are being given wide range of puzzles / quizzes in an attempt to understand which subjects you are good at. The outcome to this study would be something like this – if you are given a trignometry based tenth grade problem, you are 70% likely to solve it. On the other hand, if it is grade fifth history question, the probability of getting an answer is only 30%. This is what Logistic Regression provides you.(解决这个问题的概率是70%.)</p>
-<p>Coming to the math, the log odds of the outcome is modeled as a linear combination of the predictor variables.</p>
-<pre><code>odds= p/ (1-p) = probability of event occurrence / probability of not event occurrence
-ln(odds) = ln(p/(1-p))
-logit(p) = ln(p/(1-p)) = b0+b1X1+b2X2+b3X3....+bkXk
-
-即
-logit(p) = ln(odds) 概率的logit函数值就是发生几率的对数函数值
-
-如果按照上面的过程解读LR，那就类似线性回归； 但是如果按照feature来解读，就像是最大熵模型
-</code></pre>
-<p>Above, p is the probability of presence of the characteristic of interest. It chooses parameters that maximize the likelihood of observing the sample values rather than that minimize the sum of squared errors (like in ordinary regression).</p>
-<p>Python Code</p>
-<pre><code>#Import Library
-from sklearn.linear_model import LogisticRegression
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create logistic regression object
-model = LogisticRegression()
-# Train the model using the training sets and check score
-model.fit(X, y)
-model.score(X, y)
-#Equation coefficient and Intercept
-print('Coefficient: \n', model.coef_)
-print('Intercept: \n', model.intercept_)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R Code</p>
-<pre><code>x &lt;- cbind(x_train,y_train)
-# Train the model using the training sets and check score
-logistic &lt;- glm(y_train ~ ., data = x,family='binomial')
-summary(logistic)
-#Predict Output
-predicted= predict(logistic,x_test)
-</code></pre>
-<h2>3 Decision Tree</h2>
-<p>This is one of my favorite algorithm and I use it quite frequently. It is a type of supervised learning algorithm that is mostly used for classification problems. Surprisingly, it works for both categorical and continuous dependent variables. In this algorithm, we split the population into two or more homogeneous sets. This is done based on most significant attributes/ independent variables to make as distinct groups as possible. For more details, you can read: Decision Tree Simplified.</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/IkBzK.png" alt=""></p>
-<p>In the image above, you can see that population is classified into four different groups based on multiple attributes to identify ‘if they will play or not’. To split the population into different heterogeneous groups, it uses various techniques like Gini, Information Gain, Chi-square, entropy.</p>
-<p>More: <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="noopener">Simplified Version of Decision Tree Algorithm</a></p>
-<p>Python Code</p>
-<pre><code>#Import Library
-#Import other necessary libraries like pandas, numpy...
-from sklearn import tree
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create tree object 
-model = tree.DecisionTreeClassifier(criterion='gini') # for classification, here you can change the algorithm as gini or entropy (information gain) by default it is gini  
-# model = tree.DecisionTreeRegressor() for regression
-# Train the model using the training sets and check score
-model.fit(X, y)
-model.score(X, y)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R Code</p>
-<pre><code>library(rpart)
-x &lt;- cbind(x_train,y_train)
-# grow tree 
-fit &lt;- rpart(y_train ~ ., data = x,method=&quot;class&quot;)
-summary(fit)
-#Predict Output 
-predicted= predict(fit,x_test)
-</code></pre>
-<h2>4 SVM</h2>
-<p>It is a classification method. In this algorithm, we plot each data item as a point in n-dimensional space (where n is number of features you have) with the value of each feature being the value of a particular coordinate.</p>
-<p>For example, if we only had two features like Height and Hair length of an individual, we’d first plot these two variables in two dimensional space where each point has two co-ordinates (these co-ordinates are known as Support Vectors)(坐标)</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/SVM2.png" alt=""></p>
-<p>Now, we will find some line that splits the data between the two differently classified groups of data. This will be the line such that the distances from the closest point in each of the two groups will be farthest away.</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/SVM2.png" alt=""></p>
-<p>In the example shown above, the line which splits the data into two differently classified groups is the black line, since the two closest points are the farthest apart from the line. This line is our classifier. Then, depending on where the testing data lands on either side of the line, that’s what class we can classify the new data as.</p>
-<p>More: <a href="">Simplified Version of Support Vector Machine</a></p>
-<p>Python Code</p>
-<pre><code>#Import Library
-from sklearn import svm
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create SVM classification object 
-model = svm.svc() # there is various option associated with it, this is simple for classification. You can refer link, for mo# re detail.
-# Train the model using the training sets and check score
-model.fit(X, y)
-model.score(X, y)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R Code</p>
-<pre><code>library(e1071)
-x &lt;- cbind(x_train,y_train)
-# Fitting model
-fit &lt;-svm(y_train ~ ., data = x)
-summary(fit)
-#Predict Output 
-predicted= predict(fit,x_test)
-</code></pre>
-<h2>5 Native Bayes</h2>
-<p>It is a classification technique based on Bayes’ theorem with an assumption of independence between predictors. In simple terms, a Naive Bayes classifier assumes that the presence of a particular feature in a class is unrelated to the presence of any other feature. For example, a fruit may be considered to be an apple if it is red, round, and about 3 inches in diameter. Even if these features depend on each other or upon the existence of the other features, a naive Bayes classifier would consider all of these properties to independently contribute to the probability that this fruit is an apple.</p>
-<p>Naive Bayesian model is easy to build and particularly useful for very large data sets. Along with simplicity, Naive Bayes is known to outperform even highly sophisticated classification methods.</p>
-<p>Bayes theorem provides a way of calculating posterior probability P(c|x) from P(c), P(x) and P(x|c). Look at the equation below:</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/Bayes_rule.png" alt=""></p>
-<p>Here,</p>
-<pre><code>P(c|x) is the posterior probability of class (target) given predictor (attribute). 
-P(c) is the prior probability of class. 
-P(x|c) is the likelihood which is the probability of predictor given class. 
-P(x) is the prior probability of predictor.
-</code></pre>
-<p>Example: Let’s understand it using an example. Below I have a training data set of weather and corresponding target variable ‘Play’. Now, we need to classify whether players will play or not based on weather condition. Let’s follow the below steps to perform it.</p>
-<p>Step 1: Convert the data set to frequency table</p>
-<p>Step 2: Create Likelihood table by finding the probabilities like Overcast probability = 0.29 and probability of playing is 0.64.</p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/Bayes_41.png" alt=""></p>
-<p>Step 3: Now, use Naive Bayesian equation to calculate the posterior probability for each class. The class with the highest posterior probability is the outcome of prediction.</p>
-<p>Problem: Players will pay if weather is sunny, is this statement is correct?</p>
-<p>We can solve it using above discussed method, so P(Yes | Sunny) = P( Sunny | Yes) * P(Yes) / P (Sunny)</p>
-<p>Here we have P (Sunny |Yes) = 3/9 = 0.33, P(Sunny) = 5/14 = 0.36, P( Yes)= 9/14 = 0.64</p>
-<p>Now, P (Yes | Sunny) = 0.33 * 0.64 / 0.36 = 0.60, which has higher probability.</p>
-<p>Naive Bayes uses a similar method to predict the probability of different class based on various attributes. This algorithm is mostly used in text classification and with problems having multiple classes.</p>
-<p>Python Code</p>
-<pre><code>#Import Library
-from sklearn.naive_bayes import GaussianNB
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create SVM classification object model = GaussianNB() # there is other distribution for multinomial classes like Bernoulli Naive Bayes, Refer link
-# Train the model using the training sets and check score
-model.fit(X, y)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R Code</p>
-<pre><code>library(e1071)
-x &lt;- cbind(x_train,y_train)
-# Fitting model
-fit &lt;-naiveBayes(y_train ~ ., data = x)
-summary(fit)
-#Predict Output 
-predicted= predict(fit,x_test)
-</code></pre>
-<h2>KNN</h2>
-<p>It can be used for both classification and regression problems. However, it is more widely used in classification problems in the industry. K nearest neighbors is a simple algorithm that stores all available cases and classifies new cases by a majority vote of its k neighbors. The case being assigned to the class is most common amongst its K nearest neighbors measured by a distance function.</p>
-<p>These distance functions can be Euclidean, Manhattan, Minkowski and Hamming distance. First three functions are used for continuous function and fourth one (Hamming) for categorical variables. If K = 1, then the case is simply assigned to the class of its nearest neighbor. At times, choosing K turns out to be a challenge while performing kNN modeling.</p>
-<p>Mode:<a href="">Introduction to k-nearest neighbors : Simplified</a></p>
-<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/KNN.png" alt=""></p>
-<p>KNN can easily be mapped to our real lives. If you want to learn about a person, of whom you have no information, you might like to find out about his close friends and the circles he moves in and gain access to his/her information!</p>
-<p>Things to consider before selecting kNN:</p>
-<p>KNN is computationally expensive
-Variables should be normalized else higher range variables can bias it
-Works on pre-processing stage more before going for kNN like outlier, noise removal</p>
-<p>Python Code</p>
-<pre><code>#Import Library
-from sklearn.neighbors import KNeighborsClassifier
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create KNeighbors classifier object model 
-KNeighborsClassifier(n_neighbors=6) # default value for n_neighbors is 5
-# Train the model using the training sets and check score
-model.fit(X, y)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R Code</p>
-<pre><code>library(knn)
-x &lt;- cbind(x_train,y_train)
-# Fitting model
-fit &lt;-knn(y_train ~ ., data = x,k=5)
-summary(fit)
-#Predict Output 
-predicted= predict(fit,x_test)
-</code></pre>
-<h2>7 K-Means</h2>
-<p>It is a type of unsupervised algorithm which  solves the clustering problem. Its procedure follows a simple and easy  way to classify a given data set through a certain number of  clusters (assume k clusters). Data points inside a cluster are homogeneous and heterogeneous to peer groups.</p>
-<p>Remember figuring out shapes from ink blots? k means is somewhat similar this activity. You look at the shape and spread to decipher how many different clusters / population are present!</p>
-<h2>8 Random Forest</h2>
-<p>Random Forest is a trademark term for an ensemble of decision trees. In Random Forest, we’ve collection of decision trees (so known as “Forest”). To classify a new object based on attributes, each tree gives a classification and we say the tree “votes” for that class. The forest chooses the classification having the most votes (over all the trees in the forest).</p>
-<p>Each tree is planted &amp; grown as follows:</p>
-<p>If the number of cases in the training set is N, then sample of N cases is taken at random but with replacement. This sample will be the training set for growing the tree.</p>
-<p>If there are M input variables, a number m&lt;&lt;M is specified such that at each node, m variables are selected at random out of the M and the best split on these m is used to split the node. The value of m is held constant during the forest growing.</p>
-<p>Each tree is grown to the largest extent possible. There is no pruning.</p>
-<p>For more details on this algorithm, comparing with decision tree and tuning model parameters, I would suggest you to read these articles:</p>
-<p><a href="https://www.analyticsvidhya.com/blog/2014/06/introduction-random-forest-simplified/" target="_blank" rel="noopener">Introduction to Random forest – Simplified</a>
-<a href="https://www.analyticsvidhya.com/blog/2014/06/comparing-cart-random-forest-1/" target="_blank" rel="noopener">Comparing a CART model to Random Forest (Part 1)</a></p>
-<p><a href="https://www.analyticsvidhya.com/blog/2014/06/comparing-random-forest-simple-cart-model/" target="_blank" rel="noopener">Comparing a Random Forest to a CART model (Part 2)</a></p>
-<p><a href="https://www.analyticsvidhya.com/blog/2015/06/tuning-random-forest-model/" target="_blank" rel="noopener">Tuning the parameters of your Random Forest model</a></p>
-<p>Python</p>
-<pre><code>#Import Library
-from sklearn.ensemble import RandomForestClassifier
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create Random Forest object
-model= RandomForestClassifier()
-# Train the model using the training sets and check score
-model.fit(X, y)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R code</p>
-<pre><code>library(randomForest)
-x &lt;- cbind(x_train,y_train)
-# Fitting model
-fit &lt;- randomForest(Species ~ ., x,ntree=500)
-summary(fit)
-#Predict Output 
-predicted= predict(fit,x_test)
-</code></pre>
-<h2>9 Dimensionality Reduction Algorithms（降维算法）</h2>
-<p>In the last 4-5 years, there has been an exponential increase in data capturing at every possible stages. Corporates/ Government Agencies/ Research organisations are not only coming with new sources but also they are capturing data in great detail.</p>
-<p>For example: E-commerce companies are capturing more details about customer like their demographics, web crawling history, what they like or dislike, purchase history, feedback and many others to give them personalized attention more than your nearest grocery shopkeeper.</p>
-<p>As a data scientist, the data we are offered also consist of many features, this sounds good for building good robust model but there is a challenge. How’d you identify highly significant variable(s) out 1000 or 2000? In such cases, dimensionality reduction algorithm helps us along with various other algorithms like Decision Tree, Random Forest, PCA, Factor Analysis, Identify based on correlation matrix, missing value ratio and others.</p>
-<p>To know more about this algorithms, you can read <a href="https://www.analyticsvidhya.com/blog/2015/07/dimension-reduction-methods/" target="_blank" rel="noopener">“Beginners Guide To Learn Dimension Reduction Techniques”</a></p>
-<p>Python code</p>
-<pre><code>#Import Library
-from sklearn import decomposition
-#Assumed you have training and test data set as train and test
-# Create PCA obeject 
-pca= decomposition.PCA(n_components=k) 
-#default value of k =min(n_sample, n_features)
-# For Factor analysis
-#fa= decomposition.FactorAnalysis()
-# Reduced the dimension of training dataset using PCA
-train_reduced = pca.fit_transform(train)
-#Reduced the dimension of test dataset
-test_reduced = pca.transform(test)
-#For more detail on this, please refer  this link.
-</code></pre>
-<p>R code</p>
-<pre><code>library(stats)
-pca &lt;- princomp(train, cor = TRUE)
-train_reduced  &lt;- predict(pca,train)
-test_reduced  &lt;- predict(pca,test)
-</code></pre>
-<h2>10. Gradient Boosting Algorithms</h2>
-<p>10.1. GBM</p>
-<p>GBM is a boosting algorithm used when we deal with plenty of data to make a prediction with high prediction power. Boosting is actually an ensemble of learning algorithms which combines the prediction of several base estimators in order to improve robustness over a single estimator. It combines multiple weak or average predictors to a build strong predictor. These boosting algorithms always work well in data science competitions like Kaggle, AV Hackathon, CrowdAnalytix.</p>
-<p>More: <a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/" target="_blank" rel="noopener">Know about Boosting algorithms in detail</a></p>
-<p>Python Code</p>
-<pre><code>#Import Library
-from sklearn.ensemble import GradientBoostingClassifier
-#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
-# Create Gradient Boosting Classifier object
-model= GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0)
-# Train the model using the training sets and check score
-model.fit(X, y)
-#Predict Output
-predicted= model.predict(x_test)
-</code></pre>
-<p>R code</p>
-<pre><code>library(caret)
-x &lt;- cbind(x_train,y_train)
-# Fitting model
-fitControl &lt;- trainControl( method = &quot;repeatedcv&quot;, number = 4, repeats = 4)
-fit &lt;- train(y ~ ., data = x, method = &quot;gbm&quot;, trControl = fitControl,verbose = FALSE)
-predicted= predict(fit,x_test,type= &quot;prob&quot;)[,2]
-</code></pre>
-<p>GradientBoostingClassifier and Random Forest are two different boosting tree classifier and often people ask about the <a href="">difference between these two algorithms</a>.</p>
-<h3>10.2 XGBoost</h3>
-<p>Another classic gradient boosting algorithm that’s known to be the decisive choice between winning and losing in some Kaggle competitions.</p>
-<p>The XGBoost has an immensely high predictive power which makes it the best choice for accuracy in events as it possesses both linear model and the tree learning algorithm, making the algorithm almost 10x faster than existing gradient booster techniques.</p>
-<p>The support includes various objective functions, including regression, classification and ranking.</p>
-<p>One of the most interesting things about the XGBoost is that it is also called a regularized boosting technique. This helps to reduce overfit modelling and has a massive support for a range of languages such as Scala, Java, R, Python, Julia and C++.</p>
-<p>Supports distributed and widespread training on many machines that encompass GCE, AWS, Azure and Yarn clusters. XGBoost can also be integrated with Spark, Flink and other cloud dataflow systems with a built in cross validation at each iteration of the boosting process.</p>
-<p>To learn more about XGBoost and parameter tuning, visit <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/" target="_blank" rel="noopener">https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/</a>.</p>
-<p>Python Code</p>
-<pre><code>from xgboost import XGBClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-X = dataset[:,0:10]
-Y = dataset[:,10:]
-seed = 1
-
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=seed)
-
-model = XGBClassifier()
-
-model.fit(X_train, y_train)
-
-#Make predictions for test data
-y_pred = model.predict(X_test)
-</code></pre>
-<h3>10.3. LightGBM</h3>
-<p>LightGBM is a gradient boosting framework that uses tree based learning algorithms. It is designed to be distributed and efficient with the following advantages:</p>
-<pre><code>Faster training speed and higher efficiency
-Lower memory usage
-Better accuracy
-Parallel and GPU learning supported
-Capable of handling large-scale data
-</code></pre>
-<p>he framework is a fast and high-performance gradient boosting one based on decision tree algorithms, used for ranking, classification and many other machine learning tasks. It was developed under the Distributed Machine Learning Toolkit Project of Microsoft.</p>
-<p>Since the LightGBM is based on decision tree algorithms, it splits the tree leaf wise with the best fit whereas other boosting algorithms split the tree depth wise or level wise rather than leaf-wise. So when growing on the same leaf in Light GBM, the leaf-wise algorithm can reduce more loss than the level-wise algorithm and hence results in much better accuracy which can rarely be achieved by any of the existing boosting algorithms.</p>
-<p>Refer to the article to know more about LightGBM: <a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/" target="_blank" rel="noopener">https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/</a></p>
-<p>Python Code</p>
-<pre><code>data = np.random.rand(500, 10) # 500 entities, each contains 10 features
-label = np.random.randint(2, size=500) # binary target
-
-train_data = lgb.Dataset(data, label=label)
-test_data = train_data.create_valid('test.svm')
-
-param = {'num_leaves':31, 'num_trees':100, 'objective':'binary'}
-param['metric'] = 'auc'
-
-num_round = 10
-bst = lgb.train(param, train_data, num_round, valid_sets=[test_data])
-
-bst.save_model('model.txt')
-
-	# 7 entities, each contains 10 features
-data = np.random.rand(7, 10)
-ypred = bst.predict(data)
-</code></pre>
-<p><a href="https://wizardforcel.gitbooks.io/dm-algo-top10/content/em.html" title="数据挖掘十大算法" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/dm-algo-top10/content/em.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/09/Aho-Corasick自动机结合DoubleArrayTrie极速多模式匹配/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/09/Aho-Corasick自动机结合DoubleArrayTrie极速多模式匹配/" itemprop="url">Aho Corasick自动机结合DoubleArrayTrie极速多模式匹配</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-09T11:12:24+08:00">
-                2018-02-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Aho-Corasick算法的Java实现与分析</h2>
-<p>简介</p>
-<pre><code>Aho-Corasick算法简称AC算法，通过将模式串预处理为确定有限状态自动机，扫描文本一遍就能结束。其时间复杂度为O(n)，即与模式串的数量和长度无关。
-</code></pre>
-<p>思想</p>
-<pre><code>自动机按照文本字符顺序，接受字符，并发生状态转移。这些状态缓存
-了&quot;按照字符转移成功(但不是模式串的结尾)&quot;、&quot;按照分i粗转移成功
-(是模式串的结尾)&quot;、&quot;按照字符转移失败&quot;三种情况，因而降低了复杂度。
-</code></pre>
-<p>基本构造</p>
-<pre><code>AC算法中三个核心函数
-* success: 成功转移到另一个状态(goto表和success表)
-* failure: 不可顺着字符串跳转的话，则跳转到另一个特定的节点（failure表），从根节点到这个特定的节点的路径恰好是失败前的文本的一部分。
-* emits: 命中一个模式串(也称output表)
-</code></pre>
-<p>举例</p>
-<pre><code>以经典的ushers为例，he/she/his/hers 文本为ushers，构造的自动机如图:
-</code></pre>
-<p><img src="/img/algs_0.png" alt="">
-上图省略了到根节点的fail边，完整的自动机如下图:
-<img src="/img/algs_1.png" alt=""></p>
-<p><strong>匹配过程</strong></p>
-<p>自动机从根节点0出发</p>
-<p>1 首先按照success表转移(图中实线)。按照文本的指示转移，也就是接受一个u。此时success表中并没有相应路线，转移失败。</p>
-<p>2 失败了则按照failure表回去(图中虚线)。按照文本指示，这次接收一个s，转移到状态3</p>
-<p>3 成功了继续按success表转移，直到失败跳转步骤2，或者遇到output表中注明的“可输出状态”。此时输出匹配到的模式串，然后将此状态视作普通的状态继续转移。</p>
-<p>算法高效之处在于，当自动机接受了“ushe”之后，再接受一个r会导致无法按照success表转移，此时自动机会聪明地按照failure表转移到2号状态，并经过几次转移后输出“hers”。来到2号状态的路不止一条，从根节点一路往下，“h→e”也可以到达。而这个“he”恰好是“ushe”的结尾，状态机就仿佛是压根就没失败过（没有接受r），也没有接受过中间的字符“us”，直接就从初始状态按照“he”的路径走过来一样（到达同一节点，状态完全相同）。</p>
-<p>goto表</p>
-<p>很简单，trie树知识的话就能了解，goto表就是一棵trie树。把上图的虚线去掉，实线部分就是一棵trie树了。</p>
-<p><img src="/img/algs_2.png" alt="">
-output表</p>
-<p>output表也很简单，与trie树里面代表这个节点是否是单词结尾的构造很像。不过trie树只有叶节点才有output，并且一个叶节点只有一个output。下图违背了这两</p>
-<p><img src="/img/algs_3.png" alt=""></p>
-<p>以上两个表通过trie构造
-<a href="http://www.hankcs.com/nlp/ansj-word-pairs-array-tire-tree-achieved-with-arrays-dic-dictionary-format.html" target="_blank" rel="noopener">Ansj分词双数组Trie树实现与arrays.dic词典格式</a>,
-<a href="http://www.hankcs.com/program/java/tire-tree-participle.html" target="_blank" rel="noopener">Trie树分词</a>,<a href="http://www.hankcs.com/program/java/%e5%8f%8c%e6%95%b0%e7%bb%84trie%e6%a0%91doublearraytriejava%e5%ae%9e%e7%8e%b0.html" target="_blank" rel="noopener">双数组Trie树(DoubleArrayTrie)Java实现</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/08/11-Formal-Grammars-of-English/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/08/11-Formal-Grammars-of-English/" itemprop="url">11 Formal Grammars of English</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T11:08:44+08:00">
-                2018-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Formal Grammers of English</h2>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/10-part-of-speech-Tagging/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/06/10-part-of-speech-Tagging/" itemprop="url">10 part of speech Tagging</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T16:51:47+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Part-of-Speech Tagging</h2>
-<p>本章介绍Part-of_speech tagging. 介绍两种算法用于词性标注，HMM和MEMM</p>
-<h2>English Word Classes</h2>
-<p>词性标注可以被分成两部分: closed class type and open class types。clossed class 是那些有固定的格式，例如介词，几乎不会创造新的介词。相反名词和形容词是open classes，新的名词如iphone等。Cloesd class 单词一般是功能单词例如of,it,and,you，短，出现频次高，经常在语法构造中。</p>
-<p>syntactic句法的
-literal  照字面的
-metaphorical 隐喻性的
-semantic 语义的
-auxiliary  辅助的; 备用的，补充的; 附加的; 副的</p>
-<p>四个主要的open classes是:名词，动词，形容词，副词。</p>
-<pre><code>一些比较重要的closed classes：
-prepositions: 介词， on under over near by at from to 
-determiners: 限定词， a  an the
-pronouns: 代词，she who I others
-conjunctions:连词， and,but or as if when 
-auxiliary verbs:助动词 can may should are
-particles: up down on off in out 
-numerals: one two three first second third
-
-cardinal number: 基数
-existential 存在的
-verb past participle 动词过去分词
-possessive ending 所有格的结尾
-morpheme 形态词 词素
-</code></pre>
-<h2>The Penn Treebank Part-of_speech Tagset</h2>
-<p>Penn Treebank tagset
-<img src="/img/nlp10_0.png" alt=""></p>
-<p>词性标注为每一个单词放置一个词性</p>
-<pre><code>The/DT grand/JJ jury/NN commented/VBD on/IN a/DT number/NN of/IN other/JJ topics/NNS ./.
-There/EX are/VBP 70/CD children/NNS there/RB
-Preliminary/JJ findings/NNS were/VBD reported/VBN in/IN today/NN ’s/POS New/NNP England/NNP Journal/NNP of/IN Medicine/NNP ./.
-</code></pre>
-<p>语料库的词性标注像Treebank语料库对于统计标注算法十分重要。<strong>Brown</strong>语料库， <strong>WSJ</strong>,<strong>Switchboard</strong></p>
-<h2>Part-of-Speech Tagging</h2>
-<pre><code>Tagging is a disambiguation task;words are ambiguous- 
-have more than one possible part-of-speech---and the 
-goal is to find the correct tag for the situation. For
-example, the word book can be a verb(book that flight) 
-or a noun(as in hand me that book)
-
-complementizer 补语
-</code></pre>
-<p><img src="/img/nlp10_1.png" alt=""></p>
-<p>some of the most ambiguous rfequent words are that,back,down,put and set</p>
-<pre><code>earnings growth took a back/JJ seat
-a small building in the back/NN
-a clear majority of senators back/VBP the bill
-Dave began to back/VB toward the door
-enable the country to buy back/RP about the debt
-I was twenty-one back/RB then
-</code></pre>
-<p>一种词性标注最简单的baseline算法: 给出一个歧义单词，选择在语料库中出现最多的词性作为这个单词的词性。</p>
-<pre><code>Most Frequent Class Baseline: Always compare a classifier against a baseline at leat as good as the most frequent class baseline(assinging each token to the class it occurred in most often in the training set)
-</code></pre>
-<p>度量词性标注的标准是准确率: 人工定义的进行比较。WSJ语料库。如果我们在WSJ语料库上训练，剩下的在测试集上测试，most-frequent-tag baseline 能够达到准确率92.34%。</p>
-<h2>HMM Part-of-Speech Tagging</h2>
-<p>我们使用HMM在这里用作词性标注，也就是Viterbi 解码算法。</p>
-<h3>The basic equation of HMM Tagging</h3>
-<h3>Eatimating probabilities</h3>
-<p>在HMM词性标注方法中，不需要使用HMM的EM 算法，概率可以通过对训练集进行计数的方式直接估计。使用WSJ数据集，词性转移概率$p(t_{i}|t_{i-1})$，最大似然估计对转移概率的计算方式是数数。</p>
-<p>$$P(t_{i}|t_{i-1})=\frac{C(t_{i-1},t_{i})}{C(t_{i-1})}$$</p>
-<p>比如在WSJ语料库中，MD出现了13124次，后面跟VB出现了10471 次，MLE估计</p>
-<p>$$P(VB|MD)=\frac{C(MD,VB}{C(MD)} = 10471/13124 = 0.80$$</p>
-<p>发射概率$p(w_{i}|t_{i})$,代表了给定一个标记MD，然后和一个固定单词出现的概率。</p>
-<p>$$P(w_{i}|t_{i})=\frac{C(t_{i},w_{i})}{C(t_{i})}$$</p>
-<p>will 这个单词出现4046次，而MD出现了13124次</p>
-<p>$$P(will|MD)=\frac{C(MD,will)}{C(MD)}=0.31$$</p>
-<p><img src="/img/nlp10_2.png" alt=""></p>
-<p><img src="/img/nlp10_3.png" alt=""></p>
-<h3>Working through an example</h3>
-<p>现在用一个例子说明</p>
-<pre><code>Janet will back the hill
-Janet/NNP will/MD back/VB the/DT bill/NN
-</code></pre>
-<p><img src="/img/nlp10_4.png" alt=""></p>
-<p>下面是HMM的viterbi构造过程，</p>
-<p><img src="/img/nlp10_5.png" alt=""></p>
-<p>Viterbi算法伪代码
-<img src="/img/nlp10_6.png" alt=""></p>
-<p>在下图中，</p>
-<p><img src="/img/nlp10_7.png" alt=""></p>
-<h3>Extending the HMM Algorithm to Trigrams</h3>
-<p>实际的HMM词性标注对这个简单的模型都有许多扩展，之前的计算过程中概率只依赖前面一个词性</p>
-<p>$$P(t^{n}<em>{1})\approx \prod ^{n}</em>{i=1}P(t_{i}|t_{i-1})$$</p>
-<p>实际中，我们选择两个依赖</p>
-<p>$$P(t^{n}<em>{1})\approx \prod ^{n}</em>{i=1}P(t_{i}|t_{i-1},t_{i-2})$$</p>
-<p><img src="/img/nlp10_8.png" alt=""></p>
-<p>计算$\lambda $的过程如下，使用delete interpolation</p>
-<p><img src="/img/nlp10_9.png" alt=""></p>
-<h3>Unknown Words</h3>
-<p>一个好的词性标注模型体现在对未登录词的判定上。</p>
-<p>对于未登录词的词性标注最好的是 morphology(形态学)。单词以s结尾的更像是复数名词(NNS).-ed 是VBN,-able 是JJ。考虑后缀直到10个字母，计算每一个长度i的后缀对于给定词性的概率。</p>
-<h2>Maximum Entropy Markov Models</h2>
-<p>MEMM,基础是最大熵分类器(多分类逻辑回归)。因为基于逻辑回归，因此是一个判定式序列模型。而HMM是一个生成式序列模型。</p>
-<p>假如一个序列$W=w^{n}<em>{1}$并且序列的词性是$T=t^{n}</em>{1}$,在HMM中计算最好的序列是最大化P(T|W)，依靠贝叶斯规则和似然值P(W|T)</p>
-<p><img src="/img/nlp10_10.png" alt=""></p>
-<pre><code>生成式模型最终全部转换到了 贝叶斯公式
-</code></pre>
-<p>在MEMM中，直接计算先验P(T|W),不做任何形式的变化</p>
-<p><img src="/img/nlp10_11.png" alt=""></p>
-<pre><code>HMM计算似然值(观察到的单词依赖于标签)
-MEMM计算先验值(标签依赖于观察到的单词)
-</code></pre>
-<p><img src="/img/nlp10_12.png" alt=""></p>
-<h3>Feature in a MEMM</h3>
-<p>一个MEMM模型考虑两个特征(观察到的单词和前面的词性)</p>
-<pre><code>使用判别式模型是因为一个判别式模型容易处理多种混合的特征。在
-HMM中所有的计算都是基于P(tag|word),P(word|tag),如果我们
-想添加一些知识源，必须用一种方式将这些知识编码到两种概率中。在
-前面看到这种方式是可选的，如P(capitalization|tag)和P(syffix|tag)。
-</code></pre>
-<p><img src="/img/nlp10_13.png" alt=""></p>
-<p>一个基本的MEMM词性标注模型依赖于单词本身，邻近单词，前面的词性，可变的组合，使用特征模型如下。</p>
-<p><img src="/img/nlp10_14.png" alt=""></p>
-<p>特征模型位于候选集中的每一个实例</p>
-<pre><code>Janet/NNP will/MD back/VB the/DT bill/NN
-</code></pre>
-<p>当$w_{i}$是单词 back， 将会产生一下特征</p>
-<p><img src="/img/nlp10_15.png" alt=""></p>
-<p>当然其他的特征也是必须的，表达单词的拼写属性</p>
-<p><img src="/img/nlp10_16.png" alt=""></p>
-<p>计算公式
-<img src="/img/nlp10_17.png" alt=""></p>
-<pre><code>需要对LR公式特征计算过程进行一次模拟。
-</code></pre>
-<h3>Decoding and Training MEMMs</h3>
-<p>将MaxEnt分类器用于解码任务去发现序列的词性，最简单的方式是构建一个本地分类器，先对第一个单词构建词性标注，再依赖第一个单词对第二个单词进行词性标注。这就是贪婪解码算法。</p>
-<p><img src="/img/nlp10_18.png" alt=""></p>
-<p><img src="/img/nlp10_19.png" alt=""></p>
-<p><img src="/img/nlp10_20.png" alt=""></p>
-<h2>Summary</h2>
-<pre><code>This chapter introduced the idea of parts-of-speech and part-of-speech tagging.
-The main ideas:
-
-Languages generally have a relatively small set of closed class words that are often highly frequent, generally act as function words, and can be ambiguous
-in their part-of-speech tags. Open-class words generally include various kinds of nouns, verbs, adjectives. There are a number of part-of-speech coding schemes, based on tagsets of between 40 and 200 tags.
-
-Part-of-speech tagging is the process of assigning a part-of-speech label to each of a sequence of words.
-
-Two common approaches to sequence modeling are a generative approach,HMM tagging, and a discriminative approach, MEMM tagging.
-
-The probabilities in HMM taggers are estimated, not using EM, but directly by maximum likelihood estimation on hand-labeled training corpora. The Viterbi algorithm is used to find the most likely tag sequence
-
-Maximum entropy Markov model or MEMM taggers train logistic regression models to pick the best tag given an observation word and its context and the previous tags, and then use Viterbi to choose the best sequence of tags for the sentence. More complex augmentions of the MEMM exist, like the Conditional Random Field (CRF) tagger
-
-Modern taggers are generally run bidirectionally.
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/06/9-Hidden-Markov-Models/" itemprop="url">9 Hidden Markov Models</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T10:59:53+08:00">
-                2018-02-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>##Hidden Markov Models
-HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。</p>
-<p>本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。</p>
-<h2>Markov Chains</h2>
-<p><img src="/img/nlp9_0.png" alt=""></p>
-<pre><code>Q=q1q2....qN    a set of N states
-A=a01a02...an1...ann  a trainsation probability matrix A, each aij representing the probability of moving from state i to state j . 
-q0,qF 		a special start state and end state that are not associaed with observations
-</code></pre>
-<p><strong>Markov Assumption:</strong></p>
-<p>$$ P(q_{i}|q_1..q_{i-1})=P(q_{i}|q_{i-1})$$</p>
-<p>$$ \pi =\pi_{1},\pi_{2},..\pi_{N}$$ , an initial probability distribution over states.也就是说马尔科夫链从状态i开始，其余的状态将会是0.</p>
-<p>因此，state 1 是第一个状态，可以被表示为a01 或者$\pi_{1}$。每一个$\pi_{i}$代表概率 P(qi|START)。</p>
-<p><img src="/img/nlp9_1.png" alt=""></p>
-<h2>The Hidden Markoc Model</h2>
-<p><img src="/img/nlp9_2.png" alt=""></p>
-<p>HMM 有两个特殊的假设</p>
-<pre><code>马尔科夫假设，状态转移概率只依赖于前一个状态
-输出假设: 观察状态的概率只依赖与当前的隐含状态
-</code></pre>
-<p><img src="/img/nlp9_3.png" alt=""></p>
-<p>HMM三个问题, 隐马隐含状态序列，概率矩阵参数，输出序列</p>
-<ul>
-<li>Likelihood</li>
-<li>Decoding</li>
-<li>Learning</li>
-</ul>
-<h2>Likelihood Computation: The Forward Algorithm</h2>
-<p>第一个问题计算一个特定的观测序列的概率。比如，给出ice-cream eating HMM，那么序列 3 1 3 出现的概率是多少</p>
-<p>**Computing Likelihood **</p>
-<p>Given an HMM $\lambda =(A,B)$,and an observation sequence O,determine the likelihood $P(O|\lambda) $</p>
-<p>首先，对于HMM来说，每一个隐藏状态仅仅产生一个观测，因此，隐含状态和观测状态有相同的长度。</p>
-<p><img src="/img/nlp9_4.png" alt=""></p>
-<p>但是实际上，上面的计算过程都是在我们基于已经知道隐含状态序列的情况下进行的，实际上是不知道的。 我们需要计算的是ice-cream 出现的概率。</p>
-<p><img src="/img/01.png" alt=""></p>
-<p>按照上式的理解，如果需要一个结果，需要将整个遍历以便，一种可能的状态如下</p>
-<p>$$P(3 1 3,hot hot cold)=P(hot|start)\times P(hot|hot) \times P(cold|hot) \times P(3|hot) \times P(1|hot)\times P(3|cold)$$</p>
-<p>计算了一种假设的，那么对于一个序列可能出现的所有情况做一个总和</p>
-<p>$$P(3,1,3)=P(3,1,3,cold cold cold)+P(3 1 3,cold cold hot)+P(3 1 3,hot hot cold)+...$$</p>
-<p>对于一个HMM 有N个hidden 状态和T个观测状态，有$N^{T}$ 个可能的隐含序列。</p>
-<p>使用一种高效的算法 <strong>forward algorithm.</strong>,是<strong>dynamic programing</strong>算法。</p>
-<p>每一个前向算法的单元格$\alpha _{t}(j)$代表看到t时刻观察值时处于状态j的概率，</p>
-<p>$$\alpha_{t}(j)= P(o_{1},...o_{t},q_{t}=j|\lambda )$$</p>
-<p>qt=j 代表&quot;第t时刻的状态是state j&quot;。</p>
-<pre><code>we compute this probability at(j) 是对所有路径上可以到达这个网格的路径进行求和。
-</code></pre>
-<p><img src="/img/nlp9_5.png" alt=""></p>
-<p>根据图片的描述，整个公式可以重写为</p>
-<p><img src="/img/02.png" alt=""></p>
-<p>$\alpha_{t-1}(i)$ previous forward path probability</p>
-<p>$a_{ij}$ transition probability</p>
-<p>$b_{j}(o_{t})$ state observation likelihood</p>
-<p><img src="/img/nlp9_6.png" alt=""></p>
-<p>计算过程</p>
-<p>1 Initialization:</p>
-<p>$\alpha_{1}(j)=a_{oj}b_{j}(o_{1})$，例如上式中的$\alpha_1(2)=P(3|H)*P(H|START)$,这里的a01 就是start--&gt;1的转变</p>
-<p>2 递归计算</p>
-<p><img src="/img/03.png" alt=""></p>
-<p>3 决策</p>
-<p><img src="/img/04.png" alt=""></p>
-<p>前向算法实现
-<img src="/img/nlp9_7.png" alt=""></p>
-<h2>Decoding: The Viterbi Algorithm</h2>
-<pre><code>Decoding: Given as input an HMM ,and a sequence of observation O,find
-the most probable sequence of states Q=q1q2...qT
-</code></pre>
-<p>需要发现最好的隐含序列，对于可能的隐藏状态序列(HHH,HHC,HCH,etc.)，可以运行前向算法，计算最后的概率，概率最大的就是最好的序列。</p>
-<p>但是，最好的decoding方法是Viterbi算法。Viterbi也是一个动态编程过程。
-<img src="/img/nlp9_8.png" alt=""></p>
-<pre><code>t=1 时刻就可以用max，从t=2时刻开始进行max选择。
-</code></pre>
-<p><img src="/img/nlp9_9.png" alt=""></p>
-<p><img src="/img/nlp9_10.png" alt=""></p>
-<h2>HMM Training:The Forward-Backward Algorithm</h2>
-<p>HMM 的参数计算。</p>
-<pre><code>Learning: Given an observation sequence O and the set of possible 
-states in the HMM ,learn the HMM parameters A and B
-The algorithm will let us train both the transition probabilities A 
-and the emission probabilities B of the HMM
-</code></pre>
-<p>EM算法就暂时先不看了。</p>
-<h2>Summary</h2>
-<pre><code>This chapter introducted the hidden Markov model for probabilistic 
-sequence classification.
-
-hidden Markov models are a way of relating a sequence of 
-observations to a sequence of hidden classes or hidden states that 
-explain the observations
-
-The process of discovering the sequence of hidden states,given the 
-sequence of observations, is known as decoding or inference. The 
-Viterbi algorithm is commonly used for decoding 
-
-The parameters of an HMM are the A transition probability matrix and 
-the B  observation likelihood matrix. Both can be trained with the
-Baum-Welch or forward-backward algorithm.
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/Hanlp分词技术/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/05/Hanlp分词技术/" itemprop="url">Hanlp分词技术</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T23:14:50+08:00">
-                2018-02-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>分词技术</h2>
-<h3>HanLP 中的WordNet</h3>
-<pre><code>public WordNet(char[] charArray)
-按照句子的分析过程，每一个词都可能有引申。
-每一个词作为一个节点，其都是一个链表形式。
-头尾为B ,E
-
-刚开始所有的顶点都是空的，
-0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
-1:[]
-2:[]
-3:[]
-4:[]
-5:[]
-6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
-
-public WordNet(char[] charArray, List&lt;Vertex&gt; vertexList)
-初始构造，只是往里面添加了顶点，也就是为顶点链表添加节点的过程
-
-添加的过程是按照 初始句子中给出的所有顶点进行添加。
-
-商品和服务: 
-vertext[0].add(商)
-</code></pre>
-<p>GenerateWordNet 生成一元词网</p>
-<pre><code>按照上面的描述将所有的可以成词的词组成词网，具体过程就是查询词典
-0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
-1:[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
-2:[WordNode{word='品', realWord='品', attribute=ng 563 }]
-3:[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
-4:[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
-5:[WordNode{word='务', realWord='务', attribute=vg 209 }]
-6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
-
-里面的顶点是:
-按照句子的长度，分成length个顶点，每个顶点都是一个链表
-[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
-[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
-[WordNode{word='品', realWord='品', attribute=ng 563 }]
-[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
-[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
-[WordNode{word='务', realWord='务', attribute=vg 209 }]
-[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
-
-词网生成。
-</code></pre>
-<p>开始分词</p>
-<pre><code>首先建立vertex之间的联系，就是首尾相连，之前是所有的顶点各自为一个list，现在是一个总的list。每个vertex之间多了约束
-
-[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }, WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }, WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
-</code></pre>
-<p>上面是一些基本的介绍过程，下面结合具体的分词算法进行分析</p>
-<h2>分词算法</h2>
-<pre><code> List&lt;Term&gt; termList = HanLP.segment(&quot;南京市长江大桥&quot;);
- System.out.println(termList);
-
-return new ViterbiSegment();   // Viterbi分词器是目前效率和效果的最佳平衡
-</code></pre>
-<p>Viterbi</p>
-<p><img src="/img/hanlp_0.png" alt=""></p>
-<pre><code>best_score[0]=0
-for each node in the graph(ascending order)
-	best_score[node] = inf
-	for each incoming edge of node:
-		score = best_score[edge.prev_node]+ edge.score
-		if score &lt; best_score[node]
-			best_score[node] = score
-			best_edge[node]=edge
-
-最后得出的
-best_score =(0.0,2.5,1.4,3.7) 是每一个节点的分数
-best_edge = (null, e1,e2,e5),以node为准，进入这个节点的边
-
-Backward Step
-
-best_path=[]
-next_edge = best_edge[best_edge.length -1]
-while next_edge !=NULL
-	add next_edge to best_path
-	next_edge = best_edge[next_edgee.prev_node]
-reverse best_path
-
-best_path=[e2,e5]
-</code></pre>
-<p><a href="http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf" target="_blank" rel="noopener">http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf</a></p>
-<pre><code>private static  List&lt;Vertex&gt; viterbi(WordNet wordNet)
-{
-    LinkedList&lt;Vertex&gt; nodes[] = wordNet.getVertexes();
-    LinkedList&lt;Vertex&gt; vertexList = new LinkedList&lt;&gt;();
-    for(Vertex node : nodes[1])
-    {
-        // 更新初始节点到首节点的联系。其他的不用更新吗
-        node.updateFrom(nodes[0].getFirst());
-    }
-    for (int i = 1; i &lt; nodes.length - 1; ++i)
-    {
-        LinkedList&lt;Vertex&gt; nodeArray = nodes[i];
-        if (nodeArray == null) continue;
-        for (Vertex node : nodeArray)
-        {
-            if (node.from == null) continue;
-            for (Vertex to : nodes[i + node.realWord.length()])
-            {
-//                    double weight = from.weight + MathTools.calculateWeight(from, this);
-//                    if (this.from == null || this.weight &gt; weight)
-//                    {
-//                        this.from = from;
-//                        this.weight = weight;
-//                    }
-                to.updateFrom(node);
-            }
-        }
-    }
-    System.out.println(&quot; 这里应该有一个best_score, 和best_path, 然后从backward上寻找最佳路径&quot; +
-            &quot;forward 方式已经更新了前后连接方式&quot;);
-    Vertex from = nodes[nodes.length - 1].getFirst();
-    System.out.println(&quot;from:0 &quot;+from);
-    while (from != null)
-    {
-        vertexList.addFirst(from);
-        from = from.from;
-        System.out.println(&quot;from:1 &quot;+from);
-    }
-    return vertexList;
+            <h2>Solidity Location</h2>
+<pre><code>pragma solidity ^0.4.9;
+
+contract Loc1{
+struct S{string a;uint b;}
+
+//parameter is memory
+function assign(S s) internal{
+    // local variable is storage
+    S memory tmp =s;
+}
 }
 </code></pre>
-<p>根据前向算法计算best_score和best_path,然后根据后向算法计算best_path,注意 Viterbi算法一定是按照node来进行算法的持续，不是边</p>
-<p>NLP分词</p>
-<pre><code>List&lt;Term&gt; termList = NLPTokenizer.segment(&quot;中国科学院计算技术研究所的宗成庆教授正在教授自然语言处理课程&quot;);
-System.out.println(termList);
+<p>// convert storage to storage</p>
+<pre><code>contract Loc2{
+struct S{string a;uint b;}
 
+S s;
 
-public static final Segment SEGMENT = HanLP.newSegment().enableNameRecognize(true).enableTranslatedNameRecognize(true)
-        .enableJapaneseNameRecognize(true).enablePlaceRecognize(true).enableOrganizationRecognize(true)
-        .enablePartOfSpeechTagging(true);
-
-
-
-NLP分词实际上也是HMM分词，只是增加了全部命名实体识别和词性标注过程，速度比较慢，并且有误识别的情况。
+function convertToStorage(S storage  s) internal{
+    S tmp =s;
+    tmp.a = &quot;Test&quot;;
+}
+function call()  constant returns  (string str)
+{
+    convertToStorage(s);
+    return s.a; //Test
+}
+}
 </code></pre>
-<p>索引分词</p>
-<pre><code>索引分词 IndexTokenizer 是面向搜索引擎的分词器，能够对长词全切分，另外通过 term.offset 可以获取单词在文本中的偏移量。调用方法如下:
+<p>// memory to state variable</p>
+<pre><code>contract Loc3{
+struct S{string a;uint b;}
 
-	List&lt;Term&gt; termList = IndexTokenizer.segment(&quot;南京市长江大桥&quot;);
-    for (Term term : termList)
+S s;
+
+function memoryToState(S memory tmp) internal{
+    s = tmp;
+    tmp.a =&quot;Test&quot;;
+}
+function call() constant returns (string)
+{
+    S memory tmp = S(&quot;memory&quot;,0);
+    memoryToState(tmp);
+    return s.a;
+}
+}
+</code></pre>
+<p>// memory to Local variable</p>
+<pre><code>contract Loc4 {
+struct S{string a;uint b;}
+function memoryToLocal(S s) internal{
+    // Error
+    // S tmp =s;
+    S memory tmp =s;
+}
+}
+</code></pre>
+<p>// storage to memory</p>
+<pre><code>contract Loc5{
+struct S{string a;uint b;}
+
+// storage variable
+S s= S(&quot;storage&quot;,1);
+
+function storageToMemory(S storage x) internal{
+    // storage to memory
+    S memory tmp= x;
+    tmp.a = &quot;Text&quot;;
+}
+function call() constant returns (string){
+    storageToMemory(s);
+    return s.a;
+}
+}
+
+
+contract Loc6{
+struct S{string a;uint b;}
+
+function memoryToMemory(S s ) internal{
+    S memory tmp =s;
+    tmp.a = &quot;other memory&quot;;
+}
+function call() constant returns (string)
+{
+    S memory mem = S(&quot;memory&quot;,1);
+    memoryToMemory(mem);
+    return mem.a;
+}
+}
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/21/Spark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/Spark/" itemprop="url">Spark</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T10:40:23+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/15/solidity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/solidity/" itemprop="url">solidity</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T13:44:07+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Solidity Tutorials</h2>
+<pre><code>pragma solidity ^0.4.9;
+
+contract SimpleStorage {
+uint data;
+
+function setData(uint x) public{
+    
+    data = x;
+}
+
+function getData() public constant returns (uint)  {
+    
+    return data;
+}
+}
+</code></pre>
+<h2>使用Truffle 部署测试协议</h2>
+<pre><code>mkdir hello-world
+cd hello-world
+truffle init
+
+truffle test
+
+...
+</code></pre>
+<p>建立协议</p>
+<pre><code>truffle create contract HelloWorld
+contracts/HelloWorld.sol
+
+pragma solidity ^0.4.9;
+
+contract HelloWorld {
+address private creator;
+address private lastCaller;
+string private message;
+uint private totalGas;
+
+
+
+function HelloWorld(){
+     /*
+  We can use the special variable `tx` which gives us information
+  about the current transaction.
+
+  `tx.origin` returns the sender of the transaction.
+  `tx.gasprice` returns how much we pay for the transaction
+	*/
+    creator = tx.origin;
+    totalGas = tx.gasprice;
+    message = &quot;Hello World&quot;;
+}
+
+function getMesage() constant returns (string) {
+    return message;
+}
+
+function getLastCaller() constant returns(address){
+    return lastCaller;
+}
+function getCreator() constant returns (address){
+    return creator;
+}
+function getTotalGas() constant returns(uint) {
+return totalGas;
+}
+//End: getters
+
+//Being: setters
+function setMessage(string newMessage) {
+message = newMessage;
+lastCaller = tx.origin;
+totalGas += tx.gasprice;
+}
+}
+</code></pre>
+<p>Migration:我们完成了一个协议，需要用一种方式将这个协议部署到区块链中。truffle使用migration方式，压缩和部署contracts</p>
+<pre><code>truffle create migration 
+生成一个文件: 1521178244_deploy_hello_world.js
+
+在js文件中部署协议
+
+const HelloWorld = artifacts.require('HelloWorld')
+	module.exports = function(deployer) {
+deployer.deploy(HelloWorld)
+};
+</code></pre>
+<p>需要将协议部署到测试区块链中  truffle migrate --reset</p>
+<p>Testing</p>
+<pre><code>truffle create test HelloWorld
+test/hello_world.js
+
+const HelloWorld = artifacts.require('HelloWorld')
+
+contract('HelloWorld', function(accounts) {
+it('sets the first account as the contract creator', async function() {
+		const contract = await HelloWorld.deployed()
+		const creator = await contract.getCreator()
+		
+		assert.equal(creator, accounts[0],'main account is the creator')
+})
+it('has hello world as initial message' ,async function(){
+				const contract = await HelloWorld.deployed()
+				
+				const message = await contract.getMesage()
+				assert.equal(message, 'Hello World', 'message is hola mundo')
+		})
+it('changes the message via setMessage', async function() {
+const contract = await HelloWorld.deployed()
+
+// Execute a transaction and change the state of the contract.
+await contract.setMessage('hola mundo')
+
+// Get the new state.
+const message = await contract.getMesage()
+
+assert.equal(message, 'hola mundo', 'message is hola mundo')
+})
+});
+</code></pre>
+<p>使用测试命令</p>
+<pre><code>truffle test
+测试输出
+
+Contract: HelloWorld
+√ sets the first account as the contract creator
+√ has hello world as initial message
+√ changes the message via setMessage (91ms)
+</code></pre>
+<p>解析这个过程 <a href="https://blog.abuiles.com/blog/2017/07/08/writing-smart-contracts-with-truffle/" target="_blank" rel="noopener">https://blog.abuiles.com/blog/2017/07/08/writing-smart-contracts-with-truffle/</a></p>
+<p>1 协议文件</p>
+<pre><code>构造函数中一个变量tx
+
+首先看下面的全局变量
+
+block.coinbase(address): 当前块的矿场的地址
+block.difficulty(uint) : 当前块的难度
+block.gaslimit(uint)   : 当前块的gaslimit
+block.number(uint)     : 当前块的数量
+block.blockhash(function(uint) returns(bytes32)): 给定的块的hash值，只有最近工作的256块的hash值
+block.timestamp(uint)  ： 当前块的时间戳
+msg.data(bytes)			: 完整的calldata
+msg.gas(uint)			: 剩余gas
+msg.sender(address)		: 消息的发送者
+msg.value(uint)			: 和消息一起发送的wei的数量
+now(uint):				当前块的时间戳(block.timestamp的别名)
+tx.gasprice(uint):		交易的gas价格
+tx.origin(address):		交易的发送者(全调用链)
+sha3(...) retuens (bytes32): 计算(紧凑排列的) 参数的 Etherum-SHA3 hash值
+sha256(...) returns (bytes32): 计算(紧凑排列的)参数的SHA256 hash值
+ripemd160(...) returns (bytes20): 计算256个参数的RIPEMD
+ecrecover(bytes32, uint8, bytes32, bytes32) returns (address):椭圆曲线签名公钥恢复
+addmod(uint x, uint y, uint k) returns (uint):计算（x + y）K，加法为任意精度，不以2 ** 256取余
+mulmod(uint x, uint y, uint k) returns (uint):计算（XY）K，乘法为任意精度，不以2 * 256取余
+this (current contract’s type): 当前合约，在地址上显式转换
+super:在层次关系上一层的合约
+selfdestruct(address):销毁当前的合同，将其资金发送到指定address地址
+.balance:address地址中的账户余额（以wei为单位）
+.send(uint256) returns (bool):将一定量wei发送给address地址，若失败返回false。
+</code></pre>
+<p>contract中的分析</p>
+<pre><code>creator = tx.origin;  //交易的发送者，协议的关联者，
+这里和第一个account账户关联
+totalGas = tx.gasprice;
+message = &quot;Hello World&quot;;
+
+const contract = await HelloWorld.deployed()
+const creator = await contract.getCreator()
+console.log(creator)
+console.log(accounts[0])
+
+0x0eb84a8d7ae082e0d9709c75ba8a230e0c74e278
+0x0eb84a8d7ae082e0d9709c75ba8a230e0c74e278
+
+tx.gasprice: BigNumber { s: 1, e: 11, c: [ 100000000000 ] }
+
+也就是在部署这个协议的时候，默认将accounts作为tx.origin，那么协议的发送者是谁?
+并且会调用构造函数
+
+tx.origin: 0x0eb84a8d7ae082e0d9709c75ba8a230e0c74e278
+</code></pre>
+<p>下面修改协议，对上面的数据进行一次重新测试</p>
+<pre><code>    coinbase = block.coinbase();
+    difficulty = block.difficulty();
+    gaslimit = block.gaslimit();
+    number = block.number();
+    nottime = block.timestamp();
+    calldata = msg.data();
+    gas = msg.gas();
+    sender = msg.sender();
+    weivalue = msg.value();
+</code></pre>
+<p><img src="/img/solidity01.png" alt=""></p>
+<h2>Solidity by Example</h2>
+<p><strong>Voting</strong></p>
+<p>how to assign voting rights to the correct persons and how to prevent manipulation.</p>
+<pre><code>pragma solidity ^0.4.9;
+
+
+contract Ballot {
+// struct type
+struct Voter{
+    uint weight;
+    bool voted;
+    address delegate;
+    uint vote;
+}
+
+struct Proposal{
+    bytes32 name;
+    uint voteCount;
+}
+
+address public chairperson;
+mapping(address =&gt; Voter) public voters;
+Proposal[] public proposals;
+
+
+function Ballot(bytes32[] proposalNames) public {
+    chairperson = msg.sender;
+    voters[chairperson].weight =1;
+
+    for(uint i=0;i&lt;proposalNames.length;i++)
     {
-        System.out.println(term + &quot; [&quot; + term.offset + &quot;:&quot; + (term.offset + term.word.length()) + &quot;]&quot;);
+        proposals.push(Proposal({
+            name: proposalNames[i],
+            voteCount:0
+    }));
     }
-南京市/ns [0:3]
-南京/ns [0:2]
-长江/ns [3:5]
-大桥/n [5:7]
+}
+// Give `voter` the right to vote on this ballot.
+// May only be called by `chairperson`.
+function giveRightToVote(address voter) public {
+    //If the arguments of 'require' evaluate to 'false'
+    // it terminates and reverts all changes to
+    // the state and to Ether balances. It is often
+    // a good idea to use this functions are called incorrectly.proposals//
+    // but watch out,this will currently also consume all provided gas
+    //(this is planned to change in the future)
+    require(
+        (msg.sender == chairperson) &amp;&amp;
+         !voters[voter].voted &amp;&amp; (voters[voter].weight ==0)
+        );
+    voters[voter].weight =1;
+}
 
+function delegate(address to) public {
+    Voter storage sender = voters[msg.sender];
+    require(!sender.voted);
 
-也是在HMM-Viterbi的基础上进行了其他扩展
+    require(to != msg.sender);
 
-public static final Segment SEGMENT = HanLP.newSegment().enableIndexMode(true);
+    while( voters[to].delegate != address(0))
+    {
+        to = voters[to].delegate;
+        require(to != msg.sender);
+    }
+    sender.voted = true;
+    sender.delegate = to;
+    Voter storage delegate_ = voters[to];
+    if(delegate_.voted){
+        proposals[delegate_.vote].voteCount += sender.weight;
+    }else{
+        delegate_.weight += sender.weight;
+    }
+
+}
+
+function vote(uint proposal) public {
+    Voter storage sender = voters[msg.sender];
+    require(!sender.voted);
+    sender.voted = true;
+    sender.vote = proposal;
+
+    proposals[proposal].voteCount += sender.weight;
+}
+
+function winningProposal() public view returns (uint winningProposal_)
+{
+    uint winningVoteCount =0;
+    for(uint p=0; p&lt;proposals.length; p++)
+    {
+        if (proposals[p].voteCount &gt;winningVoteCount){
+            winningVoteCount = proposals[p].voteCount;
+            winningProposal_ =p;
+        }
+    }
+}
+
+function winnerName() public view returns (bytes32 winnerName_)
+{
+    winnerName_ = proposals[winningProposal()].name;
+}
+}
+
+构造函数:
+合约的构造者拥有 weight =1
+候选人数组: name, 票数 0
+
+giveRightToVote(address voter)
+	赋予投票人的投票权利，首先保证合约的拥有者 是主席
+	投票者 没有投过票， 权力是0，才能赋予投票权
+
+delegate: 将自己的投票权限给代理人，让代理人帮助投票
+	
+
+协议稍微有点复杂，但还是看完了，里面有个问题
+一: 测试的时候  [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]作为议案，供用户投票
+二: giveRightToVote: 可以输入 1，2，3等值，作为voter账户，
+初始化的时候会将bool初始化为false，uint为0，address 为0
+三： delegate代理，这个代理的入参是address to，但是这个动作
+的发起者是msg.sender,在测试的时候是和create的账户保持一致
+的，作为A，然后to作为B，把A的投票权限让B去代理，那么最终的实
+际操作在B中，但是也就意味着这样无法完成下面的vote操作，因为
+vote操作需要的是msg.sender的投票权限，怎么才能切换用户或者
+address，或者msg.sender从而实现不同用户的切换
 </code></pre>
-<p>繁体分词</p>
-<pre><code>繁体分词 TraditionalChineseTokenizer 可以直接对繁体进行分词，输出切分后的繁体词语。调用方法如下:
-
-List&lt;Term&gt; termList = TraditionalChineseTokenizer.segment(&quot;大衛貝克漢不僅僅是名著名球員，球場以外，其妻為前辣妹合唱團成員維多利亞·碧咸，亦由於他擁有突出外表、百變髮型及正面的形象，以至自己品牌的男士香水等商品，及長期擔任運動品牌Adidas的代言人，因此對大眾傳播媒介和時尚界等方面都具很大的影響力，在足球圈外所獲得的認受程度可謂前所未見。&quot;);
-System.out.println(termList);
+<h2>Blind Auction(暗箱拍卖)</h2>
+<p>这是一个非公开的拍卖系统，在透明的平台运行非公开拍卖看起来是矛盾的，但是密码学可以做到这一点。</p>
+<p>在拍卖期间，参与者把自己的出价加密发送给拍卖系统，除了自己，任何人不知道出价是多少。当拍卖结束，参与者把出价明文发给拍卖系统，系统用明文加密运算，跟之前发送的密文比对，一致的话说明出价跟之前一样，出价有效。</p>
+<p>在传统领域，很多业务很容易产生暗箱操作，智能合约让参与者跟工作人员都无法干预系统，系统也没有人的行为，全部是自动执行的代码，使业务变得透明公平，这对产业的变革是颠覆性的。</p>
+<h2>Lauout of a Solidity Source File</h2>
+<p>pragma  0.x.0  x.0.0</p>
+<pre><code>pragma solidity ^0.4.21
 </code></pre>
-<p>极速词典分词</p>
-<pre><code>极速分词是词典最长分词，速度极其快，精度一般。调用方法如下:
-
-使用的算法是 《Aho Corasick自动机结合DoubleArrayTrie极速多模式匹配》
-
-String text = &quot;江西鄱阳湖干枯，中国最大淡水湖变成大草原&quot;;
-System.out.println(SpeedTokenizer.segment(text));
+<p>这样一个源文件将不会被低于0.4.0 的编译器编译，或者高于0.5.0 的编译器编译。^ 代表直到0.5.0 之前的编译器都可以编译</p>
+<p>导入其他文件</p>
+<pre><code>import &quot;filename&quot;;
+import * as symbolName from &quot;filename&quot;;
 </code></pre>
-<p>N-最短路径分词</p>
-<pre><code>最短路分词器 NShortSegment 比最短路分词器( DijkstraSegment )慢，但是效果稍微好一些，对命名实体识别能力更强。调用方法如下:
+<p>Paths</p>
+<p>注释</p>
+<pre><code>pragma solidity ^0.4.0;
+
+/** @title Shape calculator. */
+contract shapeCalculator {
+/** @dev Calculates a rectangle's surface and perimeter.
+  * @param w Width of the rectangle.
+  * @param h Height of the rectangle.
+  * @return s The calculated surface.
+  * @return p The calculated perimeter.
+  */
+function rectangle(uint w, uint h) returns (uint s, uint p) {
+    s = w * h;
+    p = 2 * (w + h);
+}
+}	
 </code></pre>
-<p>Dijkstra分词</p>
+<h2>Structure of a Contract</h2>
+<p>State Variables</p>
+<pre><code>uint storedData;  // state variable
+</code></pre>
+<p>Functions</p>
+<pre><code>function bid() public payable // function
+</code></pre>
+<p>Function Modifiers</p>
+<pre><code>函数修饰符可以用声明的方式修改函数的语义。
+
+modifier onlySeller() // Modifier
+</code></pre>
+<p>Events</p>
+<pre><code>event HighestBidIncreased(address bidder,uint amount) // Event
+</code></pre>
+<p>Struct Types</p>
+<pre><code>struct Voter{
+		uint weight;
+		bool voted;
+	}  // Struct
+</code></pre>
+<p>Enum Types //枚举</p>
+<pre><code>enum State { Created,Locked,Inactive } // enum
+</code></pre>
+<h2>Types</h2>
+<pre><code>bool: true/false  !, &amp;&amp;, ||, == ,!=
+int/uint: uint--&gt; uint 256, int --&gt;int256
+&lt;=, &lt; ==,!=,&gt;=, &gt;
+位运算: &amp;，| ^ 
+&lt;&lt; 左移，  &gt;&gt; 右移
+</code></pre>
+<p>address: 20 byte value</p>
+<pre><code>Members of Addresses: balance and transfer
+balance: 查询地址的余额
+transfer: 发送Ether(wei 计数) 
+
+address x = 0x123;
+address myAddress = this;
+if (x.balance &lt; 10 &amp;&amp; myAddress.balance &gt;= 10) x.transfer(10); 
+
+send：
+	使用send的时候有些危险，如果call stack depth是1024，或者接收者运行超出gas，交易失败。因此为了交易的安全，检查使用send的返回值； 使用transfer更安全: 或者使用一个方式 接收者撤回money
+
+call,callcode,delegatecall
+</code></pre>
+<p>Fixed-size Bytes</p>
+<pre><code>bytes1,bytes2,bytes3,....bytes32, byte 是bytes1的别名
+
+it is possible to use n array of bytes as byte[], but
+is is wasting a lot of space.,31 bytes every element, 
+to be exact, when passing in calls, it is better to use bytes
+</code></pre>
+<p>Dynamically-sized byte array</p>
+<pre><code>bytes: 是一个可变长的数组，不是一个value-type
+string: 动态可变长的UTF-8编码的字符串。
+</code></pre>
+<p>Address Literals (地址常量)</p>
+<p>Rational and Integer Literals</p>
+<p>String Literals</p>
+<p>Hexadecimal Literals</p>
+<p>Enums</p>
+<pre><code>	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
+	ActionChoices choice;
+	ActionChoices constant defaultChoice = ActionChoices.GoStraight;
+</code></pre>
+<p>Function Types</p>
+<pre><code>function (&lt;parameter types&gt;) {internal|external} [pure|constant|view|payable] [returns (&lt;return types&gt;)]
+
+默认情况下，函数是内部的，因此，internal可以忽略
+
+function f() public view returns (bytes4) {
+	return this.f.selector;
+}
+
+
+//外部函数不能在内部调用
+function Pyramid(uint l) public pure returns (uint){
+    return ArrayUtils.range(l).map(square).reduce(sum);
+}
+function square(uint x) external pure returns (uint)
+{
+    return x*x;
+}
+function sum(uint x,uint y) external pure returns (uint)
+{
+    return x+y;
+}
+因此上面的句子编译失败
+</code></pre>
+<p>功能修饰符</p>
+<pre><code>修饰符可用于轻松更改功能的行为，例如，可以在执行功能之前自动检查条件。修饰符是合同的可继承属性，可能会被派生合同覆盖。
+
+//此合约仅定义修饰符，但不是用它 - 它将用于派生合约
+//函数体插入其中，特殊符号 _; 在修饰符的定义出现。
+//这意味着如果所有者调用此函数，则执行该函数，否则抛出异常。
+modifier onlyOwner{
+	require(msg.sender == owner; )
+	-;
+}
+</code></pre>
+<p>Reference Types （引用类型）</p>
+<pre><code>因为变量间的复制开销比较大，因此一般可以考虑存储在memoey或者storage中
+
+默认的 对于函数参数(包括返回值)是在memory中，本地变量是在storage中
+state variables 强制被存储在storage中
+
+还有第三个数据位置，calldata，是一个不能被修改的，不能被持久化的位置，并且函数参数被存储。函数参数被强制性的存储在calldata中。
+</code></pre>
+<p>数据位置非常重要，因为它们改变了赋值的行为：存储和内存之间的赋值以及状态变量（甚至来自其他状态变量）总是创建一个独立的副本。对本地存储变量的赋值只分配一个引用，而这个引用总是指向状态变量，即使后者在这期间也被改变了。另一方面，从内存存储引用类型到另一个内存存储引用类型的赋值不会创建副本。</p>
+<pre><code>uint[] x; // 本地变量存储在storage中
+function f(uint[] memorArray)： 函数参数保存在memory中
+x=memoryArray; 复制一份memory中的数据到storage中。
+
+var y=x;// 本地变量的赋值是分配一个指向storage的引用
+y.length=2; //通过修改引用的大小类修改实际存储对象
+delete x;  修改storage中的数据
+y=memoryArray; // 不能给一个指针变量赋值一个memory变量。
+</code></pre>
+<h2>分析</h2>
+<p>局部变量是函数中声明的变量，状态变量是合约内声明的共有变量</p>
+<p>1 storage 转换为storage</p>
+<pre><code>当把一个storage类型的变量赋值给另一个storage时，只是修改了指针
+S s; // storage
+funciton convertToStorage(S storage s) internal{
+	S tmp =s;  // storage  --&gt; storage
+	tmp a =&quot;Test&quot;;
+}
+function call() returns (string)
+{
+	convertToStorage(s);
+	return s.a;//  Test
+}
+将传入的storage变量，赋值给另一个storage变量，并修改值，最后发现合约的状态变量s也被改变了， 引用的作用
+</code></pre>
+<p>memory转换为storage</p>
+<pre><code>因为局部变来那个和状态变量的类型都可能是storage，分开来讲
+</code></pre>
+<p>memory赋值给状态变量(原来memory的值是直接可以拷贝给storage的状态变量的，而不能拷贝给局部变量)</p>
+<pre><code>将一个memory类型的变量赋值给一个状态变量时，实际上是将内存变量拷贝到存储中
+
+S s;  // storage
+function call() returns(string){
+	S memry tmp = S(&quot;memory&quot;,0);
+	memoryToState(tmp);
+	return s.a;
+}
+function memoryToState(S memory tmp) internal{
+	s= tmp;
+	tmp.a =&quot;Test&quot;;
+}
+memory --&gt; 状态变量，是值拷贝
+</code></pre>
+<p>memory赋值给局部变量</p>
+<pre><code>由于在区块链中，storage必须是静态分配存储空间的。局部变量虽然是一个storage的，但是仅仅是一个storage类型的指针。如果进行这样的赋值，会产生错误。
+
+S tmp=s;  是错误的
+</code></pre>
+<p>storage到memory， 也是值的拷贝，注意storage到memory只需要强制定义左边的类型， 是可以转换成功的。</p>
+<p>memory 到memory: memory 之间是引用传递，不是值传递</p>
+<p>Arrays</p>
+<pre><code>bytes 和string 是特殊的数组，bytes和byte[] 比较详细，但是是稠密的。
+</code></pre>
+<p>将数组保存在Memory中</p>
+<pre><code>将数组变量保存在内存中可以使用new关键字，和保存在storage中相比，不能通过.length 重新划分memory数组长度
+</code></pre>
+<p>Array Literals/Inline Arrays</p>
+<pre><code>数组常量 作为一个表达式 并且不需要马上赋值
+function g(uint[3] _data) public pure{
+}
+则传入参数的形式是
+g([uint(1),2,3]);
+数组常量是一个memory数组，长度固定，基本类型是给定数据的普遍类型，[1,2,3]是uint8[3] memory,因为每一个元素的类型是uint8,因此，需要将第一个类型转换为uint。注意，固定长度的memory数组不能被分配给动态长度的memory数组。
+
+也就是说 uint[] x= [uint(1),3,4]是不行的，后面的是固定长度的，前面的是可变长度的。uint[] x 是一个storage变量。
+
+uint[] memory  x=new uint[](3)
+ x = [uint(3),3,4]
+Type uint256[3] memory is not implicitly convertible to expected type uint256[] memory.
+后面的是固定长度的数组，前面的是可变长的数组，不能赋值?
+有点奇怪
+</code></pre>
+<p>Members</p>
+<pre><code>length: 动态数组可以在storage(不是在memory)中调整大小通过.length 
+
+那么动态数组应该如何定义呢?
+uint[] x = new uint[](4)
+TypeError: Type uint256[] memory is not implicitly convertible to expected type uint256[] storage pointer
+
+push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一个新的元素在数组的末尾。 函数返回一个新的长度
+</code></pre>
 
           
         
@@ -1908,7 +1216,7 @@ System.out.println(SpeedTokenizer.segment(text));
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/专题推荐0205/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/12/区块链01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -1927,7 +1235,7 @@ System.out.println(SpeedTokenizer.segment(text));
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/05/专题推荐0205/" itemprop="url">专题推荐0205</a></h1>
+                <a class="post-title-link" href="/2018/03/12/区块链01/" itemprop="url">区块链01</a></h1>
         
 
         <div class="post-meta">
@@ -1937,10 +1245,10 @@ System.out.println(SpeedTokenizer.segment(text));
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T13:39:13+08:00">
-                2018-02-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T13:06:57+08:00">
+                2018-03-12
               </time>
             
 
@@ -1979,26 +1287,35 @@ System.out.println(SpeedTokenizer.segment(text));
       
         
           
-            <h2>专题推荐</h2>
-<p>专题推荐 ------&gt; 衣食住行</p>
-<p>家庭人口判断？</p>
-<p>算法本身根据不一样的业务属性，</p>
-<p>基于现有的数据进行优化</p>
-<p>刘珊珊</p>
-<p>王迪</p>
-<p>吴尚波 / 高响 /李竹红</p>
-<p>吴久清</p>
-<p>直播导流</p>
-<pre><code>在某个专题里面，专题的其他节目全部推荐； 如果没有推荐，就推荐相关
-</code></pre>
-<p>我的直播推荐</p>
-<pre><code>几个频道的节目，5； 
-</code></pre>
-<p>我的轮播</p>
-<pre><code>个性化推荐，轮播方式。
-</code></pre>
-<p>专题内容</p>
-<pre><code>专题</code></pre>
+            <h2>Windows</h2>
+<p><a href="https://github.com/ethereum/go-ethereum/releases/" target="_blank" rel="noopener">https://github.com/ethereum/go-ethereum/releases/</a></p>
+<p>安装后用cmd命令打开命令行，进入到你安装geth的目录下，输入geth –help 命令，如果输出一大堆关于geth的信息如下图则说明安装成功。当前geth命令只能在geth对应的目录下使用，如果想要在任何目录使用geth命令，只要把你安装geth的目录的路径加入到系统环境环境变量path中即可。</p>
+<p><a href="https://github.com/ethereum/go-ethereum/releases/tag/v1.4.11" target="_blank" rel="noopener">https://github.com/ethereum/go-ethereum/releases/tag/v1.4.11</a></p>
+<p><a href="https://ethereum.github.io/go-ethereum/downloads/" target="_blank" rel="noopener">https://ethereum.github.io/go-ethereum/downloads/</a>
+最全的下载地址</p>
+<p>创世文件的定义
+<a href="https://my.oschina.net/stevex/blog/746669" target="_blank" rel="noopener">https://my.oschina.net/stevex/blog/746669</a></p>
+<p>geth --identity &quot;PICC&quot; --rpc --rpccorsdomain &quot;*&quot;  --datadir &quot;%cd%\chain&quot;  --port &quot;30303&quot; --rpcapi &quot;db,eth,net,web3&quot;  --networkid 95518 console</p>
+<p>targetgaslimit –每个块的gas上限，这里可以暂时理解为容量 rpc –启动rpc通信，可以进行智能合约的部署和调试 rpcaddr –rpc接口的地址 rpcport –rpc接口的端口号 port –网络监听端口，用于节点之间通信 rpcapi –设置rpc的范围，暂时开启eth,web3,personal足够 networkid –设置当前区块链的网络ID，是一个数字，可以随便写 identity –区块链的标示，随便填写，用于标示目前网络的名字 nodiscover 禁止被网络中其它节点发现，需要手动添加该节点到网络 maxpeers 最大节点数量 datadir –设置当前区块链网络数据存放的位置 unlock –解锁某用户（此处用用户坐标来控制，解锁后的用户调用接口发起交易时，不要需要提供密码） rpccorsdomain 限制rpc访问源的ip，代表不限制 mine 允许挖矿 console –启动命令行模式，可以在Geth中执行命令*</p>
+<p>personal.newAccount()</p>
+<h2>智能合约</h2>
+<p>以太坊很大的特色就是能够实现智能合约，所谓智能合约，是密码学家提出以数字形式定义的一系列承诺，包括合约参与方可以在上面执行这些承诺的协议。</p>
+<p>智能合约一旦设立指定后，能够无需中介的参与自动执行，并且没有人可以阻止它的运行。</p>
+<p>区块链为智能合约提供可行执行环境，智能合约为区块链扩展应用。而在以太坊上的智能合约，能够控制区块链上各种数字资产进行复杂的操作，随着智能合约开始获得越来越多的使用，人们也发现，就像现实世界的合同一样，如果没有认真审核的话，其中就有可能出现漏洞，并且被坏人利用。</p>
+<p><strong>智能合约是什么</strong></p>
+<p>从用户角度来讲，智能合约通常被认为是一个自动担保账户，例如，当特定的条件满足时，程序就会释放和转移资金</p>
+<p>从技术角度来讲，智能合约被认为是网络服务器，只是这些服务器并不是使用IP地址假设在互联网上，而是架设在区块链上，从而可以在上面运行特定的程序。</p>
+<p>但与网络服务器不同的是，所有人都可以看到智能合约，因为这些智能合约的代码和状态都在区块链上。而且，与网络服务器不同的是，智能合约不依赖某个特定的硬件设备，事实上，智能合约的代码由所有参与挖矿的设备来执行</p>
+<p>代码的执行是自动的: 要么成功执行，或者所有的状态变化都撤销(包括从当前失败的合约中已经发送或接受的信息) 这很重要，避免了合约 部分执行的情况(例如，在证券购买交易中，证券所有者已经转移发送了证券，但是密码学货币的支付转移却失败了)。 在区块链环境下，这尤为重要，因为没有办法来撤销执行错误所带来的不好的后果(如果对手不配合的话，根本没有办法逆转交易)</p>
+<p>智能合约基于区块链的智能合约包括事务处理和保存的机制，以及一个完备的状态机，用于接受和处理各种智能合约；并且事务的保存和状态处理都在区块链上完成。事务主要包含需要发送的数据；而事件则是对这些数据的描述信息。事务及事件信息传入智能合约后，合约资源集合中的资源状态会被更新，进而触发智能合约进行状态机判断。如果自动状态集中某个或某几个动作的触发条件满足，则由状态机根据预设信息选择合约动作自动执行。</p>
+<p>基于区块链的智能合约的构建及执行分为如下步骤：</p>
+<p>智能合约的构建: 由区块链内的多个用户共同参与指定一份智能合约；</p>
+<p>智能合约的存储: 智能合约通过P2P网络扩散到每个节点，并存入区块链</p>
+<p>智能合约的执行: 智能合约定期进行自动机状态检查，将满足条件的事务进行验证，达成共识后自动执行并通知用户</p>
+<p>智能合约其实就是一种可以自动化执行的简单交易。</p>
+<p>https://www.cnblogs.com/fengzhiwu/p/5629468.html</p>
+<h2>MetaMask过程</h2>
+<h2>Ubuntu上</h2>
 
           
         
@@ -2047,7 +1364,7 @@ System.out.println(SpeedTokenizer.segment(text));
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/数学之美-自然语言处理-从规则到统计/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/08/Spark-调优/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -2066,7 +1383,7 @@ System.out.println(SpeedTokenizer.segment(text));
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/05/数学之美-自然语言处理-从规则到统计/" itemprop="url">数学之美 自然语言处理 从规则到统计</a></h1>
+                <a class="post-title-link" href="/2018/03/08/Spark-调优/" itemprop="url">Spark 调优</a></h1>
         
 
         <div class="post-meta">
@@ -2076,10 +1393,10 @@ System.out.println(SpeedTokenizer.segment(text));
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T09:56:37+08:00">
-                2018-02-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T17:34:19+08:00">
+                2018-03-08
               </time>
             
 
@@ -2118,28 +1435,150 @@ System.out.println(SpeedTokenizer.segment(text));
       
         
           
-            <h2>自然语言处理 从规则到统计</h2>
-<p><img src="/img/math2_0.png" alt=""></p>
-<p>句法分析，先看下面一个简单的句子</p>
-<pre><code>徐志摩喜欢林徽因
+            <h2>Spark 性能调优记录</h2>
+<p>Spark 性能调优要点分析</p>
+<pre><code>并行度
+压缩
+序列化
+数据倾斜
+JVM调优(JVM数据结构化优化)
+内存调优
+Task性能调优(包含Mapper和Reducer两种类型的Task)
+Shuffle网络优化(小文件合并)
+RDD算子优化(RDD复用，自定义RDD)
+数据本地性
+容错调优
+参数调优
 </code></pre>
-<p>这个句子分为主语、谓语和句号三部分，对每个部分进行分析，得到下面的句法分析树(Parse Tree)。</p>
-<p><img src="/img/math2_1.png" alt=""></p>
-<pre><code>句子----&gt; 主语谓语句号
-主语----&gt; 名词
-谓语----&gt; 动词  名词短语
-名词短语----&gt; 名词
-名词----&gt; 徐志摩
-动词----&gt; 喜欢
-名词----&gt; 林徽因
-句号----&gt; 。
+<p>大数据最怕的就是数据本地性和数据倾斜，调优Spark的重点一定是在数据本地性和数据倾斜入手</p>
+<pre><code>资源分配和使用: 能够申请多少资源以及如何最优化的使用计算资源
+Shuffle调优: 分布式系统必然面临的杀手级别的问题
+数据倾斜： 分布式系统业务本身有数据倾斜
 </code></pre>
-<p>20世纪80年代以前，自然语言处理工作中的文法规则都是人写的，这和后来采用机器总结的做法大不相同。直到2000年后，很多公司，比如机器翻译公司SysTran,还靠人来总结文法规则。</p>
-<h2>从规则到统计</h2>
-<p>上世纪70年代，基于统计的方法的核心模型是通信系统加隐含马尔科夫模型。</p>
-<p>今天，几乎不再有科学家宣称自己是传统的基于规则方法的捍卫者。自然语言处理的规则也从单纯的句法分析和语义理解，变成了非常贴近应用的机器翻译、语音识别、文本到数据库自动生成、数据挖掘和知识的获取等等。</p>
-<h2>小结</h2>
-<p>基于统计的自然语言处理方法，在数学模型上和通信是相通的，甚至就是相通的。因此，在数学意义上自然语言处理又和语言的初衷---通信联系在一起了。</p>
+<p>核心调优参数如下</p>
+<pre><code>num-executors: 
+	Yarn会按照Driver的申请去最终为当前的Application生产指定个数的Executors，
+executor-memory:
+	定义了每个Executor的内存，与JVM OOM密切相关，许多时候甚至决定了Spark运行的性能
+	如果executor-memory超过了worker-memory 就会停止任务
+	
+
+executor-cores:
+	决定了在Executors中能够并行执行的Tasks的个数
+
+total-executor-cores:
+	所有的core的个数，该数目除以executor-cores = executor个数
+
+
+driver-memory: 默认是1G
+spark.default.parallelize: 并行度问题，如果不设置这个参数，Spark会根据HDFS中的Block的个数去设置这一个数量，原理是每个Block对应一个Task，Spark官方的建议是每一个Core负责2-3个Task
+
+spark.storage.memoryFraction: 默认占用60%，如果计算比较依赖历史数据则可以调高该参数，如果计算比较依赖Shuffle的话则需要降低该比例。
+
+spark.shuffle.memoryFraction: 默认占用20%,如果计算比较依赖shuffle的话则需要调高该比例。
+</code></pre>
+<p>**Spark 更高性能的算子 **</p>
+<p>Shuffle分开两部分，一个是Mapper端的Shuffle，另一个就是Reduce端的Shuffle，性能调优有一个很重要的总结就是尽量不使用Shuffle类的算子，能避免就尽量避免，因为一般进行Shuffle的时候，会把集群中多个节点上的同一个key汇聚在同一个节点上，例如reduceByKey。然后会优先把数据放在内存中，但如果内存不够的话会放在磁盘上。Shuffle在进行数据转去之前，为了整个集群的稳定性，它的Mapper端会把数据写到本地文件系统。这可能导致大量磁盘文件的操作。如何避免Shuffle可以考虑如下:</p>
+<pre><code>1 采用Map端的Join(RDD1+RDD2) 先把一个RDD1的数据收集起来，然后再通过sc.broadcast()把数据广播到Executor上
+2 如果无法避免Shuffle，退而求其次就是需要更多的机器参与Shuffle过程，这个时候就需要充分的利用Mapper端和Reducer端机制的计算资源，尽量使用Mapper端的Aggregate功能，例如aggregateByKey操作。相对于groupByKey而言，更倾向于使用reduceByKey() 和aggregateByKey() 来取代groupByKey(),因为groupbyKey() 不会进行Mapper端的操作，aggregateByKey()可以给予更多的控制。
+3 如果一批一批的处理数据来说，可以使用mapPartitions(),但这个算子可能会出现OOM机会，会进行JVM的GC操作。
+4 如果进行批量插入数据到数据库的话，建议使用foreachPartition() 
+5 
+6 官方建议使用repartitionAndSortWithPartitions()
+7 数据进行复用时一般都会进行持久化persist()
+8 
+</code></pre>
+<p>Spark开发调优</p>
+<p>1 避免创建重复的RDD</p>
+<pre><code>对于同一份数据，只应该创建一个RDD，不能创建多个RDD来代表同一份数据
+</code></pre>
+<p>2 尽可能复用同一个RDD</p>
+<pre><code>由于业务需要，对rdd1执行了一个map操作，创建了一个rdd2，而rdd2中的数据仅仅是rdd1中的value值而已，也就是说
+
+JavaPairRDD&lt;Long,String&gt; rdd1 = ...
+JavaRDD&lt;String&gt; rdd2 = rdd1.map(...)
+
+rdd1.reduceByKey(...)
+rdd2.map(...)
+
+// 上面这个case中，其实rdd1和rdd2的区别无非就是数据格式不同而已，rdd2的数据完全就是rdd1 的子集而已，却创建了两个rdd
+可以用一个rdd来执行操作
+
+JavaPairRDD&lt;Long,String&gt; rdd1 = ...
+rdd1.reduceByKey(...)
+rdd1.map(tuple._2...)
+</code></pre>
+<p>三: 对多次使用的RDD进行持久化</p>
+<pre><code>Spark中对于一个RDD执行多次算子的默认原理是这样的：每次你对一个RDD执行一个算子操作时，都会重新从源头处计算一遍，计算出那个RDD来，然后再对这个RDD执行你的算子操作。这种方式的性能是很差的。
+
+因此对于这种情况，我们的建议是：对多次使用的RDD进行持久化。此时Spark就会根据你的持久化策略，将RDD中的数据保存到内存或者磁盘中。以后每次对这个RDD进行算子操作时，都会直接从内存或磁盘中提取持久化的RDD数据，然后执行算子，而不会从源头处重新计算一遍这个RDD，再执行算子操作。
+
+val rdd1 = sc.textFile(&quot;hdfs://192.168.0.1:9000/hello.txt&quot;).cache()
+rdd1.map(...)
+rdd1.reduce(...)
+</code></pre>
+<p>四: 尽量避免使用Shuffle类算子</p>
+<pre><code>Shuffle过程中，会发生大量的磁盘文件读写的IO操作，以及数据的网络传输操作。磁盘IO和网络传输也是Shuffle性能较差的主要原因。
+
+// 传统的join操作会导致Shuffle操作
+因为在两个RDD中，相同的Key都需要通过网络拉取到一个节点上，由一个task进行join操作。
+val rdd3= rdd1.join(rdd2)
+
+// Boradcast + map 的join操作，不会导致shuffle操作
+//使用broadcast将一个数据量较小的rdd作为广播变量
+val rdd2Data = rdd2.collect()
+val rdd2DataBroadCast = sc.broadcast(rdd2Data)
+</code></pre>
+<p>五: 使用map-side预聚合的shuffle操作</p>
+<pre><code>map-side端的操作: 类似于Mapreduce中的本地combiner
+map-side 预聚合之后，每个节点就会只有一条相同的key?
+
+建议使用reduceByKey或aggregateByKey算子来替代掉groupByKey算子。因为reduceByKey和aggregateByKey算子都会使用用户自定义的函数对每个节点本地相同的key进行预聚合，而groupByKey算子是不会进行预聚合的，全量的数据会在集群的各个节点之间进行分发和传输，性能相对来说会比较差。
+</code></pre>
+<p><img src="/img/spark1.png" alt="">
+<img src="/img/spark2.png" alt=""></p>
+<p>六 使用高性能的算子</p>
+<pre><code>1 使用groupByKey 替代groupByKey
+2 使用mapPartitions 替代普通的map
+mapPartitions 类的算子，一次函数调用会处理一个partition所有的数据，而不是一次函数调用处理一条，性能相对来说会高一些。但是有的时候，使用mapPartitions会出现OOM的问题。因为单次函数调用就要处理掉一个partition所有的数据，如果内存不够，垃圾回收时是无法回收掉太多对象的，很可能出现oom异常，所以使用这类操作要慎重。
+
+3 使用foreachParitions替代foreach
+也是一次函数调用处理一个partition的所有数据，而不是一条数据。 
+
+实践中发现，
+
+
+4 使用filter之后进行coalesce操作
+通常对一个RDD执行filter算子过滤掉RDD中较多数据后(比如过滤掉30%以上的数据)，建议使用coalesce算子，手动减少RDD的partition数量，将RDD中的数据压缩到更少的partition中去。
+
+
+5 使用repartitionAndSortWithinPartition替代repartition与sort算子
+
+repartitionAndSortWithinPartitions是Spark官网推荐的一个算子，官方建议，如果需要在repartition重分区之后，还要进行排序，建议直接使用repartitionAndSortWithinPartitions算子。因为该算子可以一边进行重分区的shuffle操作，一边进行排序。shuffle与sort两个操作同时进行，比先shuffle再sort来说，性能可能是要高的。
+</code></pre>
+<p>七: 广播大变量</p>
+<pre><code>在算子函数中使用到外部变量时，默认情况下，Spark会将该变量复制多个副本，通过网络传输到task中，此时每个task都有一个变量副本。如果变量本身比较大的话（比如100M，甚至1G），那么大量的变量副本在网络中传输的性能开销，以及在各个节点的Executor中占用过多内存导致的频繁GC，都会极大地影响性能。
+
+因此对于上述情况，如果使用的外部变量比较大，建议使用Spark的广播功能，对该变量进行广播。广播后的变量，会保证每个Executor的内存中，只驻留一份变量副本，而Executor中的task执行时共享该Executor中的那份变量副本。这样的话，可以大大减少变量副本的数量，从而减少网络传输的性能开销，并减少对Executor内存的占用开销，降低GC的频率。
+
+通过广播方式，将变量的位置从 task 放在了Executor中
+用以共享变量
+</code></pre>
+<p>使用Kryo优化序列化性能</p>
+<pre><code>* 在算子函数中使用外部变量时，该变量会被序列化后进行网络传输
+* 将自定义的类型作为RDD的泛型类型时(比如JavaRDD，Student是自定义类型)，所有自定义类型对象，都会进行序列化。因此这种情况下，也要求自定义的类必须实现Serializable接口
+* 使用可序列化的持久化策略时，Spark会将RDD中的每个partition都序列化成一个大的字节数组
+
+官方介绍，Kryo序列化机制比Java序列化机制，性能高10倍左右。Spark之所以默认没有使用Kryo作为序列化类库，是因为Kryo要求最好要注册所有需要进行序列化的自定义类型，因此对于开发者来说，这种方式比较麻烦。
+
+
+// 创建SparkConf对象。
+val conf = new SparkConf().setMaster(...).setAppName(...)
+// 设置序列化器为KryoSerializer。
+conf.set(&quot;spark.serializer&quot;, &quot;org.apache.spark.serializer.KryoSerializer&quot;)
+// 注册要序列化的自定义类型。
+conf.registerKryoClasses(Array(classOf[MyClass1], classOf[MyClass2]))
+</code></pre>
 
           
         
@@ -2188,7 +1627,7 @@ System.out.println(SpeedTokenizer.segment(text));
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/数学之美-文本和语言-数字和信息/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/08/Spark-Deploy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -2207,7 +1646,7 @@ System.out.println(SpeedTokenizer.segment(text));
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/05/数学之美-文本和语言-数字和信息/" itemprop="url">数学之美 文本和语言 数字和信息</a></h1>
+                <a class="post-title-link" href="/2018/03/08/Spark-Deploy/" itemprop="url">Spark Deploy</a></h1>
         
 
         <div class="post-meta">
@@ -2217,10 +1656,10 @@ System.out.println(SpeedTokenizer.segment(text));
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T09:52:31+08:00">
-                2018-02-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T13:35:04+08:00">
+                2018-03-08
               </time>
             
 
@@ -2259,14 +1698,749 @@ System.out.println(SpeedTokenizer.segment(text));
       
         
           
-            <h2>文字和语言Vs 数字和信息</h2>
-<p>通信的原理和信息传播的模型</p>
-<p>信源编码和最短编码</p>
-<p>编码的规则、语法</p>
-<p>聚类</p>
-<p>校验位</p>
-<p>双语对照文本、语料库和机器翻译</p>
-<p>多义性和利用上下文消除歧义性。</p>
+            <h2>Cluster Mode Overview</h2>
+<p>Read through the <a href="http://spark.apache.org/docs/2.3.0/submitting-applications.html" target="_blank" rel="noopener">application submission guide</a> to learn about launching applications on a cluster</p>
+<p><strong>Components</strong></p>
+<p>Spark 应用在集群上作为独立的进程组来运行，在您的 main 程序中通过 SparkContext 来协调（称之为 driver 程序）。</p>
+<p>具体的说，为了运行在集群上，SparkContext 可以连接至几种类型的 Cluster Manager（既可以用 Spark 自己的 Standlone Cluster Manager，或者 Mesos，也可以使用 YARN），它们会分配应用的资源。一旦连接上，Spark 获得集群中节点上的 Executor，这些进程可以运行计算并且为您的应用存储数据。接下来，它将发送您的应用代码（通过 JAR 或者 Python 文件定义传递给 SparkContext）至 Executor。最终，SparkContext 将发送 Task 到 Executor 以运行。</p>
+<p><img src="http://spark.apache.org/docs/2.3.0/img/cluster-overview.png" alt=""></p>
+<p>这里有几个需要注意的地方</p>
+<ol>
+<li>每个application获取到executor进程，会保持在应用的生命周期中并期望在多个线程中运行Task。在调度方面和Executor方面隔离。</li>
+<li>Spark不知道底层的Cluster Manager到底是什么类型的。 只要获得Executor进程，并且彼此之间通信</li>
+</ol>
+<p><strong>Cluster Manager类型</strong></p>
+<ul>
+<li>Standalone: Spark中使得更容易来安装集群的一个简单的Cluster Manager</li>
+<li>Mesos: 一个通用的Cluster Manager，可以运行Hadoop Mapredce和其他服务应用</li>
+<li>Hadoop YARN: Hadoop 2的ResourceManager</li>
+<li>Kubernetes – an open-source system for automating deployment, scaling, and management of containerized applications.</li>
+</ul>
+<p>** 提交应用 **
+使用spark-submit 脚本可以提交应用程序至任何类型的集群，在 <a href="http://spark.apache.org/docs/2.3.0/submitting-applications.html" target="_blank" rel="noopener">application submitting</a>可以获得详细信息。</p>
+<p>**监控 **</p>
+<p>每个 driver 程序有一个 Web UI，通常在端口 4040 上，它展示了关于运行 task，executor，和存储使用情况的信息。在网页浏览器中访问这个 UI : http://&lt;driver-node&gt;:4040。<a href="http://spark.apache.org/docs/2.3.0/monitoring.html" target="_blank" rel="noopener">监控指南</a> 也描述了其它的监控选项。</p>
+<p><strong>Job调度</strong></p>
+<p>Spark既可以在应用间(Cluster Manager级别)，也可以在应用内(如果一个application中发生多个计算) 调度资源。<a href="http://spark.apache.org/docs/2.3.0/job-scheduling.html" target="_blank" rel="noopener">job scheduling overview</a></p>
+<h2>Spark Standalone Mode</h2>
+<p>安装过程</p>
+<pre><code>1 解压: tar
+2 local模式: 直接使用
+3 Standalone模式:
+	mv spark-env.sh.template  spark-env.sh
+	export JAVA_HOME=/usr/lib/jdk
+	export SPARK_MASTER_IP=cd-bigdata02
+
+4 slaves
+	cd-bigdata02
+	cd-bigdata03
+</code></pre>
+<p>启动之后:</p>
+<p><img src="/img/spark0.png" alt=""></p>
+<pre><code>cores是worker的逻辑cpu个数
+cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l
+分别是4 和 8
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/02/scrapy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/02/scrapy/" itemprop="url">scrapy</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T10:01:50+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Scrapy</h2>
+<p>测试网址
+<a href="http://quotes.toscrape.com/page/1/" target="_blank" rel="noopener">http://quotes.toscrape.com/page/1/</a></p>
+<p>def start_requests(self):</p>
+<pre><code>must return an iterable of Requests(you can return a 
+list of requests of write a generator function) which 
+Spider will  begin to crawl from. Subsequent requests 
+will be generated successively form these initial 
+requests
+</code></pre>
+<p>parse()</p>
+<pre><code>The response parameter is an instance of TextResponse 
+that holds the page content and has further helpful 
+methods to handle it 
+</code></pre>
+<p>The parse() method usually parses the response, extracting the scraped data as dicts and also finding new URLs to follow and creating new requests (Request) from them.</p>
+<p><strong>How to run our spider</strong></p>
+<pre><code>scrapy crawl quotes
+
+&gt;&gt;&gt; response.css('title')
+[&lt;Selector xpath='descendant-or-self::title' data='&lt;title&gt;Quotes to Scrape&lt;/title&gt;'&gt;]
+
+response.css('title') is a list-like called SelectorList, which represents a list of selector objects that wrap around XML/HTML elements and allow you to run further queries to fine-grain the seletion or extract the data.
+</code></pre>
+<h2>Using Selectors</h2>
+<pre><code>https://doc.scrapy.org/en/latest/_static/selectors-sample1.html
+&gt;&gt;&gt; response.xpath('//title/text()')
+[&lt;Selector (text) xpath=//title/text()&gt;]
+&gt;&gt;&gt; response.css('title::text')
+[&lt;Selector (text) xpath=//title/text()&gt;]
+
+response.css('img')
+
+[&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image1_thumb.jpg&quot;&gt;'&gt;,
+&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image2_thumb.jpg&quot;&gt;'&gt;,
+&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image3_thumb.jpg&quot;&gt;'&gt;,
+&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image4_thumb.jpg&quot;&gt;'&gt;,
+&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image5_thumb.jpg&quot;&gt;'&gt;]
+
+
+&gt;&gt;&gt; response.css('img').xpath('@src').extract()
+[u'image1_thumb.jpg',
+u'image2_thumb.jpg',
+u'image3_thumb.jpg',
+u'image4_thumb.jpg',
+u'image5_thumb.jpg']
+
+
+说明xpath中里面的某一个属性用 @xxx 来表示
+
+
+
+&gt;&gt;&gt; response.xpath('//base/@href').extract()
+[u'http://example.com/']
+
+&gt;&gt;&gt; response.css('base::attr(href)').extract()
+[u'http://example.com/']
+
+&gt;&gt;&gt; response.xpath('//a[contains(@href, &quot;image&quot;)]/@href').extract()
+[u'image1.html',
+u'image2.html',
+u'image3.html',
+u'image4.html',
+u'image5.html']
+
+&gt;&gt;&gt; response.css('a[href*=image]::attr(href)').extract()
+[u'image1.html',
+u'image2.html',
+u'image3.html',
+u'image4.html',
+u'image5.html']
+
+&gt;&gt;&gt; response.xpath('//a[contains(@href, &quot;image&quot;)]/img/@src').extract()
+[u'image1_thumb.jpg',
+u'image2_thumb.jpg',
+u'image3_thumb.jpg',
+u'image4_thumb.jpg',
+u'image5_thumb.jpg']
+
+&gt;&gt;&gt; response.css('a[href*=image] img::attr(src)').extract()
+[u'image1_thumb.jpg',
+u'image2_thumb.jpg',
+u'image3_thumb.jpg',
+u'image4_thumb.jpg',
+u'image5_thumb.jpg']
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/01/hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/hadoop/" itemprop="url">hadoop</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T13:39:05+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>hadoop的集群是基于master/slave模式，namenode和jobtracker属于master，datanode和tasktracker属于slave，master只有一个，而slave有多个.</p>
+<p>SecondaryNameNode内存需求和NameNode在一个数量级上，所以通常secondary NameNode（运行在单独的物理机器上）和 NameNode 运行在不同的机器上。</p>
+<p>JobTracker对应于NameNode,TaskTracker对应于DataNode.</p>
+<p>DataNode和NameNode是针对数据存放来而言的.JobTracker和TaskTracker是对于MapReduce执行而言的.</p>
+<p>mapreduce中几个主要概念，mapreduce 整体上可以分为这么几条执行线索：</p>
+<p>jobclient，JobTracker与TaskTracker。</p>
+<p>1、JobClient会在用户端通过JobClient类将已经配置参数打包成jar文件的应用存储到hdfs，并把路径提交到Jobtracker,然后由JobTracker创建每一个Task（即 MapTask 和 ReduceTask） 并将它们分发到各个TaskTracker服务中去执行。</p>
+<p>2、JobTracker是一master服务，软件启动之后JobTracker接收Job，负责调度Job的每一个子任务。task运行于TaskTracker上，并监控它们，如果发现有失败的task就重新运行它。一般情况应该把JobTracker 部署在单独的机器上。</p>
+<p>3、TaskTracker是运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信，接收作业，并负责直接执行每一个任务。 TaskTracker 都需要运行在HDFS的DataNode上。</p>
+<p>secondaryNameNode: 他的目的使帮助 NameNode 合并编辑日志，减少 NameNode 启动时间</p>
+<p>列决几个Hadoop生态圈的组件并作简要概述
+Zookeeper:是一个开源的分布式应用程序协调服务,基于zookeeper可以实现同步服务，配置维护，命名服务。</p>
+<p>Flume:一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统。</p>
+<p>Hbase:是一个分布式的、面向列的开源数据库, 利用Hadoop HDFS作为其存储系统.</p>
+<p>Hive:基于Hadoop的一个数据仓库工具，可以将结构化的数据档映射为一张数据库表，并提供简单的sql 查询功能，可以将sql语句转换为MapReduce任务进行运行。</p>
+<p>Sqoop:将一个关系型数据库中的数据导进到Hadoop的 HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
+<p>4 正常工作的Hadoop集群中Hadoop都分别需要启动哪些进程，它们的作用分别是什么?</p>
+<p>a) NameNode 是hadoop中的主服务器，管理文件系统名称空间和对集群中存储的文件的访问，保存有metadate</p>
+<p>b) SecondaryNameNode 不是NameNode的冗余守护进程，而是提供周期检查点检查点和清理服务。帮助NN合并edits log,减少NN启动时间</p>
+<p>c) DataNode 负责管理连接到节点的存储(一个集群中可以有多个节点)。 每个存储数据的节点运行一个datanode守护进程。</p>
+<p>d) ResourceManager(JobTracker),负责调度DataNode上的工作。每个DataNode有一个TaskTracker，执行实际工作。</p>
+<p>e) NodeManager (TaskTracker)执行任务</p>
+<p>4 HDFS 的存储机制是什么</p>
+<p>客户端通过把请求发送给NameNode active，NN会把文件切成1到N个固定大小的block(一般默认为128M)并上传到DataNode中。当所有block拷贝结束时，NN会立即通知客户端上传结果。但此时上传的流程还未结束。DN还需要根据配置信息的副本数量，在不同的机架节点上通过局域网做数据拷贝工作。</p>
+<p>5 Hadoop中的job和task之间的区别是什么</p>
+<p>JobTracker是一个master服务，软件启动之后，JobTracker接受Job，负责调度Job的每一个子任务task运行于TaskTracker上，并监控他们，如果发现有失败的task就重新运行它。一般情况应该把JobTracker部署在单独的机器上。</p>
+<p>TaskTracker是运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信，接收作业，并负责执行每一个任务</p>
+<p>7 如何决定一个job的map和reduce的数量</p>
+<pre><code>splitSize = max{minSize,min{maxSize,blockSize}}
+map的数量由处理的初级分成的block熟练决定，= total_size/split_size
+reduce的数量job.setNumReduceTasks(x);x 为reduce的数量
+</code></pre>
+<p>8 如何为一个Hadoop任务设置mappers的数量</p>
+<p>InputFormat在默认情况下会根据hadoop集群HDFS块大小进行分片，每一个分片会由一个map任务来进行处理，当然用户还是可以通过参数mapred.min.split.size 参数在作业提交客户端进行自定义设置。还有一个重要参数就是mapred.map.tasks, 这个参数设置的map数量仅仅是一个提示，只有当InputFormat决定了map任务的个数比mapred.map.tasks值小时才起作用。同样，Map任务的个数也能通过使用JobConf的conf.setNumMapTasks()来手动的设置。这个方法能够用来增加map任务的个数，但是不鞥设定任务的个数小于Hadoop系统通过分隔输入数据得到的值。</p>
+<p>9 如何为一个Hadoop任务设置要创建的reducer的数量</p>
+<p>纯粹的mapreduce task的reduce task数很简单，就是参数mapred.reduce.tasks 的值</p>
+<p>10 MapReduce 中排序发生的几个阶段</p>
+<p>4个阶段</p>
+<p>Splitting: 在进行map计算之前，mapreduce会根据输入文件计算输入分片(inputsplit),每个输入分片针对一个map任务。输入分片存储的并非数据本身，</p>
+<p>11 请描述Mapreduce中shuffle阶段的工作流程，如何优化shuffle阶段</p>
+<p>分区，排序，溢写，拷贝到对应reduce机器上，增加conbiner，压缩溢写的文件。</p>
+<p>12 Mapreduce中combiner的作用是什么，一般使用情景，哪些情况不需要？</p>
+<p>MR作业中的Map阶段会输出结果数据到磁盘中</p>
+<p>Combiner只适应于那种reduce的输入类型完全一直，且不影响最终结果的场景，比如累加，最大值等。也可以用于过滤数据，在map端将无效的数据过滤到</p>
+<p>combiner的作用就是在map端对输出先做一次合并，以减少传输到reducer的数据量</p>
+<p>combiner最基本是实现本地key的归并，具有类似本地reduce，那么所有的结果都是reduce</p>
+<p>使用combiner，先完成的map会在本地聚合，提升速度。</p>
+<pre><code>map--&gt; 本地reduce --&gt;集群reduce
+</code></pre>
+<p>13  如果没有定义partitioner，那数据在被送达reducer前是如何被分区的</p>
+<pre><code>如果没有自定义的partitioning，则默认的partition算法，即根据每一条数据的key的hascode 值 取模reduce的数量，得到的数字就是reducer 分区号
+</code></pre>
+<p>14 Map阶段结束后，Hadoop框架会处理：Partitioning，shuffle和sort，</p>
+<pre><code>map task上的shuffle结束，此时reduce task 上的shuffle开始，抓取fetch所属于自己分区的数据，同时将这些分区的数据进行排序sort(默认的排序是根据每一条数据的键的字典排序)，进而将数据进行合并merge，即根据key相同的，将其value组成一个集合，最后输出结果。
+</code></pre>
+<p>15 一个mr作业跑得比较慢，如何来优化，</p>
+<pre><code>数据倾斜
+	数据倾斜可能是partition不合理，导致部分partition中的数据过多，部分过少，通过分析数据，自定义分区解决。
+
+合理设置map和reduce数: 两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致map，reduce任务间竞争资源，造成处理超时等错误。
+
+设置map，reduce共存: 调整slowstart.completedmaps参数，是map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。
+
+合并小文件: 在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢
+
+减少spill次数
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/01/mysql-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/mysql-基础/" itemprop="url">mysql 基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T09:32:45+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/CKY/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/26/CKY/" itemprop="url">CKY</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T16:13:38+08:00">
+                2018-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>CKY(Cocke-Kasami-Younger) and Earley Parsing Algorithms</h2>
+<p><strong>Context Free Grammar</strong></p>
+<p>A Context-free Grammar(CFG) is a 4-tuple:
+$$G={N,\sum  ,P,S}$$</p>
+<p><img src="/img/nlp_cky1.png" alt=""></p>
+<p><strong>Chomsky Normal Form 乔姆斯基范式</strong></p>
+<p>A context-free grammar</p>
+<pre><code>A--&gt; \alpha
+A--&gt; BC
+Any CFG can be converted a weakly equivalent grammar in CNF
+</code></pre>
+<h2>Parsing Algorithm</h2>
+<pre><code>CFGs are basis for describing(syntactic) structure of NL sentences
+Thus- Parsing Algorithms are core of NL analysis systems
+Recognition vs. Parsing:
+	Recognition-deciding the membership in the language
+	Parsing- Recogintion+producing a parse tree for it
+Parsing is more difficult than recogintion(time complexity)
+Ambiguity - an input may have exponentially many parses.
+</code></pre>
+<h2>Parsing Algorithms</h2>
+<pre><code>Top-down vs bottom-up
+Top-down:(goal-driven): from the start symbol down
+Bottom-up:(data-driven): from the symbols up.
+
+Naive vs. dynamic programming
+Naive: enumerate everything
+backtracking: try something, discard partial solutions.
+Dynamic programming: save partial solutions in a table
+
+Example:
+CKY: bottom-up dynamic programming
+Earley parsing: top-down dynamic programming.
+</code></pre>
+<h2>CKY</h2>
+<pre><code>one of the earliest recogintion and parsing algorithms 
+The standard version of CKY can only recoginze languages defined by context-free grammars in Chomsky Normal Form(CNF)
+It is also possible to extend the CKY algorithm to handle some grammars which are not in CNF
+	Harder to understand
+Based on a &quot;dynamic programming&quot; approach:
+	Build solutions compositionally from sub-solutions
+Uses the grammar directly
+</code></pre>
+<p>Considers every possible consective(连续的，连贯的) subsequence of letters and sets $k \in T[i,j]$, if the sequence of letters starting frm i to j can be generated from the non-terminal K.</p>
+<p>Once it has considered sequences of length 1 , it goes on to sequences of length 2,and so on</p>
+<p>For subsequences of length 2 and greater, it considers every possible partition of the subsequence into two halves, and checks to see if there is some production A-&gt;BC sunch that B matches the first half and C matches the second half. If so, it records A as matching the whole subsequence.</p>
+<p>Once this process if completed, that sentence if recognnized by the grammar if the entire string is matched by the start symbol.</p>
+<p>**Observation: ** any portion of the input string spanning i to j can be split at k, and structure can then be built using sub-solutions spanning i to k and sub-solitions spanning k to j.</p>
+<p>**Meaning: ** Solution to problem [i,j] can constructed from solution to sub problem[i,k] and solution to sub problem [k,j]</p>
+<p><img src="/img/nlp_cky2.png" alt=""></p>
+<p><img src="/img/nlp_cky3.png" alt=""></p>
+<p>The algorithm is &quot;bottom-up&quot; in that we start with bottom of derivation tree.</p>
+<p><img src="/img/nlp_cky4.png" alt=""></p>
+<h2>The CKY Algorithm</h2>
+<pre><code>function CKY(word w,grammar P) returns table
+for i&lt;- from 1 to length(w) do
+	table[i-1,i] &lt;- {A| A-&gt;wi in P}
+for j &lt;- from 2 to length(w) do
+	for i &lt;- form j-2 down to 0 do
+		for k &lt;- i+1 to j-1 do
+			table[i,j] &lt;- table[i,j] 并 {A|A-&gt; BC in P,B in table[i,k],C in table[k,j]}
+</code></pre>
+<p><img src="/img/nlp_cky5.png" alt=""></p>
+<p>这种解析过程能够判断出句子的形式</p>
+<h2>Parsing results</h2>
+<pre><code>We keep the results for every wij in a table
+Note that we only need to fill in entries up to the diagonal
+Every entry in the table T[i,j] can contains up to r=|N| symbols (the size of non-terminal set)
+We can use lists or a Boolean n*n*r table
+We then want to find T[0,b,S] = true
+</code></pre>
 
           
         
@@ -2306,7 +2480,7 @@ System.out.println(SpeedTokenizer.segment(text));
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2352,8 +2526,8 @@ System.out.println(SpeedTokenizer.segment(text));
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
@@ -2365,8 +2539,8 @@ System.out.println(SpeedTokenizer.segment(text));
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">Tags</span>
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
                 
               </div>
             
@@ -2412,7 +2586,7 @@ System.out.println(SpeedTokenizer.segment(text));
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

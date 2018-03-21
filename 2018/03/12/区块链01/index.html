@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="区块链," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Windows https://github.com/ethereum/go-ethereum/releases/ 安装后用cmd命令打开命令行，进入到你安装geth的目录下，输入geth –help 命令，如果输出一大堆关于geth的信息如下图则说明安装成功。当前geth命令只能在geth对应的目录下使用，如果想要在任何目录使用geth命令，只要把你安装geth的目录的路径加入到系统环境环境变量">
+<meta name="keywords" content="区块链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链01">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/03/12/区块链01/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="Windows https://github.com/ethereum/go-ethereum/releases/ 安装后用cmd命令打开命令行，进入到你安装geth的目录下，输入geth –help 命令，如果输出一大堆关于geth的信息如下图则说明安装成功。当前geth命令只能在geth对应的目录下使用，如果想要在任何目录使用geth命令，只要把你安装geth的目录的路径加入到系统环境环境变量">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-19T07:29:02.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="区块链01">
+<meta name="twitter:description" content="Windows https://github.com/ethereum/go-ethereum/releases/ 安装后用cmd命令打开命令行，进入到你安装geth的目录下，输入geth –help 命令，如果输出一大堆关于geth的信息如下图则说明安装成功。当前geth命令只能在geth对应的目录下使用，如果想要在任何目录使用geth命令，只要把你安装geth的目录的路径加入到系统环境环境变量">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/03/12/区块链01/"/>
+
+
+
+
+
+  <title>区块链01 | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/12/区块链01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">区块链01</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T13:06:57+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2>Windows</h2>
+<p><a href="https://github.com/ethereum/go-ethereum/releases/" target="_blank" rel="noopener">https://github.com/ethereum/go-ethereum/releases/</a></p>
+<p>安装后用cmd命令打开命令行，进入到你安装geth的目录下，输入geth –help 命令，如果输出一大堆关于geth的信息如下图则说明安装成功。当前geth命令只能在geth对应的目录下使用，如果想要在任何目录使用geth命令，只要把你安装geth的目录的路径加入到系统环境环境变量path中即可。</p>
+<p><a href="https://github.com/ethereum/go-ethereum/releases/tag/v1.4.11" target="_blank" rel="noopener">https://github.com/ethereum/go-ethereum/releases/tag/v1.4.11</a></p>
+<p><a href="https://ethereum.github.io/go-ethereum/downloads/" target="_blank" rel="noopener">https://ethereum.github.io/go-ethereum/downloads/</a>
+最全的下载地址</p>
+<p>创世文件的定义
+<a href="https://my.oschina.net/stevex/blog/746669" target="_blank" rel="noopener">https://my.oschina.net/stevex/blog/746669</a></p>
+<p>geth --identity &quot;PICC&quot; --rpc --rpccorsdomain &quot;*&quot;  --datadir &quot;%cd%\chain&quot;  --port &quot;30303&quot; --rpcapi &quot;db,eth,net,web3&quot;  --networkid 95518 console</p>
+<p>targetgaslimit –每个块的gas上限，这里可以暂时理解为容量 rpc –启动rpc通信，可以进行智能合约的部署和调试 rpcaddr –rpc接口的地址 rpcport –rpc接口的端口号 port –网络监听端口，用于节点之间通信 rpcapi –设置rpc的范围，暂时开启eth,web3,personal足够 networkid –设置当前区块链的网络ID，是一个数字，可以随便写 identity –区块链的标示，随便填写，用于标示目前网络的名字 nodiscover 禁止被网络中其它节点发现，需要手动添加该节点到网络 maxpeers 最大节点数量 datadir –设置当前区块链网络数据存放的位置 unlock –解锁某用户（此处用用户坐标来控制，解锁后的用户调用接口发起交易时，不要需要提供密码） rpccorsdomain 限制rpc访问源的ip，代表不限制 mine 允许挖矿 console –启动命令行模式，可以在Geth中执行命令*</p>
+<p>personal.newAccount()</p>
+<h2>智能合约</h2>
+<p>以太坊很大的特色就是能够实现智能合约，所谓智能合约，是密码学家提出以数字形式定义的一系列承诺，包括合约参与方可以在上面执行这些承诺的协议。</p>
+<p>智能合约一旦设立指定后，能够无需中介的参与自动执行，并且没有人可以阻止它的运行。</p>
+<p>区块链为智能合约提供可行执行环境，智能合约为区块链扩展应用。而在以太坊上的智能合约，能够控制区块链上各种数字资产进行复杂的操作，随着智能合约开始获得越来越多的使用，人们也发现，就像现实世界的合同一样，如果没有认真审核的话，其中就有可能出现漏洞，并且被坏人利用。</p>
+<p><strong>智能合约是什么</strong></p>
+<p>从用户角度来讲，智能合约通常被认为是一个自动担保账户，例如，当特定的条件满足时，程序就会释放和转移资金</p>
+<p>从技术角度来讲，智能合约被认为是网络服务器，只是这些服务器并不是使用IP地址假设在互联网上，而是架设在区块链上，从而可以在上面运行特定的程序。</p>
+<p>但与网络服务器不同的是，所有人都可以看到智能合约，因为这些智能合约的代码和状态都在区块链上。而且，与网络服务器不同的是，智能合约不依赖某个特定的硬件设备，事实上，智能合约的代码由所有参与挖矿的设备来执行</p>
+<p>代码的执行是自动的: 要么成功执行，或者所有的状态变化都撤销(包括从当前失败的合约中已经发送或接受的信息) 这很重要，避免了合约 部分执行的情况(例如，在证券购买交易中，证券所有者已经转移发送了证券，但是密码学货币的支付转移却失败了)。 在区块链环境下，这尤为重要，因为没有办法来撤销执行错误所带来的不好的后果(如果对手不配合的话，根本没有办法逆转交易)</p>
+<p>智能合约基于区块链的智能合约包括事务处理和保存的机制，以及一个完备的状态机，用于接受和处理各种智能合约；并且事务的保存和状态处理都在区块链上完成。事务主要包含需要发送的数据；而事件则是对这些数据的描述信息。事务及事件信息传入智能合约后，合约资源集合中的资源状态会被更新，进而触发智能合约进行状态机判断。如果自动状态集中某个或某几个动作的触发条件满足，则由状态机根据预设信息选择合约动作自动执行。</p>
+<p>基于区块链的智能合约的构建及执行分为如下步骤：</p>
+<p>智能合约的构建: 由区块链内的多个用户共同参与指定一份智能合约；</p>
+<p>智能合约的存储: 智能合约通过P2P网络扩散到每个节点，并存入区块链</p>
+<p>智能合约的执行: 智能合约定期进行自动机状态检查，将满足条件的事务进行验证，达成共识后自动执行并通知用户</p>
+<p>智能合约其实就是一种可以自动化执行的简单交易。</p>
+<p>https://www.cnblogs.com/fengzhiwu/p/5629468.html</p>
+<h2>MetaMask过程</h2>
+<h2>Ubuntu上</h2>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/08/Spark-调优/" rel="next" title="Spark 调优">
+                <i class="fa fa-chevron-left"></i> Spark 调优
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/solidity/" rel="prev" title="solidity">
+                solidity <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">智能合约</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">MetaMask过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">Ubuntu上</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

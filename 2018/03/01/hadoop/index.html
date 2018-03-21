@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="hadoop的集群是基于master/slave模式，namenode和jobtracker属于master，datanode和tasktracker属于slave，master只有一个，而slave有多个. SecondaryNameNode内存需求和NameNode在一个数量级上，所以通常secondary NameNode（运行在单独的物理机器上）和 NameNode 运行在不同的机器上。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/03/01/hadoop/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="hadoop的集群是基于master/slave模式，namenode和jobtracker属于master，datanode和tasktracker属于slave，master只有一个，而slave有多个. SecondaryNameNode内存需求和NameNode在一个数量级上，所以通常secondary NameNode（运行在单独的物理机器上）和 NameNode 运行在不同的机器上。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-01T07:22:23.056Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hadoop">
+<meta name="twitter:description" content="hadoop的集群是基于master/slave模式，namenode和jobtracker属于master，datanode和tasktracker属于slave，master只有一个，而slave有多个. SecondaryNameNode内存需求和NameNode在一个数量级上，所以通常secondary NameNode（运行在单独的物理机器上）和 NameNode 运行在不同的机器上。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/03/01/hadoop/"/>
+
+
+
+
+
+  <title>hadoop | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/01/hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hadoop</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T13:39:05+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>hadoop的集群是基于master/slave模式，namenode和jobtracker属于master，datanode和tasktracker属于slave，master只有一个，而slave有多个.</p>
+<p>SecondaryNameNode内存需求和NameNode在一个数量级上，所以通常secondary NameNode（运行在单独的物理机器上）和 NameNode 运行在不同的机器上。</p>
+<p>JobTracker对应于NameNode,TaskTracker对应于DataNode.</p>
+<p>DataNode和NameNode是针对数据存放来而言的.JobTracker和TaskTracker是对于MapReduce执行而言的.</p>
+<p>mapreduce中几个主要概念，mapreduce 整体上可以分为这么几条执行线索：</p>
+<p>jobclient，JobTracker与TaskTracker。</p>
+<p>1、JobClient会在用户端通过JobClient类将已经配置参数打包成jar文件的应用存储到hdfs，并把路径提交到Jobtracker,然后由JobTracker创建每一个Task（即 MapTask 和 ReduceTask） 并将它们分发到各个TaskTracker服务中去执行。</p>
+<p>2、JobTracker是一master服务，软件启动之后JobTracker接收Job，负责调度Job的每一个子任务。task运行于TaskTracker上，并监控它们，如果发现有失败的task就重新运行它。一般情况应该把JobTracker 部署在单独的机器上。</p>
+<p>3、TaskTracker是运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信，接收作业，并负责直接执行每一个任务。 TaskTracker 都需要运行在HDFS的DataNode上。</p>
+<p>secondaryNameNode: 他的目的使帮助 NameNode 合并编辑日志，减少 NameNode 启动时间</p>
+<p>列决几个Hadoop生态圈的组件并作简要概述
+Zookeeper:是一个开源的分布式应用程序协调服务,基于zookeeper可以实现同步服务，配置维护，命名服务。</p>
+<p>Flume:一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统。</p>
+<p>Hbase:是一个分布式的、面向列的开源数据库, 利用Hadoop HDFS作为其存储系统.</p>
+<p>Hive:基于Hadoop的一个数据仓库工具，可以将结构化的数据档映射为一张数据库表，并提供简单的sql 查询功能，可以将sql语句转换为MapReduce任务进行运行。</p>
+<p>Sqoop:将一个关系型数据库中的数据导进到Hadoop的 HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
+<p>4 正常工作的Hadoop集群中Hadoop都分别需要启动哪些进程，它们的作用分别是什么?</p>
+<p>a) NameNode 是hadoop中的主服务器，管理文件系统名称空间和对集群中存储的文件的访问，保存有metadate</p>
+<p>b) SecondaryNameNode 不是NameNode的冗余守护进程，而是提供周期检查点检查点和清理服务。帮助NN合并edits log,减少NN启动时间</p>
+<p>c) DataNode 负责管理连接到节点的存储(一个集群中可以有多个节点)。 每个存储数据的节点运行一个datanode守护进程。</p>
+<p>d) ResourceManager(JobTracker),负责调度DataNode上的工作。每个DataNode有一个TaskTracker，执行实际工作。</p>
+<p>e) NodeManager (TaskTracker)执行任务</p>
+<p>4 HDFS 的存储机制是什么</p>
+<p>客户端通过把请求发送给NameNode active，NN会把文件切成1到N个固定大小的block(一般默认为128M)并上传到DataNode中。当所有block拷贝结束时，NN会立即通知客户端上传结果。但此时上传的流程还未结束。DN还需要根据配置信息的副本数量，在不同的机架节点上通过局域网做数据拷贝工作。</p>
+<p>5 Hadoop中的job和task之间的区别是什么</p>
+<p>JobTracker是一个master服务，软件启动之后，JobTracker接受Job，负责调度Job的每一个子任务task运行于TaskTracker上，并监控他们，如果发现有失败的task就重新运行它。一般情况应该把JobTracker部署在单独的机器上。</p>
+<p>TaskTracker是运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信，接收作业，并负责执行每一个任务</p>
+<p>7 如何决定一个job的map和reduce的数量</p>
+<pre><code>splitSize = max{minSize,min{maxSize,blockSize}}
+map的数量由处理的初级分成的block熟练决定，= total_size/split_size
+reduce的数量job.setNumReduceTasks(x);x 为reduce的数量
+</code></pre>
+<p>8 如何为一个Hadoop任务设置mappers的数量</p>
+<p>InputFormat在默认情况下会根据hadoop集群HDFS块大小进行分片，每一个分片会由一个map任务来进行处理，当然用户还是可以通过参数mapred.min.split.size 参数在作业提交客户端进行自定义设置。还有一个重要参数就是mapred.map.tasks, 这个参数设置的map数量仅仅是一个提示，只有当InputFormat决定了map任务的个数比mapred.map.tasks值小时才起作用。同样，Map任务的个数也能通过使用JobConf的conf.setNumMapTasks()来手动的设置。这个方法能够用来增加map任务的个数，但是不鞥设定任务的个数小于Hadoop系统通过分隔输入数据得到的值。</p>
+<p>9 如何为一个Hadoop任务设置要创建的reducer的数量</p>
+<p>纯粹的mapreduce task的reduce task数很简单，就是参数mapred.reduce.tasks 的值</p>
+<p>10 MapReduce 中排序发生的几个阶段</p>
+<p>4个阶段</p>
+<p>Splitting: 在进行map计算之前，mapreduce会根据输入文件计算输入分片(inputsplit),每个输入分片针对一个map任务。输入分片存储的并非数据本身，</p>
+<p>11 请描述Mapreduce中shuffle阶段的工作流程，如何优化shuffle阶段</p>
+<p>分区，排序，溢写，拷贝到对应reduce机器上，增加conbiner，压缩溢写的文件。</p>
+<p>12 Mapreduce中combiner的作用是什么，一般使用情景，哪些情况不需要？</p>
+<p>MR作业中的Map阶段会输出结果数据到磁盘中</p>
+<p>Combiner只适应于那种reduce的输入类型完全一直，且不影响最终结果的场景，比如累加，最大值等。也可以用于过滤数据，在map端将无效的数据过滤到</p>
+<p>combiner的作用就是在map端对输出先做一次合并，以减少传输到reducer的数据量</p>
+<p>combiner最基本是实现本地key的归并，具有类似本地reduce，那么所有的结果都是reduce</p>
+<p>使用combiner，先完成的map会在本地聚合，提升速度。</p>
+<pre><code>map--&gt; 本地reduce --&gt;集群reduce
+</code></pre>
+<p>13  如果没有定义partitioner，那数据在被送达reducer前是如何被分区的</p>
+<pre><code>如果没有自定义的partitioning，则默认的partition算法，即根据每一条数据的key的hascode 值 取模reduce的数量，得到的数字就是reducer 分区号
+</code></pre>
+<p>14 Map阶段结束后，Hadoop框架会处理：Partitioning，shuffle和sort，</p>
+<pre><code>map task上的shuffle结束，此时reduce task 上的shuffle开始，抓取fetch所属于自己分区的数据，同时将这些分区的数据进行排序sort(默认的排序是根据每一条数据的键的字典排序)，进而将数据进行合并merge，即根据key相同的，将其value组成一个集合，最后输出结果。
+</code></pre>
+<p>15 一个mr作业跑得比较慢，如何来优化，</p>
+<pre><code>数据倾斜
+	数据倾斜可能是partition不合理，导致部分partition中的数据过多，部分过少，通过分析数据，自定义分区解决。
+
+合理设置map和reduce数: 两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致map，reduce任务间竞争资源，造成处理超时等错误。
+
+设置map，reduce共存: 调整slowstart.completedmaps参数，是map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。
+
+合并小文件: 在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢
+
+减少spill次数
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/01/mysql-基础/" rel="next" title="mysql 基础">
+                <i class="fa fa-chevron-left"></i> mysql 基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/02/scrapy/" rel="prev" title="scrapy">
+                scrapy <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

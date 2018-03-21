@@ -182,7 +182,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -192,7 +192,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Seq2Seq中的函数/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/12-Syntactic-Parsing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/02/Seq2Seq中的函数/" itemprop="url">Seq2Seq中的函数</a></h1>
+                <a class="post-title-link" href="/2018/02/26/12-Syntactic-Parsing/" itemprop="url">12 Syntactic Parsing</a></h1>
         
 
         <div class="post-meta">
@@ -258,10 +258,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T14:28:46+08:00">
-                2018-02-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T13:09:36+08:00">
+                2018-02-26
               </time>
             
 
@@ -300,214 +300,185 @@
       
         
           
-            <h2>Seq2Seq 中的函数</h2>
-<pre><code>tf.constant(value): 将一个常数转化为tensor
-tf.cast(x,dtype): 将x的数据格式转化成dtype
-
-a = tf.Variable([1,0,0,1,1])
-b = tf.cast(a,dtype=tf.bool)
-sess = tf.InteractiveSession()
-sess.run(tf.initialize_all_variables())
-print(sess.run(b))
-[ True False False  True  True]
-
-
-
-1. src_vocab_table.lookup(tf.constant(eos))
-
-
-2. tf.contrib.lookup.index_table_from_tensor(),构建单词索引对
-	
-	mapping_strings = tf.constant([&quot;emerson&quot;, &quot;lake&quot;, &quot;palmer&quot;])
-	table = tf.contrib.lookup.index_table_from_tensor(
-  	mapping=mapping_strings, num_oov_buckets=1, default_value=-1)
-	features = tf.constant([&quot;emerson&quot;, &quot;lake&quot;, &quot;and&quot;, &quot;palmer&quot;])
-	ids = table.lookup(features)
-
-	with tf.Session() as sess:
-		tf.tables_initializer().run()
-		print(ids.eval() )
-		[0 1 3 2]
+            <h2>Syntactic Parsing(句法分析)</h2>
+<p>Syntactic Parsing is the task of recognizing a sentence and assigning a syntactic structure to it. This chapter focuses on the kind of structures assigned by context-free grammers of the kind described in chapter 11. We need to specify algorithms that employ these grammers to efficiently produce correct trees.</p>
+<p>Parse trees are directly useful in applications such as grammar checking in word-processing systems: a sentence that cannot be paesed may have grammatical errors(or at least be hard to read). More typically, paese trees serve as an important intermediate state of representation for semantic analysis(as we show in chapter 20) and thus play an important role in applications like question answering and information extration. For example, to answer the question</p>
+<pre><code>What books were written by British women authors before 1800?
 </code></pre>
-<p>Dataset 与Iterator</p>
-<pre><code>Dataset可以看作是相同类型元素的有序列表，在实际使用时，单个元素可以是向量，也可以是字符串，图片，tuple或者dict
-
-是TextLineDataset TFRecordDataset FixedLengthRecorddataset 的父类
-
-dataset = tf.data.Dataset.from_tensor_slices(np.array([1.0, 2.0, 3.0, 4.0, 5.0]))
-这个dataset中含有5个元素，分别是1.0, 2.0, 3.0, 4.0, 5.0。
-
-如何取出这个dataset中的元素？方法是从dataset中实例化一个Iterator，然后对Iterator进行迭代
-
-iterator = dataset.make_one_shot_iterator()
-one_element = iterator.get_next()
-with tf.Session() as sess:
-	for i in range(5):
-    	print(sess.run(one_element))
-
-对DataSet中的元素做变换: Transformation
-
-map:  dataset.map(lambda x:x+1)
-batch: dataset.batch(32) 将每个元素组成了大小为32的batch
-	batch的意思是将原始数据分成每个batch大小为batch_size的数据
-
-shuffle: dataset.shuffle(buffer_size=10000),表示打乱时使用的buffer大小
-
-repeat: 将整个序列重复多次，主要处理机器学习中的epoch，假设原先的数据是一个epoch，使用repeat(5)之后编程5个epoch
-
-dataset = tf.data.Dataset.from_tensor_slices(np.array([1.0, 2.0, 3.0, 4.0, 5.0,6.0]))
-dataset = dataset.map(lambda x:x*2)
-dataset = dataset.shuffle(buffer_size=10)
-dataset = dataset.batch(3)
-iterator = dataset.make_one_shot_iterator()
-one_element = iterator.get_next()
-with tf.Session() as sess:
-	print(sess.run(one_element))
-	print(sess.run(one_element))
-
-[  6.   2.  10.]
-[  8.   4.  12.]
-
-如果不调用shuffle，那么repeat的是一样的数据
-[ 2.  4.  6.]
-[  8.  10.  12.]
-[ 2.  4.  6.]
-[  8.  10.  12.]
-
-
-其他Iterator
-initializable_iterator:必须在使用前通过sess.sun()来初始化，使用initializble_iterator ，可以将placeholder带入iterator中，可以方便通过参数快读定义Iterator
-
-dataset = tf.data.Dataset.from_tensor_slices(tf.range(start=0, limit=limit))
-
-iterator = dataset.make_initializable_iterator()
-next_element = iterator.get_next()
-
-with tf.Session() as sess:
-	sess.run(iterator.initializer, feed_dict={limit: 10})
-	for i in range(10):
-  		value = sess.run(next_element)
-  		assert i == value
+<p>we’ll need to know that the subject of the sentence was what books and that the byadjunct was British women authors to help us figure out that the user wants a list of books (and not a list of authors).</p>
+<h2>1 Ambiguity(含糊)</h2>
+<p>structural ambiguity,which arises from many commonly used rules in phrase-structure grammers.
+<img src="/img/nlp12_01.png" alt=""></p>
+<p>Structural ambiguity,appropriately enough,comes in many forms. Two common kinds of ambiguity are attachment ambiguity(附着歧义) and coordination ambiguity(并列歧义).</p>
+<p>A sentence has an attahcment ambiguity if a particular constituent can be attached to the parse tree at more than one place.</p>
+<p>In coordination ambiguity different sets of phrase can be conjoined by a conjunction like and. the phrase old men and women [old [men and women]] or as [old men ]and women;</p>
+<p>These ambigutions combine in complex ways in real sentences. A program that summarized the news, for example, would need to be able to parse sentences like the following from the Brown corpus</p>
+<pre><code>Persident Kennedy today pushed aside other White House business to devote all his time and attention to working on the Berlin crisis address he will deliver tomorrow night to the American people over nationwide television and radio.
 </code></pre>
-<p>tf.string_split(source,delimiter=' ',skip_empty=True)</p>
-<pre><code>string=[&quot;hello world Jack niu&quot;]
-sp=tf.string_split(string)
-
-with tf.Session() as sess:
-	sess.run(tf.global_variables_initializer())
-	print(sess.run(sp).values)
-
-[b'hello' b'world' b'Jack' b'niu']
-
-
-dataset = tf.data.Dataset.from_tensor_slices(
-        tf.constant([&quot;c c a&quot;, &quot;c a&quot;, &quot;d&quot;, &quot;f e a g&quot;]))
-
-# src_dataset = src_dataset.map(lambda  x:tf.string_split([x]).values)
-dataset = dataset.map(lambda x: tf.string_split([x]).values)
-src_max_len=2
-dataset = dataset.map(lambda x: x[:src_max_len])
-dataset = dataset.map(lambda src: (src, tf.size(src)))
-iterator = dataset.make_one_shot_iterator()
-
-
-one_element = iterator.get_next()
-with tf.Session() as sess:
-	print(sess.run(one_element))
-	print(sess.run(one_element))
-	print(sess.run(one_element))
-	print(sess.run(one_element))
-
-(array([b'c', b'c'], dtype=object), 2)
-(array([b'c', b'a'], dtype=object), 2)
-(array([b'd'], dtype=object), 1)
-(array([b'f', b'e'], dtype=object), 2)
+<p>The fact that there are many grammatically correct byt semantically unreasonable parses for naturally occurring sentences is an irksome problem that affects all parsers. Ultimately,most natural language processing systems need to be able to choose a single correct parse from the multitude of possible parses through a process of syntactic disambiguation. Effiective disambiguation algorithms require statistical,semantic,and contextual knowledge sources that vary in how well they can be integrated into parsing algorithms.</p>
+<p>CKY algorothm presented in the next section is designed to efficiently handle structural ambiguities of the kind we've been discussing. And as we'll see in Chapter 13, there are straightforward ways to integrate statistical techniques into the basic CKY framework to produce highly accurate parsers.</p>
+<h2>CKY Parsing: A Dynamic Programming Approach</h2>
+<p>The dynamic programming advantage arises from the context-free nature of our grammer rules - once a constituent has been discovered in a segment of the input we can record its presence and make it available for use in any subsequent derivation that might require it. This provides both time and storage efficiencies since subtrees can be looked up in a table, not reanalyzed. This section presents the Cocke-Kasami-Younger(CKY) algorithm,the most widely used dynamic-programming based approach to parsing.</p>
+<h3>12.2.1 Conversion to Chomsky Normal Form</h3>
+<h3>12.2.2 CKY Recognition</h3>
+<p><img src="/img/nlp12_02.png" alt=""></p>
+<p><img src="/img/nlp12_03.png" alt=""></p>
+<p><img src="/img/nlp12_04.png" alt=""></p>
+<h3>12.2.3 CKY Parsing</h3>
+<p>上面的是recoginzer过程不是parser过程。</p>
+<h3>12.2.4 CKY in Practice</h3>
+<p>Obviously,as things stand now, our parser isn't returning trees that are consistent with the grammar given to us by our friendly syntacticians. In addition to making our grammar developers unhappy. the conversion to CNF will complicate any syntax-driven approach to semantic analysis.</p>
+<h2>12.3 Partial Parsing</h2>
+<p>An alternative sstyle of partial parsing is known as chunking(组块分析). bracket notation(括号标记)</p>
+<pre><code>[NP The morning flight][pp from][NP Denver][VP has arrived.]
 </code></pre>
-<p>padded_batch:</p>
-<pre><code>dataset =dataset.padded_batch(batch_size,padded_shape,padded_value)
-
-许多模型（比如：序列模型）的输入数据的size多种多样（例如：序列具有不同的长度）为了处理这种情况，Dataset.padded_batch() 转换允许你将不同shape的tensors进行batch，通过指定一或多个dimensions，在其上进行pad
-
-将顺序的元素组装成batch，
-(array([b'c', b'c', b'a'], dtype=object), 3)
-(array([b'c', b'a'], dtype=object), 2)
-.....
-
-这样的单一顺序元素
-现在进行padded_batch(3,padded_shape=(tf.TensorShape[None],tf.TensorShape([])),padded_values=(&quot;UNK&quot;,0))
-
-(array([[b'c', b'c', b'a'],
-   [b'c', b'a', b'UNK'],
-   [b'd', b'UNK', b'UNK']], dtype=object), array([3, 2, 1]))
-(array([[b'f', b'e', b'a']], dtype=object), array([3]))
-
-现在所有batch的长度都一样，就将所有长度不一的元素组成了一个batch内长度相同的元素。这样对这一个batch内的元素可以进行训练。
-
-这种填充会对每一部分都进行pad，如果不进行pad，那就shape=[],value=0
+<p>non-overlapping(无重叠的)</p>
+<p>Note that in this example all the words are contained in some chunk. This will not be the case in all chunking applications. Many words in any input will often fall outside of any chunk, for example,in systems searching for base NPs in their inputs,as in the following:</p>
+<pre><code>[NP The morning flight] from [NP Denver] has arrived
 </code></pre>
-<p>示例：</p>
-<pre><code>import tensorflow as tf
+<h3>12.3.1 Machine Learning-Based Approaches to Chunking</h3>
+<p>State-of-the-art(最先进的) to chunking use supervised machine learning to train a chunker by using annotated data as a training set.We can view this task as one of sequence labeling, where a classifier is trained to label each element of the input sequence. Any of the standard approaches to training classifiers apply to this problem.</p>
+<p>The first step in such an approach is to cast the chunking process in a way that is amenable to sequence labeling.A partiaularly fruitful approach has been to treat chunking as a tagging task similar to part-of-speech tagging. In this approach,a small tagset simultaneously encodes both the segmentation and the labeling of the chunks in the input. The standard way to do this is called IOB tagging and is accomplished by introducing tags to represent the beginning(B) and internal(I) parts of each chunk, as well as those elements of the input that are outside any chunk.Under this scheme,the size of tagset is (2n+1), where n is the number of categories to be classified. The following example shows the bracketing notation of on page 206 reframed as a tagging task:</p>
+<pre><code>The morning flight from Denver has arrived
+B_NP I_NP   I_NP   B_PP B_NP  B_VP I_VP
 
-dataset = tf.contrib.data.Dataset.range(100)
-dataset = dataset.map(lambda x: tf.fill([tf.cast(x, tf.int32)], x))
-dataset = dataset.padded_batch(32, padded_shapes=[None],padding_values=(tf.cast(-1,tf.int64)))
-
-iterator = dataset.make_one_shot_iterator()
-next_element = iterator.get_next()
-
-sess= tf.Session()
-print(sess.run(next_element))  # ==&gt; [[0, 0, 0], [1, 0, 0], [2, 2, 0], [3, 3, 3]]
-print(sess.run(next_element)[0])     # print(sess.run(one_element))
-
-[31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31 31]]
-[32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1]
+The same sentence with only the base-NPs tagged illustrates the role of the O tags
+The morning flight from Denver has arrived
+B_NP  I_VP  I_Np    O   B_NP   O   O
 </code></pre>
-<p>tf.logical_and(tf.size(src) &gt; 0, tf.size(tgt) &gt; 0))</p>
-<p>src_tgt_dataset = src_tgt_dataset.shard(2, 1)</p>
-<pre><code>shard: 将一个数据集划分成1/num_shard 的数据子集
-索引代表需要哪一块数据。
-</code></pre>
-<p>padd</p>
-<pre><code>数据是
-(array([-1, -1,  0]), array([4, 2, 2]), array([2, 2, 3]))
-(array([2, 2, 0]), array([4, 0, 1]), array([0, 1, 3]))
-(array([2, 0]), array([4, 1, 2]), array([1, 2, 3]))
+<p>Notice that there is no explicit encoding of the end of a chunk in this scheme; the end of any chunk is implicit in any transition from an I or B to a B or O tag. This encoding reflets the notion that when sequentially labeling words,it is generally easier(at least in English) to detect the begining of a new chunk than it is to know when a chunk has ended.</p>
 
-这里的注释:
-# Bucket by source sequence length (buckets for lengths 0-9, 10-19, ...)
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-batched_dataset = src_tgt_dataset.apply(
-    tf.contrib.data.group_by_window(
-        key_func=key_func, reduce_func=reduce_func, window_size=batch_size))
-这个函数有点麻烦。
-</code></pre>
-<p>tf.container(scope or &quot;train&quot;)</p>
-<pre><code>有什么作用
-</code></pre>
-<p>tf.clip_by_global_norm(gradients, max_gradient_norm)</p>
-<p>model 中的build_decoder</p>
-<pre><code>iterator = self.iterator
-print(&quot;iterator.source_sequence_length&quot;,iterator.source_sequence_length)
-# maximum_iteration: The maximum decoding steps.
-maximum_iterations = self._get_infer_maximum_iterations(
-    hparams, iterator.source_sequence_length)
+    
+      
 
-[3 2]
-3
-6
-maximum_iterations =  6
-</code></pre>
-<p>dynamic_rnn 中的time_major</p>
-<pre><code>time_major: The shape format of the inputs and outputs 
-Tensors. If true, these Tensors must be shaped 
-[max_time, batch_size, depth]. If false, these Tensors 
-must be shaped [batch_size, max_time, depth]. Using 
-time_major = True is a bit more efficient because it 
-avoids transposes at the beginning and end of the RNN 
-calculation. However, most TensorFlow data is batch-
-major, so by default this function accepts input and 
-emits output in batch-major form.
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/RandomForest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/26/RandomForest/" itemprop="url">RandomForest</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T10:43:16+08:00">
+                2018-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>随机森林</h2>
+<p>随机森林非常像机器学习实践中的AdaBoost算法，但区别在于没有迭代，随机森林的树长度不限制。</p>
+<p>因为没有迭代过程，不像AdaBoost那样需要迭代，不断更新每个样本机器子分类器的权重。因此模型相对简单，不容易出现过拟合。</p>
+<p><img src="/img/ml01.png" alt="">
+随机森林可以理解成CART树森林，是由多个CART树分类器构成的集成学习模式。其中每个Cart树可以理解为一个议员，从样本集里面随机有放回的抽取一部分进行训练，这样，多个树分类器就构成了一个训练模型，可以理解为一个议会。</p>
+<p>然后将要分类的样本带入每一个树分类器，然后以少数服从多数的原则，表决出这个样本的最终分类类型。</p>
+<p>设有N个样本，M个变量个数，具体流程如下；</p>
+<p>1 确定一个值吗，用来表述每个树分类器选取多少个变量</p>
+<p>2 从数据集中有放回的抽取k个样本集，用他们来创建k个树分类器。另外还伴随生成了k个逮外数据，用来后面做检测。</p>
+<p>3 输入待分类样本之后，每个树分类器会进行分类，选举。</p>
+<p>参数</p>
+<pre><code>预选变量个数
+随机森林中树的个数
 </code></pre>
 
           
@@ -557,7 +528,7 @@ emits output in batch-major form.
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Seq2Seq训练过程/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/MachineLearning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -576,7 +547,7 @@ emits output in batch-major form.
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/02/Seq2Seq训练过程/" itemprop="url">Seq2Seq训练过程</a></h1>
+                <a class="post-title-link" href="/2018/02/26/MachineLearning/" itemprop="url">MachineLearning</a></h1>
         
 
         <div class="post-meta">
@@ -586,10 +557,10 @@ emits output in batch-major form.
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T14:22:06+08:00">
-                2018-02-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T09:18:23+08:00">
+                2018-02-26
               </time>
             
 
@@ -628,1044 +599,380 @@ emits output in batch-major form.
       
         
           
-            <h2>Seq2seq训练过程</h2>
-<p>iterator_utils.py</p>
-<pre><code>class BatchedInput(collections.namedtuple(
-		&quot;BatchedInput&quot;,(&quot;initializer&quot;, &quot;source&quot;, &quot;target_input&quot;,
-        &quot;target_output&quot;, &quot;source_sequence_length&quot;,
-        &quot;target_sequence_length&quot;))):
-pass
-collection.namedtuple: 生成可以使用名字来访问元素内容的tuple子类
-
-
-def get_infer_iterator(src_dataset,
-                   src_vocab_table,
-                   batch_size,
-                   eos,
-                   src_max_len=None):
-
-(src_ids, src_seq_len) = batched_iter.get_next()
-return BatchedInput(
-    initializer=batched_iter.initializer,
-    source=src_ids,
-    target_input=None,
-    target_output=None,
-    source_sequence_length=src_seq_len,
-    target_sequence_length=None)
-
-src_ids: 训练语句src中word在词汇表中的id
-src_seq_len: 训练语句src本身的长度。
-
-训练数据:
-encoder: [&quot;f e a g&quot;, &quot;c c a&quot;, &quot;d&quot;, &quot;c a&quot;]
-decoder: [&quot;c c&quot;, &quot;a b&quot;, &quot;&quot;, &quot;b c&quot;]
-
-encoder_input: [2 0 3] c a eos：用eos pad，实际长度是2
-				[-1 -1 0] -1代表unknown，句子长度为4，实际为3
-
-decoder_input: [[4,2,2],[4,1,2]] [[sos c c],[sos b c]]
-				输入用sos开始
-
-decoder_target: [[2,2,3],[1,2,3]],[[c c eos],[b c eos]]	输出用eos pad
-
-看一下具体的构造过程
-
-# Create a tgt_input prefixed with &lt;sos&gt; and 
-# a tgt_output suffixed with &lt;eos&gt;.
-src_tgt_dataset = src_tgt_dataset.map(
-    lambda src, tgt: (src,
-                      tf.concat(([tgt_sos_id], tgt), 0),
-                      tf.concat((tgt, [tgt_eos_id]), 0)),
-    num_parallel_calls=num_parallel_calls).prefetch(output_buffer_size)
-</code></pre>
-<p>vocab_utils</p>
-<pre><code>下载数据，加载embedding数据，这种数据可以通过别的其他的完备的
-训练语料库来决定。
-现在在这里并没有加载embedding 数据。
-</code></pre>
-<p>nmt_utils</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Seq2Seq基本模型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/02/Seq2Seq基本模型/" itemprop="url">Seq2Seq基本模型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T13:59:23+08:00">
-                2018-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Seq2Seq中的模型</h2>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Attention-Model/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/02/Attention-Model/" itemprop="url">Attention Model</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T13:59:04+08:00">
-                2018-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Google-s-Neural-Machine-Translation-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/02/Google-s-Neural-Machine-Translation-System/" itemprop="url">Google's Neural Machine Translation System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T11:27:18+08:00">
-                2018-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>谷歌机器翻译系统</h2>
-<p>机器翻译是一个端对端学习方法。NMT系统在训练和翻译推断的方面都很昂贵，有时候需要很大的数据和很大的模型。GNMT模型包含8个encoder和8个decoder的LSTM网络，使用residual连接和attention连接在encoder和decoder之间。为了提高对稀有单词的处理，将单词分成一个有限的通用sub-word units(wordpieces)。</p>
-<p>This method provides a good balance between the flexibility of &quot;character&quot;-delimited models and the efficiency of &quot;word&quot;-delimited models,naturally haandles translation of rare words,and ultimately improves the overall acuracy of the system.</p>
-<p>Our beam search technique employs a length-normalization procedure and uses a coverage penalty,which encourages generation of an output sentence that is most likely to cover all the words in the source sentence.</p>
-<p>To directly optimize the translation BLEU scores, we consider refining the modlels by using reinforcement learning, but we found that the improvment in the BLEU scores did not reflect in the human evaluation.</p>
-<p>On the WMT'14 English-to-French and English-to-German benchmarks,GN&lt;T achieves competitive results to start-of-the-art.</p>
-<p>Using a human side-by-side evaluation on a set of isolated simple sentences, it reduces translation errors b an average 60% compared to Google's phrased-based production system</p>
-<h2>1 Introduction</h2>
-<p>Its architecture typically consists of two recurrent neural networks(RNNS),one to consume the input text sequence and one to generate translated output text. NMT is often accompanied by an attention mechanism which helps it cope effectively tirh long input sequences.</p>
-<h2>2 Realted Work</h2>
-<h2>3 Model Architecture</h2>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/31/8-Neural-Networks-and-Neural/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/31/8-Neural-Networks-and-Neural/" itemprop="url">8 Neural Networks and Neural</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T09:56:40+08:00">
-                2018-01-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Neural Networks and Neural Language Models</h2>
-<p>本章将介绍许多其他方面的神经模型。</p>
-<p>##Units
-神经网络的最基本单元是一个计算单元。一个神经单元可以表示为</p>
-<p>$$Z=b+ \sum_i w_{i}x_{i}$$</p>
-<p>将求和过程替换为点乘过程</p>
-<p>$$Z=w\cdot x+b$$</p>
-<p>神经网络单元应用一个非线性函数给z。将这个函数的输出称为activation。</p>
-<p>$$y=a=f(z)$$</p>
-<p>三种非线性函数(sigmoid, tanh,relu)</p>
-<p>sigmoid激活函数</p>
-<p>$$y=\sigma (z) = \frac{1}{1+e^{-z}}$$</p>
-<p>图像再不画，但是输出值的范围是[0,1]之间。对于输出限定在0和1之间的函数很有优势。但是这个函数在优化的过程中特别麻烦。</p>
-<p><img src="/img/nlp8_0.png" alt=""></p>
-<p><img src="/img/nlp8_1.png" alt=""></p>
-<p>进行一个简单的例子</p>
-<pre><code>w=[0.2,0.3,0.9]
-b=0.5
-x=[0.5,0.6,0.1]
-</code></pre>
-<p>$$y=\sigma (z) = \frac{1}{1+e^{-z}}=\frac{1}{1+e^{-(0.5<em>0.2+0.3</em>0.6+0.1*0.8+0.5)}}=e^{-0.86}=0.42$$</p>
-<p>tanh 激活函数，是sigmoid的变体,范围在-1 到1 之间</p>
-<p>$$y=\frac{e^z-e^{-z}}{e^z+e^{-z}}$$</p>
-<p>最简单的激活函数relu函数</p>
-<p>$$y=max(x,0)$$</p>
-<p><img src="/img/nlp8_2.png" alt=""></p>
-<p>这些激活函数有不同的属性，因此在不同的语言应用或者网络结构中有不同的使用方式。</p>
-<h2>The XOR problem</h2>
-<p>逻辑问题，首先出现在感知机中</p>
-<p><img src="/img/nlp8_3.png" alt=""></p>
-<pre><code>y:
-0; if wx+b &lt;0
-1; if wx=b &gt;0
-</code></pre>
-<p>可以用很简单的方式建立一个感知机</p>
-<p><img src="/img/nlp8_4.png" alt=""></p>
-<p>但是，没有办法建立一个感知机去解决逻辑XOR问题。</p>
-<p>感知机是一个线性分类器。</p>
-<p>。。。。。待补充</p>
-<h2>Feed-Forward Neural Networks</h2>
-<p>前馈神经网络。一个前向神经网络是一个多层网络但是没有环。前向神经网络也叫多层感知机。</p>
-<p>最简单的前向神经网络如下图所示:</p>
-<p><img src="/img/nlp8_5.png" alt=""></p>
-<p>度量输出结果最好的方式是分类，常用的方式是归一化。softmax函数</p>
-<p>$$y=softmax(x)$$</p>
-<h2>Training Neutal Nets</h2>
-<p>训练神经网络模型，就是对里面的参数进行调整，先对参数进行基本假设，然后在一个方向调整权重提高系统。</p>
-<h3>Loss function</h3>
-<p>神经网络的目标是定一个损失函数，然后寻找某种方式去最小化这个损失函数。
-$$L(\hat{y},y)=How\ much\ \hat(y)\ differ\ from\ true\ y$$</p>
-<p>损失函数---&gt;MSE(mean-squared error)</p>
-<p>公式不再定义，就是误差平方均值。</p>
-<p>多数情况下，我们考虑网络是一个概率分类。对于概率分类的误差函数是 cross entropy loss，或者叫做负对数似然(negative log likelihood)</p>
-<p>Let y be a vector over the C classes representing the true output probability distribution. Assume this is a hard classification task,meaning that only one class is the correct one. If the true class is i, then y is a vector where yi=1 and yj=0. A vector like this,with one value =1 and the rest 0,is called one-hot vector. Noe let $\hat{y}$ be the vector output from the network. The loss is simply the log probability of the correct class：</p>
-<p>$$L(\hat{y},y)= -logp(\hat{y})$$</p>
-<h3>Following Gradients</h3>
-<p>梯度下降方法
-<img src="/img/nlp8_6.png" alt="">
-<img src="/img/nlp8_7.png" alt=""></p>
-<h3>Computing the Gradient</h3>
-<p>计算梯度是用反向传播算法</p>
-<h3>Stochastic Gradient Descent</h3>
-<p><img src="/img/nlp8_8.png" alt="">
-随机梯度下降之所以被称为随机是因为它选择一个随机样本，根据公式计算参数值。还有可选的算法是minibatch 梯度下降。</p>
-<h2>Neural Language Models</h2>
-<p>一个前向神经网络语言模型，时刻t的输入是一个前面的单词(wt-1,wt-2...)输出是一个对可能的下一个单词的概率分布。</p>
-<p>$$P(w_{t}|w^{t-1}<em>1)\approx P(w</em>{t}|w^{t-1}_{t-N+1})$$
-计算整个之前的上下文概率近似于计算之前的前N个单词的概率</p>
-<p>如果我们使用一个4-gram，概率$P(w_{t}=i|w_{t-1},w_{t-2},w_{t-3})$</p>
-<h3>Embeddings</h3>
-<p>Embedding 过程
-<img src="/img/nlp8_9.png" alt=""></p>
-<p>经常是不会单独训练embeddings的，而是伴随训练网络的过程。</p>
-<p>现在展示一个结构允许embeddings可以被学习。为了实现这个功能，增加一层。</p>
-<p><img src="/img/nlp8_10.png" alt=""></p>
-<ul>
-<li>Select three embeddings from E:</li>
-<li>Multiply by W:</li>
-<li>Multiply by U:</li>
-<li>Apply softmax: After the sofrmax,each node i in the output layer estimates the probability $P(w_{t}=i|w_{t-1},w_{t-2},w_{t-3})$</li>
-</ul>
-<p>如果我们使用e代表投影层，一个神经网络语言模型如下：</p>
-<p>$$e=(Ex_{1},Ex_{2},...Ex)$$
-$$h=\sigma (Wx+b)$$
-$$z= Uh$$
-$$y=softmax(z)$$</p>
-<h3>Training the neural language model</h3>
-<p>参数 $\theta =E,W,U,b$</p>
-<p>对于一个句子开始训练，在每一个单词，计算交叉熵(negative log likelihood)损失是:</p>
-<p>$$L=-logp(w_{t}|w_{t-1},...,w_{t-n+1})$$</p>
-<p>梯度计算:</p>
-<p>$$\theta_{t+1}=\theta_{t}-\eta \frac{\partial logp(w_{t}|w_{t-1},...,w_{t-n+1})}{\partial \theta }$$</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/30/Localization-Overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/30/Localization-Overview/" itemprop="url">Localization Overview</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-30T18:57:07+08:00">
-                2018-01-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Total Probability</h2>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/24/R-Basics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/24/R-Basics/" itemprop="url">R Basics</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-24T19:13:24+08:00">
-                2018-01-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>R Basics</h2>
-<p>文本分析包； TextCat</p>
-<p>图形包: ggplot2</p>
-<pre><code>install.packages('ggplot2')
-library(ggplot2)
-
-install.packages('RColorBrewer')
-library(RColorBrewer)
-
-data(diamonds)
-
-# create scatterplot of price vs .carat color 
-qplot(data=diamonds,x=carat,y=price,color=cut)+scalar_color_brewer(palette='Accent')
-</code></pre>
-<p><img src="/img/dv_01.png" alt=""></p>
-<p><a href="https://www.statmethods.net/" target="_blank" rel="noopener">quick R</a>
-<a href="http://www.cookbook-r.com/" target="_blank" rel="noopener">R Cookbook</a></p>
-<p>getwd()获取工作目录</p>
-<p>读取csv: read.csv(&quot; &quot;)</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/24/Course-Information/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/24/Course-Information/" itemprop="url">Course Information</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-24T19:03:18+08:00">
-                2018-01-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Course Information</h2>
-<p>学习资源</p>
-<ul>
-<li><a href="http://swirlstats.com/students.html" target="_blank" rel="noopener">swirl</a>:Interactive mini-courses in R (great for beginners)</li>
-<li><a href="https://www.rdocumentation.org/packages/DescTools/versions/0.99.19" target="_blank" rel="noopener">Listing of commands for R</a></li>
-<li><a href="https://www.datacamp.com/community/tutorials/r-data-import-tutorial" target="_blank" rel="noopener">Data import tutorial</a></li>
-<li><a href="https://www.statmethods.net/management/reshape.html" target="_blank" rel="noopener">Reshaping data</a></li>
-<li>robustHD:
-<ul>
-<li><a href="http://www.nicebread.de/installation-of-wrs-package-wilcox-robust-statistics/" target="_blank" rel="noopener">Loading robustHD</a></li>
-<li><a href="https://cran.r-project.org/web/packages/robustHD/robustHD.pdf" target="_blank" rel="noopener">Using robustHD</a></li>
-<li><a href="https://www.rdocumentation.org/packages/robustHD/versions/0.5.1" target="_blank" rel="noopener">Reference for robustHD</a></li>
-</ul>
+            <p>there are 3 types of Machine Learning Algorithms..</p>
+<ol>
+<li>
+<p>Supervised Learning</p>
+<p>How it works: This algorithm consist of a target / outcome variable (or dependent variable) which is to be predicted from a given set of predictors (independent variables). Using these set of variables, we generate a function that map inputs to desired outputs. The training process continues until the model achieves a desired level of accuracy on the training data. Examples of Supervised Learning: Regression, Decision Tree, Random Forest, KNN, Logistic Regression etc.</p>
 </li>
-</ul>
-<p>依赖环境</p>
-<p>R Datasets: iris,faithful,mtcars</p>
-<p>To loda iris flower dataset(iris),</p>
-<pre><code>data(iris)
-head(iris)
-levels(iris$Species)
-data(faithful)
-data(mtcars)
+<li>
+<p>Unsupervised Learning</p>
+<p>How it works: In this algorithm, we do not have any target or outcome variable to predict / estimate.  It is used for clustering population in different groups, which is widely used for segmenting customers in different groups for specific intervention. Examples of Unsupervised Learning: Apriori algorithm, K-means.</p>
+</li>
+<li>
+<p>Reinforcement Learning:</p>
+<p>How it works:  Using this algorithm, the machine is trained to make specific decisions. It works this way: the machine is exposed to an environment where it trains itself continually using trial and error. This machine learns from past experience and tries to capture the best possible knowledge to make accurate business decisions. Example of Reinforcement Learning: Markov Decision Process</p>
+</li>
+</ol>
+<p>List of Common Machine Learning Algorithms</p>
+<pre><code>Linear Regression
+Logistic Regression
+Decision Tree
+SVM
+Naive Bayes
+kNN
+K-Means
+Random Forest
+Dimensionality Reduction Algorithms
+Gradient Boosting algorithms
+GBM
+XGBoost
+LightGBM
+CatBoost
 </code></pre>
-<p>Libraries</p>
+<h2>1 Linear Regression</h2>
+<p>It is used to estimate real values (cost of houses, number of calls, total sales etc.) based on continuous variable(s). Here, we establish relationship between independent and dependent variables by fitting a best line. This best fit line is known as regression line and represented by a linear equation Y= a *X + b.</p>
+<p>Look at the below example. Here we have identified the best fit line having linear equation y=0.2811x+13.9. Now using this equation, we can find the weight, knowing the height of a person.</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/Linear_Regression.png" alt=""></p>
+<p>Multiple Linear Regression(多变量线性回归)，采用多个参数来定义模型，Polynomial Regression多项式回归</p>
+<p>While finding best fit line, you can fit a polynomial or curvilinear regression. And these are known as polynomial or curvilinear regression.</p>
+<p>Python Code</p>
+<pre><code>#Import Library
+#Import other necessary libraries like pandas, numpy...
+from sklearn import linear_model
+#Load Train and Test datasets
+#Identify feature and response variable(s) and values must be numeric and numpy arrays
+x_train=input_variables_values_training_datasets
+y_train=target_variables_values_training_datasets
+x_test=input_variables_values_test_datasets
+# Create linear regression object
+linear = linear_model.LinearRegression()
+# Train the model using the training sets and check score
+linear.fit(x_train, y_train)
+linear.score(x_train, y_train)
+#Equation coefficient and Intercept
+print('Coefficient: \n', linear.coef_)
+print('Intercept: \n', linear.intercept_)
+#Predict Output
+predicted= linear.predict(x_test)
+</code></pre>
+<p>R Code</p>
+<pre><code>#Load Train and Test datasets
+#Identify feature and response variable(s) and values must be numeric and numpy arrays
+x_train &lt;- input_variables_values_training_datasets
+y_train &lt;- target_variables_values_training_datasets
+x_test &lt;- input_variables_values_test_datasets
+x &lt;- cbind(x_train,y_train)
+# Train the model using the training sets and check score
+linear &lt;- lm(y_train ~ ., data = x)
+summary(linear)
+#Predict Output
+predicted= predict(linear,x_test) 
+</code></pre>
+<h2>2 Logistic Regression</h2>
+<p>Don’t get confused by its name! It is a classification not a regression algorithm. It is used to estimate discrete values ( Binary values like 0/1, yes/no, true/false ) based on given set of independent variable(s). In simple words, it predicts the probability of occurrence of an event by fitting data to a logit function.（它预测一个事件发生的概率通过一个logit 函数）。Hence, it is also known as logit regression. Since, it predicts the probability, its output values lies between 0 and 1 (as expected).</p>
+<p>Again, let us try and understand this through a simple example.</p>
+<p>Let’s say your friend gives you a puzzle to solve. There are only 2 outcome scenarios – either you solve it or you don’t. Now imagine, that you are being given wide range of puzzles / quizzes in an attempt to understand which subjects you are good at. The outcome to this study would be something like this – if you are given a trignometry based tenth grade problem, you are 70% likely to solve it. On the other hand, if it is grade fifth history question, the probability of getting an answer is only 30%. This is what Logistic Regression provides you.(解决这个问题的概率是70%.)</p>
+<p>Coming to the math, the log odds of the outcome is modeled as a linear combination of the predictor variables.</p>
+<pre><code>odds= p/ (1-p) = probability of event occurrence / probability of not event occurrence
+ln(odds) = ln(p/(1-p))
+logit(p) = ln(p/(1-p)) = b0+b1X1+b2X2+b3X3....+bkXk
+
+即
+logit(p) = ln(odds) 概率的logit函数值就是发生几率的对数函数值
+
+如果按照上面的过程解读LR，那就类似线性回归； 但是如果按照feature来解读，就像是最大熵模型
+</code></pre>
+<p>Above, p is the probability of presence of the characteristic of interest. It chooses parameters that maximize the likelihood of observing the sample values rather than that minimize the sum of squared errors (like in ordinary regression).</p>
+<p>Python Code</p>
+<pre><code>#Import Library
+from sklearn.linear_model import LogisticRegression
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create logistic regression object
+model = LogisticRegression()
+# Train the model using the training sets and check score
+model.fit(X, y)
+model.score(X, y)
+#Equation coefficient and Intercept
+print('Coefficient: \n', model.coef_)
+print('Intercept: \n', model.intercept_)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R Code</p>
+<pre><code>x &lt;- cbind(x_train,y_train)
+# Train the model using the training sets and check score
+logistic &lt;- glm(y_train ~ ., data = x,family='binomial')
+summary(logistic)
+#Predict Output
+predicted= predict(logistic,x_test)
+</code></pre>
+<h2>3 Decision Tree</h2>
+<p>This is one of my favorite algorithm and I use it quite frequently. It is a type of supervised learning algorithm that is mostly used for classification problems. Surprisingly, it works for both categorical and continuous dependent variables. In this algorithm, we split the population into two or more homogeneous sets. This is done based on most significant attributes/ independent variables to make as distinct groups as possible. For more details, you can read: Decision Tree Simplified.</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/IkBzK.png" alt=""></p>
+<p>In the image above, you can see that population is classified into four different groups based on multiple attributes to identify ‘if they will play or not’. To split the population into different heterogeneous groups, it uses various techniques like Gini, Information Gain, Chi-square, entropy.</p>
+<p>More: <a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank" rel="noopener">Simplified Version of Decision Tree Algorithm</a></p>
+<p>Python Code</p>
+<pre><code>#Import Library
+#Import other necessary libraries like pandas, numpy...
+from sklearn import tree
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create tree object 
+model = tree.DecisionTreeClassifier(criterion='gini') # for classification, here you can change the algorithm as gini or entropy (information gain) by default it is gini  
+# model = tree.DecisionTreeRegressor() for regression
+# Train the model using the training sets and check score
+model.fit(X, y)
+model.score(X, y)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R Code</p>
+<pre><code>library(rpart)
+x &lt;- cbind(x_train,y_train)
+# grow tree 
+fit &lt;- rpart(y_train ~ ., data = x,method=&quot;class&quot;)
+summary(fit)
+#Predict Output 
+predicted= predict(fit,x_test)
+</code></pre>
+<h2>4 SVM</h2>
+<p>It is a classification method. In this algorithm, we plot each data item as a point in n-dimensional space (where n is number of features you have) with the value of each feature being the value of a particular coordinate.</p>
+<p>For example, if we only had two features like Height and Hair length of an individual, we’d first plot these two variables in two dimensional space where each point has two co-ordinates (these co-ordinates are known as Support Vectors)(坐标)</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/SVM2.png" alt=""></p>
+<p>Now, we will find some line that splits the data between the two differently classified groups of data. This will be the line such that the distances from the closest point in each of the two groups will be farthest away.</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/SVM2.png" alt=""></p>
+<p>In the example shown above, the line which splits the data into two differently classified groups is the black line, since the two closest points are the farthest apart from the line. This line is our classifier. Then, depending on where the testing data lands on either side of the line, that’s what class we can classify the new data as.</p>
+<p>More: <a href="">Simplified Version of Support Vector Machine</a></p>
+<p>Python Code</p>
+<pre><code>#Import Library
+from sklearn import svm
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create SVM classification object 
+model = svm.svc() # there is various option associated with it, this is simple for classification. You can refer link, for mo# re detail.
+# Train the model using the training sets and check score
+model.fit(X, y)
+model.score(X, y)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R Code</p>
+<pre><code>library(e1071)
+x &lt;- cbind(x_train,y_train)
+# Fitting model
+fit &lt;-svm(y_train ~ ., data = x)
+summary(fit)
+#Predict Output 
+predicted= predict(fit,x_test)
+</code></pre>
+<h2>5 Native Bayes</h2>
+<p>It is a classification technique based on Bayes’ theorem with an assumption of independence between predictors. In simple terms, a Naive Bayes classifier assumes that the presence of a particular feature in a class is unrelated to the presence of any other feature. For example, a fruit may be considered to be an apple if it is red, round, and about 3 inches in diameter. Even if these features depend on each other or upon the existence of the other features, a naive Bayes classifier would consider all of these properties to independently contribute to the probability that this fruit is an apple.</p>
+<p>Naive Bayesian model is easy to build and particularly useful for very large data sets. Along with simplicity, Naive Bayes is known to outperform even highly sophisticated classification methods.</p>
+<p>Bayes theorem provides a way of calculating posterior probability P(c|x) from P(c), P(x) and P(x|c). Look at the equation below:</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/Bayes_rule.png" alt=""></p>
+<p>Here,</p>
+<pre><code>P(c|x) is the posterior probability of class (target) given predictor (attribute). 
+P(c) is the prior probability of class. 
+P(x|c) is the likelihood which is the probability of predictor given class. 
+P(x) is the prior probability of predictor.
+</code></pre>
+<p>Example: Let’s understand it using an example. Below I have a training data set of weather and corresponding target variable ‘Play’. Now, we need to classify whether players will play or not based on weather condition. Let’s follow the below steps to perform it.</p>
+<p>Step 1: Convert the data set to frequency table</p>
+<p>Step 2: Create Likelihood table by finding the probabilities like Overcast probability = 0.29 and probability of playing is 0.64.</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/Bayes_41.png" alt=""></p>
+<p>Step 3: Now, use Naive Bayesian equation to calculate the posterior probability for each class. The class with the highest posterior probability is the outcome of prediction.</p>
+<p>Problem: Players will pay if weather is sunny, is this statement is correct?</p>
+<p>We can solve it using above discussed method, so P(Yes | Sunny) = P( Sunny | Yes) * P(Yes) / P (Sunny)</p>
+<p>Here we have P (Sunny |Yes) = 3/9 = 0.33, P(Sunny) = 5/14 = 0.36, P( Yes)= 9/14 = 0.64</p>
+<p>Now, P (Yes | Sunny) = 0.33 * 0.64 / 0.36 = 0.60, which has higher probability.</p>
+<p>Naive Bayes uses a similar method to predict the probability of different class based on various attributes. This algorithm is mostly used in text classification and with problems having multiple classes.</p>
+<p>Python Code</p>
+<pre><code>#Import Library
+from sklearn.naive_bayes import GaussianNB
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create SVM classification object model = GaussianNB() # there is other distribution for multinomial classes like Bernoulli Naive Bayes, Refer link
+# Train the model using the training sets and check score
+model.fit(X, y)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R Code</p>
+<pre><code>library(e1071)
+x &lt;- cbind(x_train,y_train)
+# Fitting model
+fit &lt;-naiveBayes(y_train ~ ., data = x)
+summary(fit)
+#Predict Output 
+predicted= predict(fit,x_test)
+</code></pre>
+<h2>KNN</h2>
+<p>It can be used for both classification and regression problems. However, it is more widely used in classification problems in the industry. K nearest neighbors is a simple algorithm that stores all available cases and classifies new cases by a majority vote of its k neighbors. The case being assigned to the class is most common amongst its K nearest neighbors measured by a distance function.</p>
+<p>These distance functions can be Euclidean, Manhattan, Minkowski and Hamming distance. First three functions are used for continuous function and fourth one (Hamming) for categorical variables. If K = 1, then the case is simply assigned to the class of its nearest neighbor. At times, choosing K turns out to be a challenge while performing kNN modeling.</p>
+<p>Mode:<a href="">Introduction to k-nearest neighbors : Simplified</a></p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/08/KNN.png" alt=""></p>
+<p>KNN can easily be mapped to our real lives. If you want to learn about a person, of whom you have no information, you might like to find out about his close friends and the circles he moves in and gain access to his/her information!</p>
+<p>Things to consider before selecting kNN:</p>
+<p>KNN is computationally expensive
+Variables should be normalized else higher range variables can bias it
+Works on pre-processing stage more before going for kNN like outlier, noise removal</p>
+<p>Python Code</p>
+<pre><code>#Import Library
+from sklearn.neighbors import KNeighborsClassifier
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create KNeighbors classifier object model 
+KNeighborsClassifier(n_neighbors=6) # default value for n_neighbors is 5
+# Train the model using the training sets and check score
+model.fit(X, y)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R Code</p>
+<pre><code>library(knn)
+x &lt;- cbind(x_train,y_train)
+# Fitting model
+fit &lt;-knn(y_train ~ ., data = x,k=5)
+summary(fit)
+#Predict Output 
+predicted= predict(fit,x_test)
+</code></pre>
+<h2>7 K-Means</h2>
+<p>It is a type of unsupervised algorithm which  solves the clustering problem. Its procedure follows a simple and easy  way to classify a given data set through a certain number of  clusters (assume k clusters). Data points inside a cluster are homogeneous and heterogeneous to peer groups.</p>
+<p>Remember figuring out shapes from ink blots? k means is somewhat similar this activity. You look at the shape and spread to decipher how many different clusters / population are present!</p>
+<h2>8 Random Forest</h2>
+<p>Random Forest is a trademark term for an ensemble of decision trees. In Random Forest, we’ve collection of decision trees (so known as “Forest”). To classify a new object based on attributes, each tree gives a classification and we say the tree “votes” for that class. The forest chooses the classification having the most votes (over all the trees in the forest).</p>
+<p>Each tree is planted &amp; grown as follows:</p>
+<p>If the number of cases in the training set is N, then sample of N cases is taken at random but with replacement. This sample will be the training set for growing the tree.</p>
+<p>If there are M input variables, a number m&lt;&lt;M is specified such that at each node, m variables are selected at random out of the M and the best split on these m is used to split the node. The value of m is held constant during the forest growing.</p>
+<p>Each tree is grown to the largest extent possible. There is no pruning.</p>
+<p>For more details on this algorithm, comparing with decision tree and tuning model parameters, I would suggest you to read these articles:</p>
+<p><a href="https://www.analyticsvidhya.com/blog/2014/06/introduction-random-forest-simplified/" target="_blank" rel="noopener">Introduction to Random forest – Simplified</a>
+<a href="https://www.analyticsvidhya.com/blog/2014/06/comparing-cart-random-forest-1/" target="_blank" rel="noopener">Comparing a CART model to Random Forest (Part 1)</a></p>
+<p><a href="https://www.analyticsvidhya.com/blog/2014/06/comparing-random-forest-simple-cart-model/" target="_blank" rel="noopener">Comparing a Random Forest to a CART model (Part 2)</a></p>
+<p><a href="https://www.analyticsvidhya.com/blog/2015/06/tuning-random-forest-model/" target="_blank" rel="noopener">Tuning the parameters of your Random Forest model</a></p>
+<p>Python</p>
+<pre><code>#Import Library
+from sklearn.ensemble import RandomForestClassifier
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create Random Forest object
+model= RandomForestClassifier()
+# Train the model using the training sets and check score
+model.fit(X, y)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R code</p>
+<pre><code>library(randomForest)
+x &lt;- cbind(x_train,y_train)
+# Fitting model
+fit &lt;- randomForest(Species ~ ., x,ntree=500)
+summary(fit)
+#Predict Output 
+predicted= predict(fit,x_test)
+</code></pre>
+<h2>9 Dimensionality Reduction Algorithms（降维算法）</h2>
+<p>In the last 4-5 years, there has been an exponential increase in data capturing at every possible stages. Corporates/ Government Agencies/ Research organisations are not only coming with new sources but also they are capturing data in great detail.</p>
+<p>For example: E-commerce companies are capturing more details about customer like their demographics, web crawling history, what they like or dislike, purchase history, feedback and many others to give them personalized attention more than your nearest grocery shopkeeper.</p>
+<p>As a data scientist, the data we are offered also consist of many features, this sounds good for building good robust model but there is a challenge. How’d you identify highly significant variable(s) out 1000 or 2000? In such cases, dimensionality reduction algorithm helps us along with various other algorithms like Decision Tree, Random Forest, PCA, Factor Analysis, Identify based on correlation matrix, missing value ratio and others.</p>
+<p>To know more about this algorithms, you can read <a href="https://www.analyticsvidhya.com/blog/2015/07/dimension-reduction-methods/" target="_blank" rel="noopener">“Beginners Guide To Learn Dimension Reduction Techniques”</a></p>
+<p>Python code</p>
+<pre><code>#Import Library
+from sklearn import decomposition
+#Assumed you have training and test data set as train and test
+# Create PCA obeject 
+pca= decomposition.PCA(n_components=k) 
+#default value of k =min(n_sample, n_features)
+# For Factor analysis
+#fa= decomposition.FactorAnalysis()
+# Reduced the dimension of training dataset using PCA
+train_reduced = pca.fit_transform(train)
+#Reduced the dimension of test dataset
+test_reduced = pca.transform(test)
+#For more detail on this, please refer  this link.
+</code></pre>
+<p>R code</p>
+<pre><code>library(stats)
+pca &lt;- princomp(train, cor = TRUE)
+train_reduced  &lt;- predict(pca,train)
+test_reduced  &lt;- predict(pca,test)
+</code></pre>
+<h2>10. Gradient Boosting Algorithms</h2>
+<p>10.1. GBM</p>
+<p>GBM is a boosting algorithm used when we deal with plenty of data to make a prediction with high prediction power. Boosting is actually an ensemble of learning algorithms which combines the prediction of several base estimators in order to improve robustness over a single estimator. It combines multiple weak or average predictors to a build strong predictor. These boosting algorithms always work well in data science competitions like Kaggle, AV Hackathon, CrowdAnalytix.</p>
+<p>More: <a href="https://www.analyticsvidhya.com/blog/2015/05/boosting-algorithms-simplified/" target="_blank" rel="noopener">Know about Boosting algorithms in detail</a></p>
+<p>Python Code</p>
+<pre><code>#Import Library
+from sklearn.ensemble import GradientBoostingClassifier
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create Gradient Boosting Classifier object
+model= GradientBoostingClassifier(n_estimators=100, learning_rate=1.0, max_depth=1, random_state=0)
+# Train the model using the training sets and check score
+model.fit(X, y)
+#Predict Output
+predicted= model.predict(x_test)
+</code></pre>
+<p>R code</p>
+<pre><code>library(caret)
+x &lt;- cbind(x_train,y_train)
+# Fitting model
+fitControl &lt;- trainControl( method = &quot;repeatedcv&quot;, number = 4, repeats = 4)
+fit &lt;- train(y ~ ., data = x, method = &quot;gbm&quot;, trControl = fitControl,verbose = FALSE)
+predicted= predict(fit,x_test,type= &quot;prob&quot;)[,2]
+</code></pre>
+<p>GradientBoostingClassifier and Random Forest are two different boosting tree classifier and often people ask about the <a href="">difference between these two algorithms</a>.</p>
+<h3>10.2 XGBoost</h3>
+<p>Another classic gradient boosting algorithm that’s known to be the decisive choice between winning and losing in some Kaggle competitions.</p>
+<p>The XGBoost has an immensely high predictive power which makes it the best choice for accuracy in events as it possesses both linear model and the tree learning algorithm, making the algorithm almost 10x faster than existing gradient booster techniques.</p>
+<p>The support includes various objective functions, including regression, classification and ranking.</p>
+<p>One of the most interesting things about the XGBoost is that it is also called a regularized boosting technique. This helps to reduce overfit modelling and has a massive support for a range of languages such as Scala, Java, R, Python, Julia and C++.</p>
+<p>Supports distributed and widespread training on many machines that encompass GCE, AWS, Azure and Yarn clusters. XGBoost can also be integrated with Spark, Flink and other cloud dataflow systems with a built in cross validation at each iteration of the boosting process.</p>
+<p>To learn more about XGBoost and parameter tuning, visit <a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/" target="_blank" rel="noopener">https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/</a>.</p>
+<p>Python Code</p>
+<pre><code>from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+X = dataset[:,0:10]
+Y = dataset[:,10:]
+seed = 1
+
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=seed)
+
+model = XGBClassifier()
+
+model.fit(X_train, y_train)
+
+#Make predictions for test data
+y_pred = model.predict(X_test)
+</code></pre>
+<h3>10.3. LightGBM</h3>
+<p>LightGBM is a gradient boosting framework that uses tree based learning algorithms. It is designed to be distributed and efficient with the following advantages:</p>
+<pre><code>Faster training speed and higher efficiency
+Lower memory usage
+Better accuracy
+Parallel and GPU learning supported
+Capable of handling large-scale data
+</code></pre>
+<p>he framework is a fast and high-performance gradient boosting one based on decision tree algorithms, used for ranking, classification and many other machine learning tasks. It was developed under the Distributed Machine Learning Toolkit Project of Microsoft.</p>
+<p>Since the LightGBM is based on decision tree algorithms, it splits the tree leaf wise with the best fit whereas other boosting algorithms split the tree depth wise or level wise rather than leaf-wise. So when growing on the same leaf in Light GBM, the leaf-wise algorithm can reduce more loss than the level-wise algorithm and hence results in much better accuracy which can rarely be achieved by any of the existing boosting algorithms.</p>
+<p>Refer to the article to know more about LightGBM: <a href="https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/" target="_blank" rel="noopener">https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/</a></p>
+<p>Python Code</p>
+<pre><code>data = np.random.rand(500, 10) # 500 entities, each contains 10 features
+label = np.random.randint(2, size=500) # binary target
+
+train_data = lgb.Dataset(data, label=label)
+test_data = train_data.create_valid('test.svm')
+
+param = {'num_leaves':31, 'num_trees':100, 'objective':'binary'}
+param['metric'] = 'auc'
+
+num_round = 10
+bst = lgb.train(param, train_data, num_round, valid_sets=[test_data])
+
+bst.save_model('model.txt')
+
+	# 7 entities, each contains 10 features
+data = np.random.rand(7, 10)
+ypred = bst.predict(data)
+</code></pre>
+<p><a href="https://wizardforcel.gitbooks.io/dm-algo-top10/content/em.html" title="数据挖掘十大算法" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/dm-algo-top10/content/em.html</a></p>
 
           
         
@@ -1714,7 +1021,7 @@ data(mtcars)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/23/7-Logistic-Regression/">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/09/Aho-Corasick自动机结合DoubleArrayTrie极速多模式匹配/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JackNiu">
@@ -1733,7 +1040,7 @@ data(mtcars)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/23/7-Logistic-Regression/" itemprop="url">7 Logistic Regression</a></h1>
+                <a class="post-title-link" href="/2018/02/09/Aho-Corasick自动机结合DoubleArrayTrie极速多模式匹配/" itemprop="url">Aho Corasick自动机结合DoubleArrayTrie极速多模式匹配</a></h1>
         
 
         <div class="post-meta">
@@ -1743,10 +1050,10 @@ data(mtcars)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-23T20:26:08+08:00">
-                2018-01-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-09T11:12:24+08:00">
+                2018-02-09
               </time>
             
 
@@ -1785,82 +1092,1220 @@ data(mtcars)
       
         
           
-            <h2>Logistic Regression</h2>
-<p>介绍第二个分类算法叫做多多项逻辑回归，一些涉及到语言处理的叫做最大熵模型。贝叶斯分类器和逻辑回归最大的不同之处是逻辑回归是一个discriminative(判别式)模型，而贝叶斯是一个generative(生成式)模型。</p>
-<pre><code>根据贝叶斯公式，选择类别y是一个间接的过程，因此是一个生成式模型: 模型被训练从类别y中产生数据x。P(x|y)给定y，选择x。
-而判别式模型一般是直接计算P(y|x)
+            <h2>Aho-Corasick算法的Java实现与分析</h2>
+<p>简介</p>
+<pre><code>Aho-Corasick算法简称AC算法，通过将模式串预处理为确定有限状态自动机，扫描文本一遍就能结束。其时间复杂度为O(n)，即与模式串的数量和长度无关。
 </code></pre>
-<p>$$\hat{y}=\underset{y}{argmax}P(y|x)$$</p>
-<p>根据推导过程，并结合线性函数和归一化过程。</p>
-<p>$$P(c|x) = \frac{exp(\sum_{i=1}{w_{i}f_{i}(c,x)})}{\sum_{c' \in C} (\sum_{i=1} w_{i}f_{i}(c',x))}$$</p>
-<pre><code>其中fi是一个实值函数，在语言处理中一般使用二指特征，对每一个特征都有一个权重值，但是特征值是0还是1需要根据具体的输入数据进行判定。
+<p>思想</p>
+<pre><code>自动机按照文本字符顺序，接受字符，并发生状态转移。这些状态缓存
+了&quot;按照字符转移成功(但不是模式串的结尾)&quot;、&quot;按照分i粗转移成功
+(是模式串的结尾)&quot;、&quot;按照字符转移失败&quot;三种情况，因而降低了复杂度。
 </code></pre>
-<p>逻辑回归就是在线性回归的基础上应用logit函数，然后得出的结果就是P(y=true|x)的概率</p>
-<h2>Features in Multinomial Logistic Regression</h2>
-<p>假定文本分类问题，需要知道是否将情绪标记为class +，-；
-<img src="/img/nlp6_8.png" alt=""></p>
-<pre><code>注意在lr中，一般定义特征函数为二元值，0，1分布。
+<p>基本构造</p>
+<pre><code>AC算法中三个核心函数
+* success: 成功转移到另一个状态(goto表和success表)
+* failure: 不可顺着字符串跳转的话，则跳转到另一个特定的节点（failure表），从根节点到这个特定的节点的路径恰好是失败前的文本的一部分。
+* emits: 命中一个模式串(也称output表)
 </code></pre>
-<h2>Classification in Multinomial Logistic Regression</h2>
-<p><img src="/img/nlp6_9.png" alt="">
-根据上述图片的描述，P(+|x)和P(-|x)可以被Eq.8.11 计算</p>
-<p><img src="/img/nlp6_10.png" alt=""></p>
-<p>如果文本的目标是做分类，那就不需要用上面的公式，直接使用下面的公式，也就是之前的贝叶斯公式即可。
-<img src="/img/nlp6_11.png" alt=""></p>
-<p>上面公式的索引从0-N,是查看所有的特征，但是实际上只需要看非零特征就可以了。</p>
-<h2>Learning Logistic Regression</h2>
-<p>LR训练方式是通过条件最大似然估计方式。选择参数w最大化y的概率，在给定数据x的情况下。</p>
-<p>$$\hat{w}=\underset{c \in C}{argmax}logP(y^{j}|x^{j})$$</p>
-<p>对于整个训练集就是上面右半部分的求和过程</p>
-<p>$$\hat{w}=\underset{c \in C}{argmax}\sum _{j}logP(y^{j}|x^{j})$$</p>
-<p><img src="/img/nlp6_12.png" alt=""></p>
-<pre><code>上面的公式:
-j代表每一个句子
-i代表每一个特征，fi()代表每一个特征的特征函数，
-j=1
-	求和: i&lt;1~N; wi*fi(yj|xj) ，这里的yj是已知的。
-	分母； 归一化过程，先令 y'=class1; 也就是每一个yj都需要
-	将所有的class 遍历一遍。
+<p>举例</p>
+<pre><code>以经典的ushers为例，he/she/his/hers 文本为ushers，构造的自动机如图:
 </code></pre>
-<p>求解权重过程变成了一个优化函数</p>
-<p><img src="/img/nlp6_13.png" alt=""></p>
-<p>左边就是数特征fk为1的次数(观察次数)，右边是期望的次数。</p>
-<p>$$L'(w)=\sum_{j} Observed \ count(f_{k}) - Expected\  scount(f_{k})$$</p>
-<h2>Regularization</h2>
-<p>如果一个特征完美预测了结果只是因为它仅仅出现在一个类中，将会被设定一个非常高的权重。这种问题叫做overfitting 过拟合。</p>
-<p>避免overfitting一个正则化的方法是增加一个函数。</p>
-<p>$$\hat{w}=\underset{w}{argmax} \sum_{j} logP(y^{j}|x^{j})-\alpha R(w)$$</p>
-<p>R(w)，正则化项，为了惩罚大的权重。</p>
-<p>因此如果权重完美的匹配了训练数据，但是用很多有较大值的权重，将会被惩罚，相比于那些匹配训练数据了，但是效果不是最好的，但是使用了较小值的权重而言。</p>
-<p>L2 regularization 是权重的二次方，称为欧几里德距离。</p>
-<p>$$R(W) = ||W||^2_{2} = \sum_{j=1}^n w^2_{j}$$</p>
-<p>L1 regularization 是一个线性函数，曼哈顿距离。</p>
-<p>$$R(W) = ||W||<em>{1} = \sum</em>{i=1}^n |w_{i}|$$</p>
-<p>这些正则化的类型来自于统计学，L1正则化叫做lasso 回归，L2正则化叫做ridge regression。两者都经常用在语言处理追踪。L2正则化更加容易去优化，简单的求导(2w),l1正则化更加复杂点。但是L2权重向量更加偏向于小向量，l1权重向量偏向于大向量，但是许多值都是0。 因此，L1正则化会生成稀疏箱量矩阵，也就是更少的特征。</p>
-<p>下面用贝叶斯公式来解释L2约束。</p>
-<p>L1和L2都会有贝叶斯解释来约束权重的先验值。L1正则化可以看作一个拉普拉斯先验，L2正则化权重分布符合高斯分母当均值$\mu =0$。 高斯分布，离mean越远，概率越低。</p>
-<p><img src="/img/nlp6_14.png" alt=""></p>
-<p>如果将每一个权重的高斯先验，就是最大化下面的约束条件</p>
-<p><img src="/img/nlp6_15.png" alt=""></p>
-<h2>Feature Selection</h2>
-<p>特征选择的基础是给每一个特征一个较好的度量值，排序，保留最好的一个特征。特征数目作为一个元参数可以在dev set中训练。</p>
-<p>特征排序是基于它们对分类决策提供了多少信息，最常用的方法是信息增益。信息增益是告诉我们这个单词表现多少位的信息帮助我们猜测类别，可以用如下的方式计算。</p>
-<p>$$G(w)=-\sum^C_{i=1}P(c_{i})logP(c_{i})+P(w)\sum^C_{i=1}P(c_{i}|w)logP(c_{i}|w)+P(\bar{w})\sum^C_{i=1}P(c_{i}|\bar{w})log(P(c_{i}|\bar{w}))$$</p>
-<pre><code>（1）原始数据 先按照类别c进行分类，计算熵
- 遍历c
-	计算条件概率的熵P(ci|w)logP(ci|w),w是文档中出现的单词
-	计算不是该文档中该单词的熵。
+<p><img src="/img/algs_0.png" alt="">
+上图省略了到根节点的fail边，完整的自动机如下图:
+<img src="/img/algs_1.png" alt=""></p>
+<p><strong>匹配过程</strong></p>
+<p>自动机从根节点0出发</p>
+<p>1 首先按照success表转移(图中实线)。按照文本的指示转移，也就是接受一个u。此时success表中并没有相应路线，转移失败。</p>
+<p>2 失败了则按照failure表回去(图中虚线)。按照文本指示，这次接收一个s，转移到状态3</p>
+<p>3 成功了继续按success表转移，直到失败跳转步骤2，或者遇到output表中注明的“可输出状态”。此时输出匹配到的模式串，然后将此状态视作普通的状态继续转移。</p>
+<p>算法高效之处在于，当自动机接受了“ushe”之后，再接受一个r会导致无法按照success表转移，此时自动机会聪明地按照failure表转移到2号状态，并经过几次转移后输出“hers”。来到2号状态的路不止一条，从根节点一路往下，“h→e”也可以到达。而这个“he”恰好是“ushe”的结尾，状态机就仿佛是压根就没失败过（没有接受r），也没有接受过中间的字符“us”，直接就从初始状态按照“he”的路径走过来一样（到达同一节点，状态完全相同）。</p>
+<p>goto表</p>
+<p>很简单，trie树知识的话就能了解，goto表就是一棵trie树。把上图的虚线去掉，实线部分就是一棵trie树了。</p>
+<p><img src="/img/algs_2.png" alt="">
+output表</p>
+<p>output表也很简单，与trie树里面代表这个节点是否是单词结尾的构造很像。不过trie树只有叶节点才有output，并且一个叶节点只有一个output。下图违背了这两</p>
+<p><img src="/img/algs_3.png" alt=""></p>
+<p>以上两个表通过trie构造
+<a href="http://www.hankcs.com/nlp/ansj-word-pairs-array-tire-tree-achieved-with-arrays-dic-dictionary-format.html" target="_blank" rel="noopener">Ansj分词双数组Trie树实现与arrays.dic词典格式</a>,
+<a href="http://www.hankcs.com/program/java/tire-tree-participle.html" target="_blank" rel="noopener">Trie树分词</a>,<a href="http://www.hankcs.com/program/java/%e5%8f%8c%e6%95%b0%e7%bb%84trie%e6%a0%91doublearraytriejava%e5%ae%9e%e7%8e%b0.html" target="_blank" rel="noopener">双数组Trie树(DoubleArrayTrie)Java实现</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/08/11-Formal-Grammars-of-English/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/08/11-Formal-Grammars-of-English/" itemprop="url">11 Formal Grammars of English</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T11:08:44+08:00">
+                2018-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Formal Grammers of English</h2>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/10-part-of-speech-Tagging/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/06/10-part-of-speech-Tagging/" itemprop="url">10 part of speech Tagging</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T16:51:47+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Part-of-Speech Tagging</h2>
+<p>本章介绍Part-of_speech tagging. 介绍两种算法用于词性标注，HMM和MEMM</p>
+<h2>English Word Classes</h2>
+<p>词性标注可以被分成两部分: closed class type and open class types。clossed class 是那些有固定的格式，例如介词，几乎不会创造新的介词。相反名词和形容词是open classes，新的名词如iphone等。Cloesd class 单词一般是功能单词例如of,it,and,you，短，出现频次高，经常在语法构造中。</p>
+<p>syntactic句法的
+literal  照字面的
+metaphorical 隐喻性的
+semantic 语义的
+auxiliary  辅助的; 备用的，补充的; 附加的; 副的</p>
+<p>四个主要的open classes是:名词，动词，形容词，副词。</p>
+<pre><code>一些比较重要的closed classes：
+prepositions: 介词， on under over near by at from to 
+determiners: 限定词， a  an the
+pronouns: 代词，she who I others
+conjunctions:连词， and,but or as if when 
+auxiliary verbs:助动词 can may should are
+particles: up down on off in out 
+numerals: one two three first second third
+
+cardinal number: 基数
+existential 存在的
+verb past participle 动词过去分词
+possessive ending 所有格的结尾
+morpheme 形态词 词素
 </code></pre>
-<p>特征选择对于没有正则化的类来说是非常重要的。</p>
-<h2>Choosing a classifier and features</h2>
-<p>NB分类器在小数据集和短文档中表现的更好，但是lr和svm在大数据集中表现的更好。</p>
+<h2>The Penn Treebank Part-of_speech Tagset</h2>
+<p>Penn Treebank tagset
+<img src="/img/nlp10_0.png" alt=""></p>
+<p>词性标注为每一个单词放置一个词性</p>
+<pre><code>The/DT grand/JJ jury/NN commented/VBD on/IN a/DT number/NN of/IN other/JJ topics/NNS ./.
+There/EX are/VBP 70/CD children/NNS there/RB
+Preliminary/JJ findings/NNS were/VBD reported/VBN in/IN today/NN ’s/POS New/NNP England/NNP Journal/NNP of/IN Medicine/NNP ./.
+</code></pre>
+<p>语料库的词性标注像Treebank语料库对于统计标注算法十分重要。<strong>Brown</strong>语料库， <strong>WSJ</strong>,<strong>Switchboard</strong></p>
+<h2>Part-of-Speech Tagging</h2>
+<pre><code>Tagging is a disambiguation task;words are ambiguous- 
+have more than one possible part-of-speech---and the 
+goal is to find the correct tag for the situation. For
+example, the word book can be a verb(book that flight) 
+or a noun(as in hand me that book)
+
+complementizer 补语
+</code></pre>
+<p><img src="/img/nlp10_1.png" alt=""></p>
+<p>some of the most ambiguous rfequent words are that,back,down,put and set</p>
+<pre><code>earnings growth took a back/JJ seat
+a small building in the back/NN
+a clear majority of senators back/VBP the bill
+Dave began to back/VB toward the door
+enable the country to buy back/RP about the debt
+I was twenty-one back/RB then
+</code></pre>
+<p>一种词性标注最简单的baseline算法: 给出一个歧义单词，选择在语料库中出现最多的词性作为这个单词的词性。</p>
+<pre><code>Most Frequent Class Baseline: Always compare a classifier against a baseline at leat as good as the most frequent class baseline(assinging each token to the class it occurred in most often in the training set)
+</code></pre>
+<p>度量词性标注的标准是准确率: 人工定义的进行比较。WSJ语料库。如果我们在WSJ语料库上训练，剩下的在测试集上测试，most-frequent-tag baseline 能够达到准确率92.34%。</p>
+<h2>HMM Part-of-Speech Tagging</h2>
+<p>我们使用HMM在这里用作词性标注，也就是Viterbi 解码算法。</p>
+<h3>The basic equation of HMM Tagging</h3>
+<h3>Eatimating probabilities</h3>
+<p>在HMM词性标注方法中，不需要使用HMM的EM 算法，概率可以通过对训练集进行计数的方式直接估计。使用WSJ数据集，词性转移概率$p(t_{i}|t_{i-1})$，最大似然估计对转移概率的计算方式是数数。</p>
+<p>$$P(t_{i}|t_{i-1})=\frac{C(t_{i-1},t_{i})}{C(t_{i-1})}$$</p>
+<p>比如在WSJ语料库中，MD出现了13124次，后面跟VB出现了10471 次，MLE估计</p>
+<p>$$P(VB|MD)=\frac{C(MD,VB}{C(MD)} = 10471/13124 = 0.80$$</p>
+<p>发射概率$p(w_{i}|t_{i})$,代表了给定一个标记MD，然后和一个固定单词出现的概率。</p>
+<p>$$P(w_{i}|t_{i})=\frac{C(t_{i},w_{i})}{C(t_{i})}$$</p>
+<p>will 这个单词出现4046次，而MD出现了13124次</p>
+<p>$$P(will|MD)=\frac{C(MD,will)}{C(MD)}=0.31$$</p>
+<p><img src="/img/nlp10_2.png" alt=""></p>
+<p><img src="/img/nlp10_3.png" alt=""></p>
+<h3>Working through an example</h3>
+<p>现在用一个例子说明</p>
+<pre><code>Janet will back the hill
+Janet/NNP will/MD back/VB the/DT bill/NN
+</code></pre>
+<p><img src="/img/nlp10_4.png" alt=""></p>
+<p>下面是HMM的viterbi构造过程，</p>
+<p><img src="/img/nlp10_5.png" alt=""></p>
+<p>Viterbi算法伪代码
+<img src="/img/nlp10_6.png" alt=""></p>
+<p>在下图中，</p>
+<p><img src="/img/nlp10_7.png" alt=""></p>
+<h3>Extending the HMM Algorithm to Trigrams</h3>
+<p>实际的HMM词性标注对这个简单的模型都有许多扩展，之前的计算过程中概率只依赖前面一个词性</p>
+<p>$$P(t^{n}<em>{1})\approx \prod ^{n}</em>{i=1}P(t_{i}|t_{i-1})$$</p>
+<p>实际中，我们选择两个依赖</p>
+<p>$$P(t^{n}<em>{1})\approx \prod ^{n}</em>{i=1}P(t_{i}|t_{i-1},t_{i-2})$$</p>
+<p><img src="/img/nlp10_8.png" alt=""></p>
+<p>计算$\lambda $的过程如下，使用delete interpolation</p>
+<p><img src="/img/nlp10_9.png" alt=""></p>
+<h3>Unknown Words</h3>
+<p>一个好的词性标注模型体现在对未登录词的判定上。</p>
+<p>对于未登录词的词性标注最好的是 morphology(形态学)。单词以s结尾的更像是复数名词(NNS).-ed 是VBN,-able 是JJ。考虑后缀直到10个字母，计算每一个长度i的后缀对于给定词性的概率。</p>
+<h2>Maximum Entropy Markov Models</h2>
+<p>MEMM,基础是最大熵分类器(多分类逻辑回归)。因为基于逻辑回归，因此是一个判定式序列模型。而HMM是一个生成式序列模型。</p>
+<p>假如一个序列$W=w^{n}<em>{1}$并且序列的词性是$T=t^{n}</em>{1}$,在HMM中计算最好的序列是最大化P(T|W)，依靠贝叶斯规则和似然值P(W|T)</p>
+<p><img src="/img/nlp10_10.png" alt=""></p>
+<pre><code>生成式模型最终全部转换到了 贝叶斯公式
+</code></pre>
+<p>在MEMM中，直接计算先验P(T|W),不做任何形式的变化</p>
+<p><img src="/img/nlp10_11.png" alt=""></p>
+<pre><code>HMM计算似然值(观察到的单词依赖于标签)
+MEMM计算先验值(标签依赖于观察到的单词)
+</code></pre>
+<p><img src="/img/nlp10_12.png" alt=""></p>
+<h3>Feature in a MEMM</h3>
+<p>一个MEMM模型考虑两个特征(观察到的单词和前面的词性)</p>
+<pre><code>使用判别式模型是因为一个判别式模型容易处理多种混合的特征。在
+HMM中所有的计算都是基于P(tag|word),P(word|tag),如果我们
+想添加一些知识源，必须用一种方式将这些知识编码到两种概率中。在
+前面看到这种方式是可选的，如P(capitalization|tag)和P(syffix|tag)。
+</code></pre>
+<p><img src="/img/nlp10_13.png" alt=""></p>
+<p>一个基本的MEMM词性标注模型依赖于单词本身，邻近单词，前面的词性，可变的组合，使用特征模型如下。</p>
+<p><img src="/img/nlp10_14.png" alt=""></p>
+<p>特征模型位于候选集中的每一个实例</p>
+<pre><code>Janet/NNP will/MD back/VB the/DT bill/NN
+</code></pre>
+<p>当$w_{i}$是单词 back， 将会产生一下特征</p>
+<p><img src="/img/nlp10_15.png" alt=""></p>
+<p>当然其他的特征也是必须的，表达单词的拼写属性</p>
+<p><img src="/img/nlp10_16.png" alt=""></p>
+<p>计算公式
+<img src="/img/nlp10_17.png" alt=""></p>
+<pre><code>需要对LR公式特征计算过程进行一次模拟。
+</code></pre>
+<h3>Decoding and Training MEMMs</h3>
+<p>将MaxEnt分类器用于解码任务去发现序列的词性，最简单的方式是构建一个本地分类器，先对第一个单词构建词性标注，再依赖第一个单词对第二个单词进行词性标注。这就是贪婪解码算法。</p>
+<p><img src="/img/nlp10_18.png" alt=""></p>
+<p><img src="/img/nlp10_19.png" alt=""></p>
+<p><img src="/img/nlp10_20.png" alt=""></p>
 <h2>Summary</h2>
-<p>本章介绍逻辑回归(最大熵)模型。</p>
+<pre><code>This chapter introduced the idea of parts-of-speech and part-of-speech tagging.
+The main ideas:
+
+Languages generally have a relatively small set of closed class words that are often highly frequent, generally act as function words, and can be ambiguous
+in their part-of-speech tags. Open-class words generally include various kinds of nouns, verbs, adjectives. There are a number of part-of-speech coding schemes, based on tagsets of between 40 and 200 tags.
+
+Part-of-speech tagging is the process of assigning a part-of-speech label to each of a sequence of words.
+
+Two common approaches to sequence modeling are a generative approach,HMM tagging, and a discriminative approach, MEMM tagging.
+
+The probabilities in HMM taggers are estimated, not using EM, but directly by maximum likelihood estimation on hand-labeled training corpora. The Viterbi algorithm is used to find the most likely tag sequence
+
+Maximum entropy Markov model or MEMM taggers train logistic regression models to pick the best tag given an observation word and its context and the previous tags, and then use Viterbi to choose the best sequence of tags for the sentence. More complex augmentions of the MEMM exist, like the Conditional Random Field (CRF) tagger
+
+Modern taggers are generally run bidirectionally.
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/06/9-Hidden-Markov-Models/" itemprop="url">9 Hidden Markov Models</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T10:59:53+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##Hidden Markov Models
+HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。</p>
+<p>本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。</p>
+<h2>Markov Chains</h2>
+<p><img src="/img/nlp9_0.png" alt=""></p>
+<pre><code>Q=q1q2....qN    a set of N states
+A=a01a02...an1...ann  a trainsation probability matrix A, each aij representing the probability of moving from state i to state j . 
+q0,qF 		a special start state and end state that are not associaed with observations
+</code></pre>
+<p><strong>Markov Assumption:</strong></p>
+<p>$$ P(q_{i}|q_1..q_{i-1})=P(q_{i}|q_{i-1})$$</p>
+<p>$$ \pi =\pi_{1},\pi_{2},..\pi_{N}$$ , an initial probability distribution over states.也就是说马尔科夫链从状态i开始，其余的状态将会是0.</p>
+<p>因此，state 1 是第一个状态，可以被表示为a01 或者$\pi_{1}$。每一个$\pi_{i}$代表概率 P(qi|START)。</p>
+<p><img src="/img/nlp9_1.png" alt=""></p>
+<h2>The Hidden Markoc Model</h2>
+<p><img src="/img/nlp9_2.png" alt=""></p>
+<p>HMM 有两个特殊的假设</p>
+<pre><code>马尔科夫假设，状态转移概率只依赖于前一个状态
+输出假设: 观察状态的概率只依赖与当前的隐含状态
+</code></pre>
+<p><img src="/img/nlp9_3.png" alt=""></p>
+<p>HMM三个问题, 隐马隐含状态序列，概率矩阵参数，输出序列</p>
 <ul>
-<li>Multinomial logistic regression(also called MaxEnt or the Maximum Entropy classifier in language processing) is a discriminative model that assigns a class to an observation by computing a probability from an exponential function of a weighted set of feature of the observation</li>
-<li>Regularization is important in MaxEnt models for avoiding overfitting</li>
-<li>Feature selection can be helpful in removing useless features to speed up training, and is also important in unregularized for avoiding overfitting.</li>
+<li>Likelihood</li>
+<li>Decoding</li>
+<li>Learning</li>
 </ul>
+<h2>Likelihood Computation: The Forward Algorithm</h2>
+<p>第一个问题计算一个特定的观测序列的概率。比如，给出ice-cream eating HMM，那么序列 3 1 3 出现的概率是多少</p>
+<p>**Computing Likelihood **</p>
+<p>Given an HMM $\lambda =(A,B)$,and an observation sequence O,determine the likelihood $P(O|\lambda) $</p>
+<p>首先，对于HMM来说，每一个隐藏状态仅仅产生一个观测，因此，隐含状态和观测状态有相同的长度。</p>
+<p><img src="/img/nlp9_4.png" alt=""></p>
+<p>但是实际上，上面的计算过程都是在我们基于已经知道隐含状态序列的情况下进行的，实际上是不知道的。 我们需要计算的是ice-cream 出现的概率。</p>
+<p><img src="/img/01.png" alt=""></p>
+<p>按照上式的理解，如果需要一个结果，需要将整个遍历以便，一种可能的状态如下</p>
+<p>$$P(3 1 3,hot hot cold)=P(hot|start)\times P(hot|hot) \times P(cold|hot) \times P(3|hot) \times P(1|hot)\times P(3|cold)$$</p>
+<p>计算了一种假设的，那么对于一个序列可能出现的所有情况做一个总和</p>
+<p>$$P(3,1,3)=P(3,1,3,cold cold cold)+P(3 1 3,cold cold hot)+P(3 1 3,hot hot cold)+...$$</p>
+<p>对于一个HMM 有N个hidden 状态和T个观测状态，有$N^{T}$ 个可能的隐含序列。</p>
+<p>使用一种高效的算法 <strong>forward algorithm.</strong>,是<strong>dynamic programing</strong>算法。</p>
+<p>每一个前向算法的单元格$\alpha _{t}(j)$代表看到t时刻观察值时处于状态j的概率，</p>
+<p>$$\alpha_{t}(j)= P(o_{1},...o_{t},q_{t}=j|\lambda )$$</p>
+<p>qt=j 代表&quot;第t时刻的状态是state j&quot;。</p>
+<pre><code>we compute this probability at(j) 是对所有路径上可以到达这个网格的路径进行求和。
+</code></pre>
+<p><img src="/img/nlp9_5.png" alt=""></p>
+<p>根据图片的描述，整个公式可以重写为</p>
+<p><img src="/img/02.png" alt=""></p>
+<p>$\alpha_{t-1}(i)$ previous forward path probability</p>
+<p>$a_{ij}$ transition probability</p>
+<p>$b_{j}(o_{t})$ state observation likelihood</p>
+<p><img src="/img/nlp9_6.png" alt=""></p>
+<p>计算过程</p>
+<p>1 Initialization:</p>
+<p>$\alpha_{1}(j)=a_{oj}b_{j}(o_{1})$，例如上式中的$\alpha_1(2)=P(3|H)*P(H|START)$,这里的a01 就是start--&gt;1的转变</p>
+<p>2 递归计算</p>
+<p><img src="/img/03.png" alt=""></p>
+<p>3 决策</p>
+<p><img src="/img/04.png" alt=""></p>
+<p>前向算法实现
+<img src="/img/nlp9_7.png" alt=""></p>
+<h2>Decoding: The Viterbi Algorithm</h2>
+<pre><code>Decoding: Given as input an HMM ,and a sequence of observation O,find
+the most probable sequence of states Q=q1q2...qT
+</code></pre>
+<p>需要发现最好的隐含序列，对于可能的隐藏状态序列(HHH,HHC,HCH,etc.)，可以运行前向算法，计算最后的概率，概率最大的就是最好的序列。</p>
+<p>但是，最好的decoding方法是Viterbi算法。Viterbi也是一个动态编程过程。
+<img src="/img/nlp9_8.png" alt=""></p>
+<pre><code>t=1 时刻就可以用max，从t=2时刻开始进行max选择。
+</code></pre>
+<p><img src="/img/nlp9_9.png" alt=""></p>
+<p><img src="/img/nlp9_10.png" alt=""></p>
+<h2>HMM Training:The Forward-Backward Algorithm</h2>
+<p>HMM 的参数计算。</p>
+<pre><code>Learning: Given an observation sequence O and the set of possible 
+states in the HMM ,learn the HMM parameters A and B
+The algorithm will let us train both the transition probabilities A 
+and the emission probabilities B of the HMM
+</code></pre>
+<p>EM算法就暂时先不看了。</p>
+<h2>Summary</h2>
+<pre><code>This chapter introducted the hidden Markov model for probabilistic 
+sequence classification.
+
+hidden Markov models are a way of relating a sequence of 
+observations to a sequence of hidden classes or hidden states that 
+explain the observations
+
+The process of discovering the sequence of hidden states,given the 
+sequence of observations, is known as decoding or inference. The 
+Viterbi algorithm is commonly used for decoding 
+
+The parameters of an HMM are the A transition probability matrix and 
+the B  observation likelihood matrix. Both can be trained with the
+Baum-Welch or forward-backward algorithm.
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/Hanlp分词技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/Hanlp分词技术/" itemprop="url">Hanlp分词技术</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T23:14:50+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>分词技术</h2>
+<h3>HanLP 中的WordNet</h3>
+<pre><code>public WordNet(char[] charArray)
+按照句子的分析过程，每一个词都可能有引申。
+每一个词作为一个节点，其都是一个链表形式。
+头尾为B ,E
+
+刚开始所有的顶点都是空的，
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[]
+2:[]
+3:[]
+4:[]
+5:[]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+public WordNet(char[] charArray, List&lt;Vertex&gt; vertexList)
+初始构造，只是往里面添加了顶点，也就是为顶点链表添加节点的过程
+
+添加的过程是按照 初始句子中给出的所有顶点进行添加。
+
+商品和服务: 
+vertext[0].add(商)
+</code></pre>
+<p>GenerateWordNet 生成一元词网</p>
+<pre><code>按照上面的描述将所有的可以成词的词组成词网，具体过程就是查询词典
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+2:[WordNode{word='品', realWord='品', attribute=ng 563 }]
+3:[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+4:[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+5:[WordNode{word='务', realWord='务', attribute=vg 209 }]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+里面的顶点是:
+按照句子的长度，分成length个顶点，每个顶点都是一个链表
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+[WordNode{word='品', realWord='品', attribute=ng 563 }]
+[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+[WordNode{word='务', realWord='务', attribute=vg 209 }]
+[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+词网生成。
+</code></pre>
+<p>开始分词</p>
+<pre><code>首先建立vertex之间的联系，就是首尾相连，之前是所有的顶点各自为一个list，现在是一个总的list。每个vertex之间多了约束
+
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }, WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }, WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+</code></pre>
+<p>上面是一些基本的介绍过程，下面结合具体的分词算法进行分析</p>
+<h2>分词算法</h2>
+<pre><code> List&lt;Term&gt; termList = HanLP.segment(&quot;南京市长江大桥&quot;);
+ System.out.println(termList);
+
+return new ViterbiSegment();   // Viterbi分词器是目前效率和效果的最佳平衡
+</code></pre>
+<p>Viterbi</p>
+<p><img src="/img/hanlp_0.png" alt=""></p>
+<pre><code>best_score[0]=0
+for each node in the graph(ascending order)
+	best_score[node] = inf
+	for each incoming edge of node:
+		score = best_score[edge.prev_node]+ edge.score
+		if score &lt; best_score[node]
+			best_score[node] = score
+			best_edge[node]=edge
+
+最后得出的
+best_score =(0.0,2.5,1.4,3.7) 是每一个节点的分数
+best_edge = (null, e1,e2,e5),以node为准，进入这个节点的边
+
+Backward Step
+
+best_path=[]
+next_edge = best_edge[best_edge.length -1]
+while next_edge !=NULL
+	add next_edge to best_path
+	next_edge = best_edge[next_edgee.prev_node]
+reverse best_path
+
+best_path=[e2,e5]
+</code></pre>
+<p><a href="http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf" target="_blank" rel="noopener">http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf</a></p>
+<pre><code>private static  List&lt;Vertex&gt; viterbi(WordNet wordNet)
+{
+    LinkedList&lt;Vertex&gt; nodes[] = wordNet.getVertexes();
+    LinkedList&lt;Vertex&gt; vertexList = new LinkedList&lt;&gt;();
+    for(Vertex node : nodes[1])
+    {
+        // 更新初始节点到首节点的联系。其他的不用更新吗
+        node.updateFrom(nodes[0].getFirst());
+    }
+    for (int i = 1; i &lt; nodes.length - 1; ++i)
+    {
+        LinkedList&lt;Vertex&gt; nodeArray = nodes[i];
+        if (nodeArray == null) continue;
+        for (Vertex node : nodeArray)
+        {
+            if (node.from == null) continue;
+            for (Vertex to : nodes[i + node.realWord.length()])
+            {
+//                    double weight = from.weight + MathTools.calculateWeight(from, this);
+//                    if (this.from == null || this.weight &gt; weight)
+//                    {
+//                        this.from = from;
+//                        this.weight = weight;
+//                    }
+                to.updateFrom(node);
+            }
+        }
+    }
+    System.out.println(&quot; 这里应该有一个best_score, 和best_path, 然后从backward上寻找最佳路径&quot; +
+            &quot;forward 方式已经更新了前后连接方式&quot;);
+    Vertex from = nodes[nodes.length - 1].getFirst();
+    System.out.println(&quot;from:0 &quot;+from);
+    while (from != null)
+    {
+        vertexList.addFirst(from);
+        from = from.from;
+        System.out.println(&quot;from:1 &quot;+from);
+    }
+    return vertexList;
+}
+</code></pre>
+<p>根据前向算法计算best_score和best_path,然后根据后向算法计算best_path,注意 Viterbi算法一定是按照node来进行算法的持续，不是边</p>
+<p>NLP分词</p>
+<pre><code>List&lt;Term&gt; termList = NLPTokenizer.segment(&quot;中国科学院计算技术研究所的宗成庆教授正在教授自然语言处理课程&quot;);
+System.out.println(termList);
+
+
+public static final Segment SEGMENT = HanLP.newSegment().enableNameRecognize(true).enableTranslatedNameRecognize(true)
+        .enableJapaneseNameRecognize(true).enablePlaceRecognize(true).enableOrganizationRecognize(true)
+        .enablePartOfSpeechTagging(true);
+
+
+
+NLP分词实际上也是HMM分词，只是增加了全部命名实体识别和词性标注过程，速度比较慢，并且有误识别的情况。
+</code></pre>
+<p>索引分词</p>
+<pre><code>索引分词 IndexTokenizer 是面向搜索引擎的分词器，能够对长词全切分，另外通过 term.offset 可以获取单词在文本中的偏移量。调用方法如下:
+
+	List&lt;Term&gt; termList = IndexTokenizer.segment(&quot;南京市长江大桥&quot;);
+    for (Term term : termList)
+    {
+        System.out.println(term + &quot; [&quot; + term.offset + &quot;:&quot; + (term.offset + term.word.length()) + &quot;]&quot;);
+    }
+南京市/ns [0:3]
+南京/ns [0:2]
+长江/ns [3:5]
+大桥/n [5:7]
+
+
+也是在HMM-Viterbi的基础上进行了其他扩展
+
+public static final Segment SEGMENT = HanLP.newSegment().enableIndexMode(true);
+</code></pre>
+<p>繁体分词</p>
+<pre><code>繁体分词 TraditionalChineseTokenizer 可以直接对繁体进行分词，输出切分后的繁体词语。调用方法如下:
+
+List&lt;Term&gt; termList = TraditionalChineseTokenizer.segment(&quot;大衛貝克漢不僅僅是名著名球員，球場以外，其妻為前辣妹合唱團成員維多利亞·碧咸，亦由於他擁有突出外表、百變髮型及正面的形象，以至自己品牌的男士香水等商品，及長期擔任運動品牌Adidas的代言人，因此對大眾傳播媒介和時尚界等方面都具很大的影響力，在足球圈外所獲得的認受程度可謂前所未見。&quot;);
+System.out.println(termList);
+</code></pre>
+<p>极速词典分词</p>
+<pre><code>极速分词是词典最长分词，速度极其快，精度一般。调用方法如下:
+
+使用的算法是 《Aho Corasick自动机结合DoubleArrayTrie极速多模式匹配》
+
+String text = &quot;江西鄱阳湖干枯，中国最大淡水湖变成大草原&quot;;
+System.out.println(SpeedTokenizer.segment(text));
+</code></pre>
+<p>N-最短路径分词</p>
+<pre><code>最短路分词器 NShortSegment 比最短路分词器( DijkstraSegment )慢，但是效果稍微好一些，对命名实体识别能力更强。调用方法如下:
+</code></pre>
+<p>Dijkstra分词</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/专题推荐0205/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/专题推荐0205/" itemprop="url">专题推荐0205</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T13:39:13+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>专题推荐</h2>
+<p>专题推荐 ------&gt; 衣食住行</p>
+<p>家庭人口判断？</p>
+<p>算法本身根据不一样的业务属性，</p>
+<p>基于现有的数据进行优化</p>
+<p>刘珊珊</p>
+<p>王迪</p>
+<p>吴尚波 / 高响 /李竹红</p>
+<p>吴久清</p>
+<p>直播导流</p>
+<pre><code>在某个专题里面，专题的其他节目全部推荐； 如果没有推荐，就推荐相关
+</code></pre>
+<p>我的直播推荐</p>
+<pre><code>几个频道的节目，5； 
+</code></pre>
+<p>我的轮播</p>
+<pre><code>个性化推荐，轮播方式。
+</code></pre>
+<p>专题内容</p>
+<pre><code>专题</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/数学之美-自然语言处理-从规则到统计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/数学之美-自然语言处理-从规则到统计/" itemprop="url">数学之美 自然语言处理 从规则到统计</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T09:56:37+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>自然语言处理 从规则到统计</h2>
+<p><img src="/img/math2_0.png" alt=""></p>
+<p>句法分析，先看下面一个简单的句子</p>
+<pre><code>徐志摩喜欢林徽因
+</code></pre>
+<p>这个句子分为主语、谓语和句号三部分，对每个部分进行分析，得到下面的句法分析树(Parse Tree)。</p>
+<p><img src="/img/math2_1.png" alt=""></p>
+<pre><code>句子----&gt; 主语谓语句号
+主语----&gt; 名词
+谓语----&gt; 动词  名词短语
+名词短语----&gt; 名词
+名词----&gt; 徐志摩
+动词----&gt; 喜欢
+名词----&gt; 林徽因
+句号----&gt; 。
+</code></pre>
+<p>20世纪80年代以前，自然语言处理工作中的文法规则都是人写的，这和后来采用机器总结的做法大不相同。直到2000年后，很多公司，比如机器翻译公司SysTran,还靠人来总结文法规则。</p>
+<h2>从规则到统计</h2>
+<p>上世纪70年代，基于统计的方法的核心模型是通信系统加隐含马尔科夫模型。</p>
+<p>今天，几乎不再有科学家宣称自己是传统的基于规则方法的捍卫者。自然语言处理的规则也从单纯的句法分析和语义理解，变成了非常贴近应用的机器翻译、语音识别、文本到数据库自动生成、数据挖掘和知识的获取等等。</p>
+<h2>小结</h2>
+<p>基于统计的自然语言处理方法，在数学模型上和通信是相通的，甚至就是相通的。因此，在数学意义上自然语言处理又和语言的初衷---通信联系在一起了。</p>
 
           
         
@@ -1900,7 +2345,7 @@ j=1
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1946,8 +2391,8 @@ j=1
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
@@ -1959,8 +2404,8 @@ j=1
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">Tags</span>
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
                 
               </div>
             
@@ -2006,7 +2451,7 @@ j=1
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

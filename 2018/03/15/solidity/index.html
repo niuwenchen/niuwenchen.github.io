@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="区块链," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Solidity Tutorials pragma solidity ^0.4.9;  contract SimpleStorage { uint data;  function setData(uint x) public{          data = x; }  function getData() public constant returns (uint)  {          re">
+<meta name="keywords" content="区块链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solidity">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/03/15/solidity/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="Solidity Tutorials pragma solidity ^0.4.9;  contract SimpleStorage { uint data;  function setData(uint x) public{          data = x; }  function getData() public constant returns (uint)  {          re">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://niuwenchen.github.io/img/solidity01.png">
+<meta property="og:updated_time" content="2018-03-21T03:11:26.572Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="solidity">
+<meta name="twitter:description" content="Solidity Tutorials pragma solidity ^0.4.9;  contract SimpleStorage { uint data;  function setData(uint x) public{          data = x; }  function getData() public constant returns (uint)  {          re">
+<meta name="twitter:image" content="http://niuwenchen.github.io/img/solidity01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/03/15/solidity/"/>
+
+
+
+
+
+  <title>solidity | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/15/solidity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">solidity</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T13:44:07+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2>Solidity Tutorials</h2>
+<pre><code>pragma solidity ^0.4.9;
+
+contract SimpleStorage {
+uint data;
+
+function setData(uint x) public{
+    
+    data = x;
+}
+
+function getData() public constant returns (uint)  {
+    
+    return data;
+}
+}
+</code></pre>
+<h2>使用Truffle 部署测试协议</h2>
+<pre><code>mkdir hello-world
+cd hello-world
+truffle init
+
+truffle test
+
+...
+</code></pre>
+<p>建立协议</p>
+<pre><code>truffle create contract HelloWorld
+contracts/HelloWorld.sol
+
+pragma solidity ^0.4.9;
+
+contract HelloWorld {
+address private creator;
+address private lastCaller;
+string private message;
+uint private totalGas;
+
+
+
+function HelloWorld(){
+     /*
+  We can use the special variable `tx` which gives us information
+  about the current transaction.
+
+  `tx.origin` returns the sender of the transaction.
+  `tx.gasprice` returns how much we pay for the transaction
+	*/
+    creator = tx.origin;
+    totalGas = tx.gasprice;
+    message = &quot;Hello World&quot;;
+}
+
+function getMesage() constant returns (string) {
+    return message;
+}
+
+function getLastCaller() constant returns(address){
+    return lastCaller;
+}
+function getCreator() constant returns (address){
+    return creator;
+}
+function getTotalGas() constant returns(uint) {
+return totalGas;
+}
+//End: getters
+
+//Being: setters
+function setMessage(string newMessage) {
+message = newMessage;
+lastCaller = tx.origin;
+totalGas += tx.gasprice;
+}
+}
+</code></pre>
+<p>Migration:我们完成了一个协议，需要用一种方式将这个协议部署到区块链中。truffle使用migration方式，压缩和部署contracts</p>
+<pre><code>truffle create migration 
+生成一个文件: 1521178244_deploy_hello_world.js
+
+在js文件中部署协议
+
+const HelloWorld = artifacts.require('HelloWorld')
+	module.exports = function(deployer) {
+deployer.deploy(HelloWorld)
+};
+</code></pre>
+<p>需要将协议部署到测试区块链中  truffle migrate --reset</p>
+<p>Testing</p>
+<pre><code>truffle create test HelloWorld
+test/hello_world.js
+
+const HelloWorld = artifacts.require('HelloWorld')
+
+contract('HelloWorld', function(accounts) {
+it('sets the first account as the contract creator', async function() {
+		const contract = await HelloWorld.deployed()
+		const creator = await contract.getCreator()
+		
+		assert.equal(creator, accounts[0],'main account is the creator')
+})
+it('has hello world as initial message' ,async function(){
+				const contract = await HelloWorld.deployed()
+				
+				const message = await contract.getMesage()
+				assert.equal(message, 'Hello World', 'message is hola mundo')
+		})
+it('changes the message via setMessage', async function() {
+const contract = await HelloWorld.deployed()
+
+// Execute a transaction and change the state of the contract.
+await contract.setMessage('hola mundo')
+
+// Get the new state.
+const message = await contract.getMesage()
+
+assert.equal(message, 'hola mundo', 'message is hola mundo')
+})
+});
+</code></pre>
+<p>使用测试命令</p>
+<pre><code>truffle test
+测试输出
+
+Contract: HelloWorld
+√ sets the first account as the contract creator
+√ has hello world as initial message
+√ changes the message via setMessage (91ms)
+</code></pre>
+<p>解析这个过程 <a href="https://blog.abuiles.com/blog/2017/07/08/writing-smart-contracts-with-truffle/" target="_blank" rel="noopener">https://blog.abuiles.com/blog/2017/07/08/writing-smart-contracts-with-truffle/</a></p>
+<p>1 协议文件</p>
+<pre><code>构造函数中一个变量tx
+
+首先看下面的全局变量
+
+block.coinbase(address): 当前块的矿场的地址
+block.difficulty(uint) : 当前块的难度
+block.gaslimit(uint)   : 当前块的gaslimit
+block.number(uint)     : 当前块的数量
+block.blockhash(function(uint) returns(bytes32)): 给定的块的hash值，只有最近工作的256块的hash值
+block.timestamp(uint)  ： 当前块的时间戳
+msg.data(bytes)			: 完整的calldata
+msg.gas(uint)			: 剩余gas
+msg.sender(address)		: 消息的发送者
+msg.value(uint)			: 和消息一起发送的wei的数量
+now(uint):				当前块的时间戳(block.timestamp的别名)
+tx.gasprice(uint):		交易的gas价格
+tx.origin(address):		交易的发送者(全调用链)
+sha3(...) retuens (bytes32): 计算(紧凑排列的) 参数的 Etherum-SHA3 hash值
+sha256(...) returns (bytes32): 计算(紧凑排列的)参数的SHA256 hash值
+ripemd160(...) returns (bytes20): 计算256个参数的RIPEMD
+ecrecover(bytes32, uint8, bytes32, bytes32) returns (address):椭圆曲线签名公钥恢复
+addmod(uint x, uint y, uint k) returns (uint):计算（x + y）K，加法为任意精度，不以2 ** 256取余
+mulmod(uint x, uint y, uint k) returns (uint):计算（XY）K，乘法为任意精度，不以2 * 256取余
+this (current contract’s type): 当前合约，在地址上显式转换
+super:在层次关系上一层的合约
+selfdestruct(address):销毁当前的合同，将其资金发送到指定address地址
+.balance:address地址中的账户余额（以wei为单位）
+.send(uint256) returns (bool):将一定量wei发送给address地址，若失败返回false。
+</code></pre>
+<p>contract中的分析</p>
+<pre><code>creator = tx.origin;  //交易的发送者，协议的关联者，
+这里和第一个account账户关联
+totalGas = tx.gasprice;
+message = &quot;Hello World&quot;;
+
+const contract = await HelloWorld.deployed()
+const creator = await contract.getCreator()
+console.log(creator)
+console.log(accounts[0])
+
+0x0eb84a8d7ae082e0d9709c75ba8a230e0c74e278
+0x0eb84a8d7ae082e0d9709c75ba8a230e0c74e278
+
+tx.gasprice: BigNumber { s: 1, e: 11, c: [ 100000000000 ] }
+
+也就是在部署这个协议的时候，默认将accounts作为tx.origin，那么协议的发送者是谁?
+并且会调用构造函数
+
+tx.origin: 0x0eb84a8d7ae082e0d9709c75ba8a230e0c74e278
+</code></pre>
+<p>下面修改协议，对上面的数据进行一次重新测试</p>
+<pre><code>    coinbase = block.coinbase();
+    difficulty = block.difficulty();
+    gaslimit = block.gaslimit();
+    number = block.number();
+    nottime = block.timestamp();
+    calldata = msg.data();
+    gas = msg.gas();
+    sender = msg.sender();
+    weivalue = msg.value();
+</code></pre>
+<p><img src="/img/solidity01.png" alt=""></p>
+<h2>Solidity by Example</h2>
+<p><strong>Voting</strong></p>
+<p>how to assign voting rights to the correct persons and how to prevent manipulation.</p>
+<pre><code>pragma solidity ^0.4.9;
+
+
+contract Ballot {
+// struct type
+struct Voter{
+    uint weight;
+    bool voted;
+    address delegate;
+    uint vote;
+}
+
+struct Proposal{
+    bytes32 name;
+    uint voteCount;
+}
+
+address public chairperson;
+mapping(address =&gt; Voter) public voters;
+Proposal[] public proposals;
+
+
+function Ballot(bytes32[] proposalNames) public {
+    chairperson = msg.sender;
+    voters[chairperson].weight =1;
+
+    for(uint i=0;i&lt;proposalNames.length;i++)
+    {
+        proposals.push(Proposal({
+            name: proposalNames[i],
+            voteCount:0
+    }));
+    }
+}
+// Give `voter` the right to vote on this ballot.
+// May only be called by `chairperson`.
+function giveRightToVote(address voter) public {
+    //If the arguments of 'require' evaluate to 'false'
+    // it terminates and reverts all changes to
+    // the state and to Ether balances. It is often
+    // a good idea to use this functions are called incorrectly.proposals//
+    // but watch out,this will currently also consume all provided gas
+    //(this is planned to change in the future)
+    require(
+        (msg.sender == chairperson) &amp;&amp;
+         !voters[voter].voted &amp;&amp; (voters[voter].weight ==0)
+        );
+    voters[voter].weight =1;
+}
+
+function delegate(address to) public {
+    Voter storage sender = voters[msg.sender];
+    require(!sender.voted);
+
+    require(to != msg.sender);
+
+    while( voters[to].delegate != address(0))
+    {
+        to = voters[to].delegate;
+        require(to != msg.sender);
+    }
+    sender.voted = true;
+    sender.delegate = to;
+    Voter storage delegate_ = voters[to];
+    if(delegate_.voted){
+        proposals[delegate_.vote].voteCount += sender.weight;
+    }else{
+        delegate_.weight += sender.weight;
+    }
+
+}
+
+function vote(uint proposal) public {
+    Voter storage sender = voters[msg.sender];
+    require(!sender.voted);
+    sender.voted = true;
+    sender.vote = proposal;
+
+    proposals[proposal].voteCount += sender.weight;
+}
+
+function winningProposal() public view returns (uint winningProposal_)
+{
+    uint winningVoteCount =0;
+    for(uint p=0; p&lt;proposals.length; p++)
+    {
+        if (proposals[p].voteCount &gt;winningVoteCount){
+            winningVoteCount = proposals[p].voteCount;
+            winningProposal_ =p;
+        }
+    }
+}
+
+function winnerName() public view returns (bytes32 winnerName_)
+{
+    winnerName_ = proposals[winningProposal()].name;
+}
+}
+
+构造函数:
+合约的构造者拥有 weight =1
+候选人数组: name, 票数 0
+
+giveRightToVote(address voter)
+	赋予投票人的投票权利，首先保证合约的拥有者 是主席
+	投票者 没有投过票， 权力是0，才能赋予投票权
+
+delegate: 将自己的投票权限给代理人，让代理人帮助投票
+	
+
+协议稍微有点复杂，但还是看完了，里面有个问题
+一: 测试的时候  [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]作为议案，供用户投票
+二: giveRightToVote: 可以输入 1，2，3等值，作为voter账户，
+初始化的时候会将bool初始化为false，uint为0，address 为0
+三： delegate代理，这个代理的入参是address to，但是这个动作
+的发起者是msg.sender,在测试的时候是和create的账户保持一致
+的，作为A，然后to作为B，把A的投票权限让B去代理，那么最终的实
+际操作在B中，但是也就意味着这样无法完成下面的vote操作，因为
+vote操作需要的是msg.sender的投票权限，怎么才能切换用户或者
+address，或者msg.sender从而实现不同用户的切换
+</code></pre>
+<h2>Blind Auction(暗箱拍卖)</h2>
+<p>这是一个非公开的拍卖系统，在透明的平台运行非公开拍卖看起来是矛盾的，但是密码学可以做到这一点。</p>
+<p>在拍卖期间，参与者把自己的出价加密发送给拍卖系统，除了自己，任何人不知道出价是多少。当拍卖结束，参与者把出价明文发给拍卖系统，系统用明文加密运算，跟之前发送的密文比对，一致的话说明出价跟之前一样，出价有效。</p>
+<p>在传统领域，很多业务很容易产生暗箱操作，智能合约让参与者跟工作人员都无法干预系统，系统也没有人的行为，全部是自动执行的代码，使业务变得透明公平，这对产业的变革是颠覆性的。</p>
+<h2>Lauout of a Solidity Source File</h2>
+<p>pragma  0.x.0  x.0.0</p>
+<pre><code>pragma solidity ^0.4.21
+</code></pre>
+<p>这样一个源文件将不会被低于0.4.0 的编译器编译，或者高于0.5.0 的编译器编译。^ 代表直到0.5.0 之前的编译器都可以编译</p>
+<p>导入其他文件</p>
+<pre><code>import &quot;filename&quot;;
+import * as symbolName from &quot;filename&quot;;
+</code></pre>
+<p>Paths</p>
+<p>注释</p>
+<pre><code>pragma solidity ^0.4.0;
+
+/** @title Shape calculator. */
+contract shapeCalculator {
+/** @dev Calculates a rectangle's surface and perimeter.
+  * @param w Width of the rectangle.
+  * @param h Height of the rectangle.
+  * @return s The calculated surface.
+  * @return p The calculated perimeter.
+  */
+function rectangle(uint w, uint h) returns (uint s, uint p) {
+    s = w * h;
+    p = 2 * (w + h);
+}
+}	
+</code></pre>
+<h2>Structure of a Contract</h2>
+<p>State Variables</p>
+<pre><code>uint storedData;  // state variable
+</code></pre>
+<p>Functions</p>
+<pre><code>function bid() public payable // function
+</code></pre>
+<p>Function Modifiers</p>
+<pre><code>函数修饰符可以用声明的方式修改函数的语义。
+
+modifier onlySeller() // Modifier
+</code></pre>
+<p>Events</p>
+<pre><code>event HighestBidIncreased(address bidder,uint amount) // Event
+</code></pre>
+<p>Struct Types</p>
+<pre><code>struct Voter{
+		uint weight;
+		bool voted;
+	}  // Struct
+</code></pre>
+<p>Enum Types //枚举</p>
+<pre><code>enum State { Created,Locked,Inactive } // enum
+</code></pre>
+<h2>Types</h2>
+<pre><code>bool: true/false  !, &amp;&amp;, ||, == ,!=
+int/uint: uint--&gt; uint 256, int --&gt;int256
+&lt;=, &lt; ==,!=,&gt;=, &gt;
+位运算: &amp;，| ^ 
+&lt;&lt; 左移，  &gt;&gt; 右移
+</code></pre>
+<p>address: 20 byte value</p>
+<pre><code>Members of Addresses: balance and transfer
+balance: 查询地址的余额
+transfer: 发送Ether(wei 计数) 
+
+address x = 0x123;
+address myAddress = this;
+if (x.balance &lt; 10 &amp;&amp; myAddress.balance &gt;= 10) x.transfer(10); 
+
+send：
+	使用send的时候有些危险，如果call stack depth是1024，或者接收者运行超出gas，交易失败。因此为了交易的安全，检查使用send的返回值； 使用transfer更安全: 或者使用一个方式 接收者撤回money
+
+call,callcode,delegatecall
+</code></pre>
+<p>Fixed-size Bytes</p>
+<pre><code>bytes1,bytes2,bytes3,....bytes32, byte 是bytes1的别名
+
+it is possible to use n array of bytes as byte[], but
+is is wasting a lot of space.,31 bytes every element, 
+to be exact, when passing in calls, it is better to use bytes
+</code></pre>
+<p>Dynamically-sized byte array</p>
+<pre><code>bytes: 是一个可变长的数组，不是一个value-type
+string: 动态可变长的UTF-8编码的字符串。
+</code></pre>
+<p>Address Literals (地址常量)</p>
+<p>Rational and Integer Literals</p>
+<p>String Literals</p>
+<p>Hexadecimal Literals</p>
+<p>Enums</p>
+<pre><code>	enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
+	ActionChoices choice;
+	ActionChoices constant defaultChoice = ActionChoices.GoStraight;
+</code></pre>
+<p>Function Types</p>
+<pre><code>function (&lt;parameter types&gt;) {internal|external} [pure|constant|view|payable] [returns (&lt;return types&gt;)]
+
+默认情况下，函数是内部的，因此，internal可以忽略
+
+function f() public view returns (bytes4) {
+	return this.f.selector;
+}
+
+
+//外部函数不能在内部调用
+function Pyramid(uint l) public pure returns (uint){
+    return ArrayUtils.range(l).map(square).reduce(sum);
+}
+function square(uint x) external pure returns (uint)
+{
+    return x*x;
+}
+function sum(uint x,uint y) external pure returns (uint)
+{
+    return x+y;
+}
+因此上面的句子编译失败
+</code></pre>
+<p>功能修饰符</p>
+<pre><code>修饰符可用于轻松更改功能的行为，例如，可以在执行功能之前自动检查条件。修饰符是合同的可继承属性，可能会被派生合同覆盖。
+
+//此合约仅定义修饰符，但不是用它 - 它将用于派生合约
+//函数体插入其中，特殊符号 _; 在修饰符的定义出现。
+//这意味着如果所有者调用此函数，则执行该函数，否则抛出异常。
+modifier onlyOwner{
+	require(msg.sender == owner; )
+	-;
+}
+</code></pre>
+<p>Reference Types （引用类型）</p>
+<pre><code>因为变量间的复制开销比较大，因此一般可以考虑存储在memoey或者storage中
+
+默认的 对于函数参数(包括返回值)是在memory中，本地变量是在storage中
+state variables 强制被存储在storage中
+
+还有第三个数据位置，calldata，是一个不能被修改的，不能被持久化的位置，并且函数参数被存储。函数参数被强制性的存储在calldata中。
+</code></pre>
+<p>数据位置非常重要，因为它们改变了赋值的行为：存储和内存之间的赋值以及状态变量（甚至来自其他状态变量）总是创建一个独立的副本。对本地存储变量的赋值只分配一个引用，而这个引用总是指向状态变量，即使后者在这期间也被改变了。另一方面，从内存存储引用类型到另一个内存存储引用类型的赋值不会创建副本。</p>
+<pre><code>uint[] x; // 本地变量存储在storage中
+function f(uint[] memorArray)： 函数参数保存在memory中
+x=memoryArray; 复制一份memory中的数据到storage中。
+
+var y=x;// 本地变量的赋值是分配一个指向storage的引用
+y.length=2; //通过修改引用的大小类修改实际存储对象
+delete x;  修改storage中的数据
+y=memoryArray; // 不能给一个指针变量赋值一个memory变量。
+</code></pre>
+<h2>分析</h2>
+<p>局部变量是函数中声明的变量，状态变量是合约内声明的共有变量</p>
+<p>1 storage 转换为storage</p>
+<pre><code>当把一个storage类型的变量赋值给另一个storage时，只是修改了指针
+S s; // storage
+funciton convertToStorage(S storage s) internal{
+	S tmp =s;  // storage  --&gt; storage
+	tmp a =&quot;Test&quot;;
+}
+function call() returns (string)
+{
+	convertToStorage(s);
+	return s.a;//  Test
+}
+将传入的storage变量，赋值给另一个storage变量，并修改值，最后发现合约的状态变量s也被改变了， 引用的作用
+</code></pre>
+<p>memory转换为storage</p>
+<pre><code>因为局部变来那个和状态变量的类型都可能是storage，分开来讲
+</code></pre>
+<p>memory赋值给状态变量(原来memory的值是直接可以拷贝给storage的状态变量的，而不能拷贝给局部变量)</p>
+<pre><code>将一个memory类型的变量赋值给一个状态变量时，实际上是将内存变量拷贝到存储中
+
+S s;  // storage
+function call() returns(string){
+	S memry tmp = S(&quot;memory&quot;,0);
+	memoryToState(tmp);
+	return s.a;
+}
+function memoryToState(S memory tmp) internal{
+	s= tmp;
+	tmp.a =&quot;Test&quot;;
+}
+memory --&gt; 状态变量，是值拷贝
+</code></pre>
+<p>memory赋值给局部变量</p>
+<pre><code>由于在区块链中，storage必须是静态分配存储空间的。局部变量虽然是一个storage的，但是仅仅是一个storage类型的指针。如果进行这样的赋值，会产生错误。
+
+S tmp=s;  是错误的
+</code></pre>
+<p>storage到memory， 也是值的拷贝，注意storage到memory只需要强制定义左边的类型， 是可以转换成功的。</p>
+<p>memory 到memory: memory 之间是引用传递，不是值传递</p>
+<p>Arrays</p>
+<pre><code>bytes 和string 是特殊的数组，bytes和byte[] 比较详细，但是是稠密的。
+</code></pre>
+<p>将数组保存在Memory中</p>
+<pre><code>将数组变量保存在内存中可以使用new关键字，和保存在storage中相比，不能通过.length 重新划分memory数组长度
+</code></pre>
+<p>Array Literals/Inline Arrays</p>
+<pre><code>数组常量 作为一个表达式 并且不需要马上赋值
+function g(uint[3] _data) public pure{
+}
+则传入参数的形式是
+g([uint(1),2,3]);
+数组常量是一个memory数组，长度固定，基本类型是给定数据的普遍类型，[1,2,3]是uint8[3] memory,因为每一个元素的类型是uint8,因此，需要将第一个类型转换为uint。注意，固定长度的memory数组不能被分配给动态长度的memory数组。
+
+也就是说 uint[] x= [uint(1),3,4]是不行的，后面的是固定长度的，前面的是可变长度的。uint[] x 是一个storage变量。
+
+uint[] memory  x=new uint[](3)
+ x = [uint(3),3,4]
+Type uint256[3] memory is not implicitly convertible to expected type uint256[] memory.
+后面的是固定长度的数组，前面的是可变长的数组，不能赋值?
+有点奇怪
+</code></pre>
+<p>Members</p>
+<pre><code>length: 动态数组可以在storage(不是在memory)中调整大小通过.length 
+
+那么动态数组应该如何定义呢?
+uint[] x = new uint[](4)
+TypeError: Type uint256[] memory is not implicitly convertible to expected type uint256[] storage pointer
+
+push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一个新的元素在数组的末尾。 函数返回一个新的长度
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/区块链01/" rel="next" title="区块链01">
+                <i class="fa fa-chevron-left"></i> 区块链01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/21/Spark/" rel="prev" title="Spark">
+                Spark <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Solidity Tutorials</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">使用Truffle 部署测试协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">Solidity by Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">Blind Auction(暗箱拍卖)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">Lauout of a Solidity Source File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">Structure of a Contract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">7.</span> <span class="nav-text">Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.</span> <span class="nav-text">分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
