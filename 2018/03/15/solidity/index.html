@@ -88,7 +88,7 @@
 <meta property="og:description" content="Solidity Tutorials pragma solidity ^0.4.9;  contract SimpleStorage { uint data;  function setData(uint x) public{          data = x; }  function getData() public constant returns (uint)  {          re">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://niuwenchen.github.io/img/solidity01.png">
-<meta property="og:updated_time" content="2018-03-21T03:11:26.572Z">
+<meta property="og:updated_time" content="2018-03-21T05:33:02.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="solidity">
 <meta name="twitter:description" content="Solidity Tutorials pragma solidity ^0.4.9;  contract SimpleStorage { uint data;  function setData(uint x) public{          data = x; }  function getData() public constant returns (uint)  {          re">
@@ -188,7 +188,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -198,7 +198,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -262,7 +262,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T13:44:07+08:00">
                 2018-03-15
@@ -840,6 +840,56 @@ TypeError: Type uint256[] memory is not implicitly convertible to expected type 
 
 push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一个新的元素在数组的末尾。 函数返回一个新的长度
 </code></pre>
+<p>Structs</p>
+<p>Mappings</p>
+<p>delete</p>
+<pre><code>delete a 恢复初始值。 数组的话是长度为0
+</code></pre>
+<p>Conversions between Elementary Types</p>
+<p>货币单位(Ether Units)</p>
+<p>一个字面量的数字，可以使用后缀wei,finney,szabo或ether来在不同面额中转换。不含任何后缀的默认单位是wei。如2 ether == 2000 finney的结果是true。</p>
+<pre><code>（2 ether == 2000 finney）
+</code></pre>
+<p>时间单位</p>
+<pre><code>seconds,minutes,hours,days,weeks,years
+1== 1 secondes
+1 minutes == 60 seconds
+1 hours == 60 minutes
+1 days == 24 hours 
+1 weeks == 7 dyas
+1 years == 365 dyas
+</code></pre>
+<p>Error Handling</p>
+<pre><code>assert(bool condition): 如果条件不满足则抛出异常
+require(bool condition):
+revert(): abort execution and revert state changes
+</code></pre>
+<p>数学公式</p>
+<pre><code>addmod(uint x,uint y,uint k) returns (uint)
+	(x+y)%k
+keccak256(...) returns (bytes32)
+	compute the etherum-ShA03 hash of the arguments
+keccak256(12)
+	0x4de0e96b0a8886e42a2c35b57df8a9d58a93b5bff655bc37a30e2ab8e29dc066
+
+sha256
+sha3 == keccak256
+</code></pre>
+<p>地址相关</p>
+<pre><code>&lt;address&gt;.balance  Wei
+&lt;adderss&gt;.transfer()
+		 . send
+		 .call
+		 .callcode
+		 .delegatecall
+</code></pre>
+<p>协议相关的</p>
+<pre><code>this(current contract's type)
+selddestruct(address recipient)
+	销毁当前合约，将他的funds发送给指定地址
+suicide(address recipient)
+	过时了，是selfdestruct的别称
+</code></pre>
 
       
     </div>
@@ -936,10 +986,10 @@ push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -959,8 +1009,8 @@ push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
             
@@ -972,8 +1022,8 @@ push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一�
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">Tags</span>
                 
               </div>
             
@@ -1035,7 +1085,7 @@ push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一�
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

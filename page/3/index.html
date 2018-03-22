@@ -182,7 +182,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -192,7 +192,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -215,6 +215,797 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/06/9-Hidden-Markov-Models/" itemprop="url">9 Hidden Markov Models</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T10:59:53+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##Hidden Markov Models
+HMM是一个序列模型。对一句话定义一个标签或者类，因此将一个可观测的序列映射为一个label序列。 HMM是一个概率序列模型: 给定一个序列，计算可能的label序列的概率分布，选择最好的一个label 序列。</p>
+<p>本章介绍三个算法Viterbi 算法，Forward 算法， Baum-Welch 或者Em算法。</p>
+<h2>Markov Chains</h2>
+<p><img src="/img/nlp9_0.png" alt=""></p>
+<pre><code>Q=q1q2....qN    a set of N states
+A=a01a02...an1...ann  a trainsation probability matrix A, each aij representing the probability of moving from state i to state j . 
+q0,qF 		a special start state and end state that are not associaed with observations
+</code></pre>
+<p><strong>Markov Assumption:</strong></p>
+<p>$$ P(q_{i}|q_1..q_{i-1})=P(q_{i}|q_{i-1})$$</p>
+<p>$$ \pi =\pi_{1},\pi_{2},..\pi_{N}$$ , an initial probability distribution over states.也就是说马尔科夫链从状态i开始，其余的状态将会是0.</p>
+<p>因此，state 1 是第一个状态，可以被表示为a01 或者$\pi_{1}$。每一个$\pi_{i}$代表概率 P(qi|START)。</p>
+<p><img src="/img/nlp9_1.png" alt=""></p>
+<h2>The Hidden Markoc Model</h2>
+<p><img src="/img/nlp9_2.png" alt=""></p>
+<p>HMM 有两个特殊的假设</p>
+<pre><code>马尔科夫假设，状态转移概率只依赖于前一个状态
+输出假设: 观察状态的概率只依赖与当前的隐含状态
+</code></pre>
+<p><img src="/img/nlp9_3.png" alt=""></p>
+<p>HMM三个问题, 隐马隐含状态序列，概率矩阵参数，输出序列</p>
+<ul>
+<li>Likelihood</li>
+<li>Decoding</li>
+<li>Learning</li>
+</ul>
+<h2>Likelihood Computation: The Forward Algorithm</h2>
+<p>第一个问题计算一个特定的观测序列的概率。比如，给出ice-cream eating HMM，那么序列 3 1 3 出现的概率是多少</p>
+<p>**Computing Likelihood **</p>
+<p>Given an HMM $\lambda =(A,B)$,and an observation sequence O,determine the likelihood $P(O|\lambda) $</p>
+<p>首先，对于HMM来说，每一个隐藏状态仅仅产生一个观测，因此，隐含状态和观测状态有相同的长度。</p>
+<p><img src="/img/nlp9_4.png" alt=""></p>
+<p>但是实际上，上面的计算过程都是在我们基于已经知道隐含状态序列的情况下进行的，实际上是不知道的。 我们需要计算的是ice-cream 出现的概率。</p>
+<p><img src="/img/01.png" alt=""></p>
+<p>按照上式的理解，如果需要一个结果，需要将整个遍历以便，一种可能的状态如下</p>
+<p>$$P(3 1 3,hot hot cold)=P(hot|start)\times P(hot|hot) \times P(cold|hot) \times P(3|hot) \times P(1|hot)\times P(3|cold)$$</p>
+<p>计算了一种假设的，那么对于一个序列可能出现的所有情况做一个总和</p>
+<p>$$P(3,1,3)=P(3,1,3,cold cold cold)+P(3 1 3,cold cold hot)+P(3 1 3,hot hot cold)+...$$</p>
+<p>对于一个HMM 有N个hidden 状态和T个观测状态，有$N^{T}$ 个可能的隐含序列。</p>
+<p>使用一种高效的算法 <strong>forward algorithm.</strong>,是<strong>dynamic programing</strong>算法。</p>
+<p>每一个前向算法的单元格$\alpha _{t}(j)$代表看到t时刻观察值时处于状态j的概率，</p>
+<p>$$\alpha_{t}(j)= P(o_{1},...o_{t},q_{t}=j|\lambda )$$</p>
+<p>qt=j 代表&quot;第t时刻的状态是state j&quot;。</p>
+<pre><code>we compute this probability at(j) 是对所有路径上可以到达这个网格的路径进行求和。
+</code></pre>
+<p><img src="/img/nlp9_5.png" alt=""></p>
+<p>根据图片的描述，整个公式可以重写为</p>
+<p><img src="/img/02.png" alt=""></p>
+<p>$\alpha_{t-1}(i)$ previous forward path probability</p>
+<p>$a_{ij}$ transition probability</p>
+<p>$b_{j}(o_{t})$ state observation likelihood</p>
+<p><img src="/img/nlp9_6.png" alt=""></p>
+<p>计算过程</p>
+<p>1 Initialization:</p>
+<p>$\alpha_{1}(j)=a_{oj}b_{j}(o_{1})$，例如上式中的$\alpha_1(2)=P(3|H)*P(H|START)$,这里的a01 就是start--&gt;1的转变</p>
+<p>2 递归计算</p>
+<p><img src="/img/03.png" alt=""></p>
+<p>3 决策</p>
+<p><img src="/img/04.png" alt=""></p>
+<p>前向算法实现
+<img src="/img/nlp9_7.png" alt=""></p>
+<h2>Decoding: The Viterbi Algorithm</h2>
+<pre><code>Decoding: Given as input an HMM ,and a sequence of observation O,find
+the most probable sequence of states Q=q1q2...qT
+</code></pre>
+<p>需要发现最好的隐含序列，对于可能的隐藏状态序列(HHH,HHC,HCH,etc.)，可以运行前向算法，计算最后的概率，概率最大的就是最好的序列。</p>
+<p>但是，最好的decoding方法是Viterbi算法。Viterbi也是一个动态编程过程。
+<img src="/img/nlp9_8.png" alt=""></p>
+<pre><code>t=1 时刻就可以用max，从t=2时刻开始进行max选择。
+</code></pre>
+<p><img src="/img/nlp9_9.png" alt=""></p>
+<p><img src="/img/nlp9_10.png" alt=""></p>
+<h2>HMM Training:The Forward-Backward Algorithm</h2>
+<p>HMM 的参数计算。</p>
+<pre><code>Learning: Given an observation sequence O and the set of possible 
+states in the HMM ,learn the HMM parameters A and B
+The algorithm will let us train both the transition probabilities A 
+and the emission probabilities B of the HMM
+</code></pre>
+<p>EM算法就暂时先不看了。</p>
+<h2>Summary</h2>
+<pre><code>This chapter introducted the hidden Markov model for probabilistic 
+sequence classification.
+
+hidden Markov models are a way of relating a sequence of 
+observations to a sequence of hidden classes or hidden states that 
+explain the observations
+
+The process of discovering the sequence of hidden states,given the 
+sequence of observations, is known as decoding or inference. The 
+Viterbi algorithm is commonly used for decoding 
+
+The parameters of an HMM are the A transition probability matrix and 
+the B  observation likelihood matrix. Both can be trained with the
+Baum-Welch or forward-backward algorithm.
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/Hanlp分词技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/Hanlp分词技术/" itemprop="url">Hanlp分词技术</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T23:14:50+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>分词技术</h2>
+<h3>HanLP 中的WordNet</h3>
+<pre><code>public WordNet(char[] charArray)
+按照句子的分析过程，每一个词都可能有引申。
+每一个词作为一个节点，其都是一个链表形式。
+头尾为B ,E
+
+刚开始所有的顶点都是空的，
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[]
+2:[]
+3:[]
+4:[]
+5:[]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+public WordNet(char[] charArray, List&lt;Vertex&gt; vertexList)
+初始构造，只是往里面添加了顶点，也就是为顶点链表添加节点的过程
+
+添加的过程是按照 初始句子中给出的所有顶点进行添加。
+
+商品和服务: 
+vertext[0].add(商)
+</code></pre>
+<p>GenerateWordNet 生成一元词网</p>
+<pre><code>按照上面的描述将所有的可以成词的词组成词网，具体过程就是查询词典
+0:[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+1:[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+2:[WordNode{word='品', realWord='品', attribute=ng 563 }]
+3:[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+4:[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+5:[WordNode{word='务', realWord='务', attribute=vg 209 }]
+6:[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+里面的顶点是:
+按照句子的长度，分成length个顶点，每个顶点都是一个链表
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }]
+[WordNode{word='商', realWord='商', attribute=vg 607 v 198 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }]
+[WordNode{word='品', realWord='品', attribute=ng 563 }]
+[WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='和服', realWord='和服', attribute=n 34 }]
+[WordNode{word='服', realWord='服', attribute=v 564 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }]
+[WordNode{word='务', realWord='务', attribute=vg 209 }]
+[WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+
+词网生成。
+</code></pre>
+<p>开始分词</p>
+<pre><code>首先建立vertex之间的联系，就是首尾相连，之前是所有的顶点各自为一个list，现在是一个总的list。每个vertex之间多了约束
+
+[WordNode{word='始##始', realWord=' ', attribute=begin 2514605 }, WordNode{word='商品', realWord='商品', attribute=n 2209 }, WordNode{word='和', realWord='和', attribute=cc 141341 }, WordNode{word='服务', realWord='服务', attribute=vn 11789 v 2898 }, WordNode{word='末##末', realWord=' ', attribute=end 2514605 }]
+</code></pre>
+<p>上面是一些基本的介绍过程，下面结合具体的分词算法进行分析</p>
+<h2>分词算法</h2>
+<pre><code> List&lt;Term&gt; termList = HanLP.segment(&quot;南京市长江大桥&quot;);
+ System.out.println(termList);
+
+return new ViterbiSegment();   // Viterbi分词器是目前效率和效果的最佳平衡
+</code></pre>
+<p>Viterbi</p>
+<p><img src="/img/hanlp_0.png" alt=""></p>
+<pre><code>best_score[0]=0
+for each node in the graph(ascending order)
+	best_score[node] = inf
+	for each incoming edge of node:
+		score = best_score[edge.prev_node]+ edge.score
+		if score &lt; best_score[node]
+			best_score[node] = score
+			best_edge[node]=edge
+
+最后得出的
+best_score =(0.0,2.5,1.4,3.7) 是每一个节点的分数
+best_edge = (null, e1,e2,e5),以node为准，进入这个节点的边
+
+Backward Step
+
+best_path=[]
+next_edge = best_edge[best_edge.length -1]
+while next_edge !=NULL
+	add next_edge to best_path
+	next_edge = best_edge[next_edgee.prev_node]
+reverse best_path
+
+best_path=[e2,e5]
+</code></pre>
+<p><a href="http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf" target="_blank" rel="noopener">http://www.phontron.com/slides/nlp-programming-en-03-ws.pdf</a></p>
+<pre><code>private static  List&lt;Vertex&gt; viterbi(WordNet wordNet)
+{
+    LinkedList&lt;Vertex&gt; nodes[] = wordNet.getVertexes();
+    LinkedList&lt;Vertex&gt; vertexList = new LinkedList&lt;&gt;();
+    for(Vertex node : nodes[1])
+    {
+        // 更新初始节点到首节点的联系。其他的不用更新吗
+        node.updateFrom(nodes[0].getFirst());
+    }
+    for (int i = 1; i &lt; nodes.length - 1; ++i)
+    {
+        LinkedList&lt;Vertex&gt; nodeArray = nodes[i];
+        if (nodeArray == null) continue;
+        for (Vertex node : nodeArray)
+        {
+            if (node.from == null) continue;
+            for (Vertex to : nodes[i + node.realWord.length()])
+            {
+//                    double weight = from.weight + MathTools.calculateWeight(from, this);
+//                    if (this.from == null || this.weight &gt; weight)
+//                    {
+//                        this.from = from;
+//                        this.weight = weight;
+//                    }
+                to.updateFrom(node);
+            }
+        }
+    }
+    System.out.println(&quot; 这里应该有一个best_score, 和best_path, 然后从backward上寻找最佳路径&quot; +
+            &quot;forward 方式已经更新了前后连接方式&quot;);
+    Vertex from = nodes[nodes.length - 1].getFirst();
+    System.out.println(&quot;from:0 &quot;+from);
+    while (from != null)
+    {
+        vertexList.addFirst(from);
+        from = from.from;
+        System.out.println(&quot;from:1 &quot;+from);
+    }
+    return vertexList;
+}
+</code></pre>
+<p>根据前向算法计算best_score和best_path,然后根据后向算法计算best_path,注意 Viterbi算法一定是按照node来进行算法的持续，不是边</p>
+<p>NLP分词</p>
+<pre><code>List&lt;Term&gt; termList = NLPTokenizer.segment(&quot;中国科学院计算技术研究所的宗成庆教授正在教授自然语言处理课程&quot;);
+System.out.println(termList);
+
+
+public static final Segment SEGMENT = HanLP.newSegment().enableNameRecognize(true).enableTranslatedNameRecognize(true)
+        .enableJapaneseNameRecognize(true).enablePlaceRecognize(true).enableOrganizationRecognize(true)
+        .enablePartOfSpeechTagging(true);
+
+
+
+NLP分词实际上也是HMM分词，只是增加了全部命名实体识别和词性标注过程，速度比较慢，并且有误识别的情况。
+</code></pre>
+<p>索引分词</p>
+<pre><code>索引分词 IndexTokenizer 是面向搜索引擎的分词器，能够对长词全切分，另外通过 term.offset 可以获取单词在文本中的偏移量。调用方法如下:
+
+	List&lt;Term&gt; termList = IndexTokenizer.segment(&quot;南京市长江大桥&quot;);
+    for (Term term : termList)
+    {
+        System.out.println(term + &quot; [&quot; + term.offset + &quot;:&quot; + (term.offset + term.word.length()) + &quot;]&quot;);
+    }
+南京市/ns [0:3]
+南京/ns [0:2]
+长江/ns [3:5]
+大桥/n [5:7]
+
+
+也是在HMM-Viterbi的基础上进行了其他扩展
+
+public static final Segment SEGMENT = HanLP.newSegment().enableIndexMode(true);
+</code></pre>
+<p>繁体分词</p>
+<pre><code>繁体分词 TraditionalChineseTokenizer 可以直接对繁体进行分词，输出切分后的繁体词语。调用方法如下:
+
+List&lt;Term&gt; termList = TraditionalChineseTokenizer.segment(&quot;大衛貝克漢不僅僅是名著名球員，球場以外，其妻為前辣妹合唱團成員維多利亞·碧咸，亦由於他擁有突出外表、百變髮型及正面的形象，以至自己品牌的男士香水等商品，及長期擔任運動品牌Adidas的代言人，因此對大眾傳播媒介和時尚界等方面都具很大的影響力，在足球圈外所獲得的認受程度可謂前所未見。&quot;);
+System.out.println(termList);
+</code></pre>
+<p>极速词典分词</p>
+<pre><code>极速分词是词典最长分词，速度极其快，精度一般。调用方法如下:
+
+使用的算法是 《Aho Corasick自动机结合DoubleArrayTrie极速多模式匹配》
+
+String text = &quot;江西鄱阳湖干枯，中国最大淡水湖变成大草原&quot;;
+System.out.println(SpeedTokenizer.segment(text));
+</code></pre>
+<p>N-最短路径分词</p>
+<pre><code>最短路分词器 NShortSegment 比最短路分词器( DijkstraSegment )慢，但是效果稍微好一些，对命名实体识别能力更强。调用方法如下:
+</code></pre>
+<p>Dijkstra分词</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/专题推荐0205/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/专题推荐0205/" itemprop="url">专题推荐0205</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T13:39:13+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>专题推荐</h2>
+<p>专题推荐 ------&gt; 衣食住行</p>
+<p>家庭人口判断？</p>
+<p>算法本身根据不一样的业务属性，</p>
+<p>基于现有的数据进行优化</p>
+<p>刘珊珊</p>
+<p>王迪</p>
+<p>吴尚波 / 高响 /李竹红</p>
+<p>吴久清</p>
+<p>直播导流</p>
+<pre><code>在某个专题里面，专题的其他节目全部推荐； 如果没有推荐，就推荐相关
+</code></pre>
+<p>我的直播推荐</p>
+<pre><code>几个频道的节目，5； 
+</code></pre>
+<p>我的轮播</p>
+<pre><code>个性化推荐，轮播方式。
+</code></pre>
+<p>专题内容</p>
+<pre><code>专题</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/05/数学之美-自然语言处理-从规则到统计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/数学之美-自然语言处理-从规则到统计/" itemprop="url">数学之美 自然语言处理 从规则到统计</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T09:56:37+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>自然语言处理 从规则到统计</h2>
+<p><img src="/img/math2_0.png" alt=""></p>
+<p>句法分析，先看下面一个简单的句子</p>
+<pre><code>徐志摩喜欢林徽因
+</code></pre>
+<p>这个句子分为主语、谓语和句号三部分，对每个部分进行分析，得到下面的句法分析树(Parse Tree)。</p>
+<p><img src="/img/math2_1.png" alt=""></p>
+<pre><code>句子----&gt; 主语谓语句号
+主语----&gt; 名词
+谓语----&gt; 动词  名词短语
+名词短语----&gt; 名词
+名词----&gt; 徐志摩
+动词----&gt; 喜欢
+名词----&gt; 林徽因
+句号----&gt; 。
+</code></pre>
+<p>20世纪80年代以前，自然语言处理工作中的文法规则都是人写的，这和后来采用机器总结的做法大不相同。直到2000年后，很多公司，比如机器翻译公司SysTran,还靠人来总结文法规则。</p>
+<h2>从规则到统计</h2>
+<p>上世纪70年代，基于统计的方法的核心模型是通信系统加隐含马尔科夫模型。</p>
+<p>今天，几乎不再有科学家宣称自己是传统的基于规则方法的捍卫者。自然语言处理的规则也从单纯的句法分析和语义理解，变成了非常贴近应用的机器翻译、语音识别、文本到数据库自动生成、数据挖掘和知识的获取等等。</p>
+<h2>小结</h2>
+<p>基于统计的自然语言处理方法，在数学模型上和通信是相通的，甚至就是相通的。因此，在数学意义上自然语言处理又和语言的初衷---通信联系在一起了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -258,7 +1049,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T09:52:31+08:00">
                 2018-02-05
@@ -385,7 +1176,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T14:28:46+08:00">
                 2018-02-02
@@ -713,7 +1504,7 @@ emits output in batch-major form.
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T14:22:06+08:00">
                 2018-02-02
@@ -888,7 +1679,7 @@ src_tgt_dataset = src_tgt_dataset.map(
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T13:59:23+08:00">
                 2018-02-02
@@ -1008,7 +1799,7 @@ src_tgt_dataset = src_tgt_dataset.map(
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T13:59:04+08:00">
                 2018-02-02
@@ -1127,7 +1918,7 @@ src_tgt_dataset = src_tgt_dataset.map(
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T11:27:18+08:00">
                 2018-02-02
@@ -1215,619 +2006,6 @@ src_tgt_dataset = src_tgt_dataset.map(
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/31/8-Neural-Networks-and-Neural/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/31/8-Neural-Networks-and-Neural/" itemprop="url">8 Neural Networks and Neural</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T09:56:40+08:00">
-                2018-01-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Neural Networks and Neural Language Models</h2>
-<p>本章将介绍许多其他方面的神经模型。</p>
-<p>##Units
-神经网络的最基本单元是一个计算单元。一个神经单元可以表示为</p>
-<p>$$Z=b+ \sum_i w_{i}x_{i}$$</p>
-<p>将求和过程替换为点乘过程</p>
-<p>$$Z=w\cdot x+b$$</p>
-<p>神经网络单元应用一个非线性函数给z。将这个函数的输出称为activation。</p>
-<p>$$y=a=f(z)$$</p>
-<p>三种非线性函数(sigmoid, tanh,relu)</p>
-<p>sigmoid激活函数</p>
-<p>$$y=\sigma (z) = \frac{1}{1+e^{-z}}$$</p>
-<p>图像再不画，但是输出值的范围是[0,1]之间。对于输出限定在0和1之间的函数很有优势。但是这个函数在优化的过程中特别麻烦。</p>
-<p><img src="/img/nlp8_0.png" alt=""></p>
-<p><img src="/img/nlp8_1.png" alt=""></p>
-<p>进行一个简单的例子</p>
-<pre><code>w=[0.2,0.3,0.9]
-b=0.5
-x=[0.5,0.6,0.1]
-</code></pre>
-<p>$$y=\sigma (z) = \frac{1}{1+e^{-z}}=\frac{1}{1+e^{-(0.5<em>0.2+0.3</em>0.6+0.1*0.8+0.5)}}=e^{-0.86}=0.42$$</p>
-<p>tanh 激活函数，是sigmoid的变体,范围在-1 到1 之间</p>
-<p>$$y=\frac{e^z-e^{-z}}{e^z+e^{-z}}$$</p>
-<p>最简单的激活函数relu函数</p>
-<p>$$y=max(x,0)$$</p>
-<p><img src="/img/nlp8_2.png" alt=""></p>
-<p>这些激活函数有不同的属性，因此在不同的语言应用或者网络结构中有不同的使用方式。</p>
-<h2>The XOR problem</h2>
-<p>逻辑问题，首先出现在感知机中</p>
-<p><img src="/img/nlp8_3.png" alt=""></p>
-<pre><code>y:
-0; if wx+b &lt;0
-1; if wx=b &gt;0
-</code></pre>
-<p>可以用很简单的方式建立一个感知机</p>
-<p><img src="/img/nlp8_4.png" alt=""></p>
-<p>但是，没有办法建立一个感知机去解决逻辑XOR问题。</p>
-<p>感知机是一个线性分类器。</p>
-<p>。。。。。待补充</p>
-<h2>Feed-Forward Neural Networks</h2>
-<p>前馈神经网络。一个前向神经网络是一个多层网络但是没有环。前向神经网络也叫多层感知机。</p>
-<p>最简单的前向神经网络如下图所示:</p>
-<p><img src="/img/nlp8_5.png" alt=""></p>
-<p>度量输出结果最好的方式是分类，常用的方式是归一化。softmax函数</p>
-<p>$$y=softmax(x)$$</p>
-<h2>Training Neutal Nets</h2>
-<p>训练神经网络模型，就是对里面的参数进行调整，先对参数进行基本假设，然后在一个方向调整权重提高系统。</p>
-<h3>Loss function</h3>
-<p>神经网络的目标是定一个损失函数，然后寻找某种方式去最小化这个损失函数。
-$$L(\hat{y},y)=How\ much\ \hat(y)\ differ\ from\ true\ y$$</p>
-<p>损失函数---&gt;MSE(mean-squared error)</p>
-<p>公式不再定义，就是误差平方均值。</p>
-<p>多数情况下，我们考虑网络是一个概率分类。对于概率分类的误差函数是 cross entropy loss，或者叫做负对数似然(negative log likelihood)</p>
-<p>Let y be a vector over the C classes representing the true output probability distribution. Assume this is a hard classification task,meaning that only one class is the correct one. If the true class is i, then y is a vector where yi=1 and yj=0. A vector like this,with one value =1 and the rest 0,is called one-hot vector. Noe let $\hat{y}$ be the vector output from the network. The loss is simply the log probability of the correct class：</p>
-<p>$$L(\hat{y},y)= -logp(\hat{y})$$</p>
-<h3>Following Gradients</h3>
-<p>梯度下降方法
-<img src="/img/nlp8_6.png" alt="">
-<img src="/img/nlp8_7.png" alt=""></p>
-<h3>Computing the Gradient</h3>
-<p>计算梯度是用反向传播算法</p>
-<h3>Stochastic Gradient Descent</h3>
-<p><img src="/img/nlp8_8.png" alt="">
-随机梯度下降之所以被称为随机是因为它选择一个随机样本，根据公式计算参数值。还有可选的算法是minibatch 梯度下降。</p>
-<h2>Neural Language Models</h2>
-<p>一个前向神经网络语言模型，时刻t的输入是一个前面的单词(wt-1,wt-2...)输出是一个对可能的下一个单词的概率分布。</p>
-<p>$$P(w_{t}|w^{t-1}<em>1)\approx P(w</em>{t}|w^{t-1}_{t-N+1})$$
-计算整个之前的上下文概率近似于计算之前的前N个单词的概率</p>
-<p>如果我们使用一个4-gram，概率$P(w_{t}=i|w_{t-1},w_{t-2},w_{t-3})$</p>
-<h3>Embeddings</h3>
-<p>Embedding 过程
-<img src="/img/nlp8_9.png" alt=""></p>
-<p>经常是不会单独训练embeddings的，而是伴随训练网络的过程。</p>
-<p>现在展示一个结构允许embeddings可以被学习。为了实现这个功能，增加一层。</p>
-<p><img src="/img/nlp8_10.png" alt=""></p>
-<ul>
-<li>Select three embeddings from E:</li>
-<li>Multiply by W:</li>
-<li>Multiply by U:</li>
-<li>Apply softmax: After the sofrmax,each node i in the output layer estimates the probability $P(w_{t}=i|w_{t-1},w_{t-2},w_{t-3})$</li>
-</ul>
-<p>如果我们使用e代表投影层，一个神经网络语言模型如下：</p>
-<p>$$e=(Ex_{1},Ex_{2},...Ex)$$
-$$h=\sigma (Wx+b)$$
-$$z= Uh$$
-$$y=softmax(z)$$</p>
-<h3>Training the neural language model</h3>
-<p>参数 $\theta =E,W,U,b$</p>
-<p>对于一个句子开始训练，在每一个单词，计算交叉熵(negative log likelihood)损失是:</p>
-<p>$$L=-logp(w_{t}|w_{t-1},...,w_{t-n+1})$$</p>
-<p>梯度计算:</p>
-<p>$$\theta_{t+1}=\theta_{t}-\eta \frac{\partial logp(w_{t}|w_{t-1},...,w_{t-n+1})}{\partial \theta }$$</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/30/Localization-Overview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/30/Localization-Overview/" itemprop="url">Localization Overview</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-30T18:57:07+08:00">
-                2018-01-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Total Probability</h2>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/24/R-Basics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/24/R-Basics/" itemprop="url">R Basics</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-24T19:13:24+08:00">
-                2018-01-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>R Basics</h2>
-<p>文本分析包； TextCat</p>
-<p>图形包: ggplot2</p>
-<pre><code>install.packages('ggplot2')
-library(ggplot2)
-
-install.packages('RColorBrewer')
-library(RColorBrewer)
-
-data(diamonds)
-
-# create scatterplot of price vs .carat color 
-qplot(data=diamonds,x=carat,y=price,color=cut)+scalar_color_brewer(palette='Accent')
-</code></pre>
-<p><img src="/img/dv_01.png" alt=""></p>
-<p><a href="https://www.statmethods.net/" target="_blank" rel="noopener">quick R</a>
-<a href="http://www.cookbook-r.com/" target="_blank" rel="noopener">R Cookbook</a></p>
-<p>getwd()获取工作目录</p>
-<p>读取csv: read.csv(&quot; &quot;)</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/01/24/Course-Information/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/24/Course-Information/" itemprop="url">Course Information</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-24T19:03:18+08:00">
-                2018-01-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Course Information</h2>
-<p>学习资源</p>
-<ul>
-<li><a href="http://swirlstats.com/students.html" target="_blank" rel="noopener">swirl</a>:Interactive mini-courses in R (great for beginners)</li>
-<li><a href="https://www.rdocumentation.org/packages/DescTools/versions/0.99.19" target="_blank" rel="noopener">Listing of commands for R</a></li>
-<li><a href="https://www.datacamp.com/community/tutorials/r-data-import-tutorial" target="_blank" rel="noopener">Data import tutorial</a></li>
-<li><a href="https://www.statmethods.net/management/reshape.html" target="_blank" rel="noopener">Reshaping data</a></li>
-<li>robustHD:
-<ul>
-<li><a href="http://www.nicebread.de/installation-of-wrs-package-wilcox-robust-statistics/" target="_blank" rel="noopener">Loading robustHD</a></li>
-<li><a href="https://cran.r-project.org/web/packages/robustHD/robustHD.pdf" target="_blank" rel="noopener">Using robustHD</a></li>
-<li><a href="https://www.rdocumentation.org/packages/robustHD/versions/0.5.1" target="_blank" rel="noopener">Reference for robustHD</a></li>
-</ul>
-</li>
-</ul>
-<p>依赖环境</p>
-<p>R Datasets: iris,faithful,mtcars</p>
-<p>To loda iris flower dataset(iris),</p>
-<pre><code>data(iris)
-head(iris)
-levels(iris$Species)
-data(faithful)
-data(mtcars)
-</code></pre>
-<p>Libraries</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1878,8 +2056,8 @@ data(mtcars)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
             
@@ -1891,8 +2069,8 @@ data(mtcars)
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">Tags</span>
                 
               </div>
             
@@ -1938,7 +2116,7 @@ data(mtcars)
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

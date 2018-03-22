@@ -182,7 +182,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -192,7 +192,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -215,6 +215,631 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/22/frature-importance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/22/frature-importance/" itemprop="url">frature_importance</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-22T17:06:41+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>GBDT:feature_importance及Spark:feature_importance计算</h2>
+<p>参考文档： <a href="http://www.cnblogs.com/yxzfscg/p/5142620.html" target="_blank" rel="noopener">http://www.cnblogs.com/yxzfscg/p/5142620.html</a>,<a href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tree/_tree.pyx" target="_blank" rel="noopener">https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tree/_tree.pyx</a></p>
+<p>GBDT其底层实现就是决策树，因此，feature_importance其实现即为GBDT实现。</p>
+<p>主要代码</p>
+<pre><code>importance_data[node.feature] += (
+                    node.weighted_n_node_samples * node.impurity -
+                    left.weighted_n_node_samples * left.impurity -
+right.weighted_n_node_samples * right.impurity)
+</code></pre>
+<p>采用iris数据源进行验证说明</p>
+<pre><code>from sklearn.datasets import load_iris
+from sklearn.tree import DecisionTreeClassifier
+iris = load_iris()
+X = iris.data
+y = iris.target
+print(X[0])
+dt = DecisionTreeClassifier(criterion='gini')
+dt.fit(X, y)
+print(dt.feature_importances_)
+
+from sklearn.tree import export_graphviz
+with open('feature_tree.dot','w')as f:
+	f=export_graphviz(dt)
+</code></pre>
+<p>生成决策树模型：</p>
+<pre><code>采用该命令： dot -Tpdf  tree.dot -o tree.pdf
+</code></pre>
+<p><img src="/img/fea_01.png" alt=""></p>
+<pre><code>输出feature_importance: [ 0.02666667  0.          0.05072262  0.92261071]
+</code></pre>
+<p>验证过程：
+从树顶部开始：</p>
+<p><img src="/img/fea_02.png" alt=""></p>
+<p>上面三者之和近似100(100.005),则特征重要性可以得出。</p>
+<p>上面的过程不涉及树的权重，因为只有一颗树，如果类似GBDT这样的多棵树就要加上每棵树的权重。真正的代码实现如下：</p>
+<pre><code>total_sum = np.zeros((self.n_features, ), dtype=np.float64)
+    for stage in self.estimators_:
+        stage_sum = sum(tree.feature_importances_
+                        for tree in stage) / len(stage)
+        total_sum += stage_sum
+
+    importances = total_sum / len(self.estimators_)
+    return importances
+</code></pre>
+<p>在一些地方加上打印过程，具体如下：</p>
+<pre><code>	[ 0.08026236  0.          0.32461037  0.          0.          0.55035696
+	0.04477031  0.        ]
+	stage_sum 0.0802623563677
+	total_sum 0.0802623563677
+	[ 0.          0.          0.25505309  0.1419576   0.          0.40878994
+	0.19419937  0.        ]
+	stage_sum 0.0
+	total_sum 0.0802623563677
+	[ 0.07849338  0.          0.35527078  0.          0.          0.56623584
+	0.          0.        ]
+	stage_sum 0.0784933756874
+	total_sum 0.158755732055
+	[ 0.          0.          0.26975468  0.08468996  0.          0.41409671  0.23145865  0.        ]
+	stage_sum 0.0
+	total_sum 0.158755732055
+	[ 0.08331287  0.          0.25748023  0.07290349  0.          0.37375141 0.212552    0.        ]
+	stage_sum 0.0833128747713
+	total_sum 0.242068606826
+	total_sum / len(self.estimators_) [ 0.04841372  0.          0.29243383  0.05991021  0.          0.46264617
+	0.13659606  0.        ]
+	feature_importance_ [ 0.04841372  0.          0.29243383  0.05991021  0.          0.46264617
+	0.13659606  0.        ]
+</code></pre>
+<p>简单来说，就是叠加每一棵树的对应特征的feature_importance_,然后除以总的树棵树，就是所得的feature_importance,并没有添加对应的weight。</p>
+<p>这应该就是python和spark的不同之处，python注重每棵树的特性，而spark注重整棵树的特性，整棵树的weight是能够得到的，但是无法计算出特征重要性。</p>
+<p>因此，计算spark 的feature_importance 可以用spark生成的树来计算每个节点的gini系数，然后按照上述计算过程计算importance。采用倒推的方式进行。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/21/Ensemble-Learning-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/Ensemble-Learning-02/" itemprop="url">Ensemble Learning 02</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T19:13:09+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Boosting</h2>
+<h2>2.2 Boostrapping and Bagging</h2>
+<p>有放回的抽样，每一个数据不被选中的概率是 0.368
+<img src="/img/ens2_1.png" alt=""></p>
+<p>boostrapping</p>
+<p><img src="/img/ens2_2.png" alt="">
+	样本集是N个样本，随机选择N个，选择B次，得出B个学习器
+	计算boostrap estimate 和accuracy</p>
+<p>Bagging(bootstrap aggregation自举汇聚法)</p>
+<p><img src="/img/ens2_3.png" alt=""></p>
+<pre><code>bagging
+* increases classifier stability and accuracy
+* reduce classifier variance,in terms of the bias-variance decomposition
+</code></pre>
+<p><img src="/img/ens2_4.png" alt=""></p>
+<p>BaggingClassifier分析</p>
+<pre><code>class sklearn.ensemble.BaggingClassifier(base_estimator=None, n_estimators=10, max_samples=1.0, max_features=1.0, bootstrap=True, bootstrap_features=False, oob_score=False, warm_start=False, n_jobs=1, random_state=None, verbose=0)
+
+base_estimator: 弱分类器
+n_estimators: 弱分类器个数
+max_sample: 弱分类器训练样本数，
+max_features: 弱分类器训练样本特征数目
+bootstrap: 是否是有放回抽样  True
+bootstrap_features: 特征是否是有放回 False
+oob_score:是否使用袋外数据去估计错误率
+warm_start: 
+n_jobs: 并行计算
+random_state: 
+verbose: 冗长
+
+base_estimator_ : estimator
+estimators_ : list of estimators
+estimators_samples_ : list of arrays
+estimators_features_ : list of arrays
+classes_ : array of shape = [n_classes]
+n_classes_ : int or list
+oob_score_ : float
+oob_decision_function_
+</code></pre>
+<h2>Boosting Algorithms</h2>
+<p>无放回采样</p>
+<p><img src="/img/ens2_5.png" alt=""></p>
+<p><img src="/img/ens2_6.png" alt=""></p>
+<h2>AdaBoost Algorithm</h2>
+<p>ada训练注重的是每个样本的样本权重，
+<img src="/img/ens2_7.png" alt=""></p>
+<p><img src="/img/ens2_8.png" alt=""></p>
+<p>第四行的h是一个阶跃函数，x&gt;0,y=1,x&lt;0,y=0;</p>
+<p>这里的一个点就是弱分类器h的确定。</p>
+<p>algorithm：这个参数只有AdaBoostClassifier有。主要原因是scikit-learn实现了两种Adaboost分类算法，SAMME和SAMME.R。两者的主要区别是弱学习器权重的度量，SAMME使用了和我们的原理篇里二元分类Adaboost算法的扩展，即用对样本集分类效果作为弱学习器权重，而SAMME.R使用了对样本集分类的预测概率大小来作为弱学习器权重。由于SAMME.R使用了概率度量的连续值，迭代一般比SAMME快，因此AdaBoostClassifier的默认算法algorithm的值也是SAMME.R。我们一般使用默认的SAMME.R就够了，但是要注意的是使用了SAMME.R， 则弱分类学习器参数base_estimator必须限制使用支持概率预测的分类器。SAMME算法则没有这个限制。</p>
+<p>下面进行一个尝试:基于单层决策树构建弱分类器</p>
+<pre><code>单层决策树(决策树桩)是一种简单的决策树: 仅仅基于单个特征来做决策。由于这棵树只有一次分裂过程，实际上就是一个树桩。
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/21/Ensemble-Learning-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/Ensemble-Learning-01/" itemprop="url">Ensemble Learning 01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T17:13:37+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Ensemble Learning</h2>
+<h3>介绍</h3>
+<p>集成学习： reduce variabce -- impoove accuracy</p>
+<h2>1.1.1</h2>
+<p>所有的分类器错误都可以被归结为两类:</p>
+<pre><code>bias: 分类器的准确性
+variance: 在不同训练集上训练时 分类器的精度
+趋势关系: 分类器有低bias 那么则倾向于高的variance
+vice versa: 反之亦然。
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/21/Ensemble-Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/Ensemble-Learning/" itemprop="url">Ensemble Learning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T13:07:05+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>集成学习</h2>
+<p>继承学习中的误差(方差与偏差)</p>
+<p>任何模型中出现的误差都可以被拆解为三个要素</p>
+<p><img src="http://static.datartisan.com/upload/attachment/2015/08/Wb6I0AHP.png" alt=""></p>
+<p>偏差Bias Error: 量化预测值与实际值差异的均值(期望)。高偏差的出现表示模型遗漏了重要的变化趋势，就是说这个模型表现并不乐观</p>
+<p>方差Variance: 个体预测结果离散程度的量化，一个拥有过大方差的模型将会对训练总体过度的拟合，从而无法保证对训练集外的个体进行准确的预测。</p>
+<p><img src="http://static.datartisan.com/upload/attachment/2015/08/6UBxj3Rg.png" alt=""></p>
+<p>需要注意的点: 通常情况下，你会发现偏差的降低会导致模型总误差的减小，但当过了某个特定的点之后，再增加模型的复杂度则会适得其反。最终，你的模型将面临过度拟合的问题，并且具有了较高的方差</p>
+<p>理论上，最优的模型应该做到尽量保持偏差和方差的的均衡。</p>
+<p><img src="http://static.datartisan.com/upload/attachment/2015/08/Ugj1NJBn.png" alt=""></p>
+<p>Bagging</p>
+<p>bagging 在小数据集上实现相似的学习器然后取所有预测的均值。一般的bagging中，可以使用不同的学习器在不同的样本中。</p>
+<p><img src="https://www.analyticsvidhya.com/wp-content/uploads/2015/07/bagging.png" alt=""></p>
+<p>Boosting</p>
+<p>Boosting是一种迭代算法，能根据最后一个分类的预测情况来调整观测值的权重。如果一个观测值的分类被预测错误，那么该算法将增加这个观测值的权重，否则反之。通常情况下，Boosting能有效减少偏差并构建出有效的模型，同时也面临着拟合的风险。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -258,7 +883,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T11:18:46+08:00">
                 2018-03-21
@@ -469,7 +1094,7 @@ function call() constant returns (string)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T10:40:23+08:00">
                 2018-03-21
@@ -588,7 +1213,7 @@ function call() constant returns (string)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T13:44:07+08:00">
                 2018-03-15
@@ -1168,6 +1793,56 @@ TypeError: Type uint256[] memory is not implicitly convertible to expected type 
 
 push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一个新的元素在数组的末尾。 函数返回一个新的长度
 </code></pre>
+<p>Structs</p>
+<p>Mappings</p>
+<p>delete</p>
+<pre><code>delete a 恢复初始值。 数组的话是长度为0
+</code></pre>
+<p>Conversions between Elementary Types</p>
+<p>货币单位(Ether Units)</p>
+<p>一个字面量的数字，可以使用后缀wei,finney,szabo或ether来在不同面额中转换。不含任何后缀的默认单位是wei。如2 ether == 2000 finney的结果是true。</p>
+<pre><code>（2 ether == 2000 finney）
+</code></pre>
+<p>时间单位</p>
+<pre><code>seconds,minutes,hours,days,weeks,years
+1== 1 secondes
+1 minutes == 60 seconds
+1 hours == 60 minutes
+1 days == 24 hours 
+1 weeks == 7 dyas
+1 years == 365 dyas
+</code></pre>
+<p>Error Handling</p>
+<pre><code>assert(bool condition): 如果条件不满足则抛出异常
+require(bool condition):
+revert(): abort execution and revert state changes
+</code></pre>
+<p>数学公式</p>
+<pre><code>addmod(uint x,uint y,uint k) returns (uint)
+	(x+y)%k
+keccak256(...) returns (bytes32)
+	compute the etherum-ShA03 hash of the arguments
+keccak256(12)
+	0x4de0e96b0a8886e42a2c35b57df8a9d58a93b5bff655bc37a30e2ab8e29dc066
+
+sha256
+sha3 == keccak256
+</code></pre>
+<p>地址相关</p>
+<pre><code>&lt;address&gt;.balance  Wei
+&lt;adderss&gt;.transfer()
+		 . send
+		 .call
+		 .callcode
+		 .delegatecall
+</code></pre>
+<p>协议相关的</p>
+<pre><code>this(current contract's type)
+selddestruct(address recipient)
+	销毁当前合约，将他的funds发送给指定地址
+suicide(address recipient)
+	过时了，是selfdestruct的别称
+</code></pre>
 
           
         
@@ -1245,7 +1920,7 @@ push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一�
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T13:06:57+08:00">
                 2018-03-12
@@ -1393,7 +2068,7 @@ push: 动态stoeage 数组和bytes 有一个函数push，可以用来追加一�
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T17:34:19+08:00">
                 2018-03-08
@@ -1656,7 +2331,7 @@ conf.registerKryoClasses(Array(classOf[MyClass1], classOf[MyClass2]))
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T13:35:04+08:00">
                 2018-03-08
@@ -1776,706 +2451,6 @@ cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/02/scrapy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/02/scrapy/" itemprop="url">scrapy</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T10:01:50+08:00">
-                2018-03-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>Scrapy</h2>
-<p>测试网址
-<a href="http://quotes.toscrape.com/page/1/" target="_blank" rel="noopener">http://quotes.toscrape.com/page/1/</a></p>
-<p>def start_requests(self):</p>
-<pre><code>must return an iterable of Requests(you can return a 
-list of requests of write a generator function) which 
-Spider will  begin to crawl from. Subsequent requests 
-will be generated successively form these initial 
-requests
-</code></pre>
-<p>parse()</p>
-<pre><code>The response parameter is an instance of TextResponse 
-that holds the page content and has further helpful 
-methods to handle it 
-</code></pre>
-<p>The parse() method usually parses the response, extracting the scraped data as dicts and also finding new URLs to follow and creating new requests (Request) from them.</p>
-<p><strong>How to run our spider</strong></p>
-<pre><code>scrapy crawl quotes
-
-&gt;&gt;&gt; response.css('title')
-[&lt;Selector xpath='descendant-or-self::title' data='&lt;title&gt;Quotes to Scrape&lt;/title&gt;'&gt;]
-
-response.css('title') is a list-like called SelectorList, which represents a list of selector objects that wrap around XML/HTML elements and allow you to run further queries to fine-grain the seletion or extract the data.
-</code></pre>
-<h2>Using Selectors</h2>
-<pre><code>https://doc.scrapy.org/en/latest/_static/selectors-sample1.html
-&gt;&gt;&gt; response.xpath('//title/text()')
-[&lt;Selector (text) xpath=//title/text()&gt;]
-&gt;&gt;&gt; response.css('title::text')
-[&lt;Selector (text) xpath=//title/text()&gt;]
-
-response.css('img')
-
-[&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image1_thumb.jpg&quot;&gt;'&gt;,
-&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image2_thumb.jpg&quot;&gt;'&gt;,
-&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image3_thumb.jpg&quot;&gt;'&gt;,
-&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image4_thumb.jpg&quot;&gt;'&gt;,
-&lt;Selector xpath='descendant-or-self::img' data='&lt;img src=&quot;image5_thumb.jpg&quot;&gt;'&gt;]
-
-
-&gt;&gt;&gt; response.css('img').xpath('@src').extract()
-[u'image1_thumb.jpg',
-u'image2_thumb.jpg',
-u'image3_thumb.jpg',
-u'image4_thumb.jpg',
-u'image5_thumb.jpg']
-
-
-说明xpath中里面的某一个属性用 @xxx 来表示
-
-
-
-&gt;&gt;&gt; response.xpath('//base/@href').extract()
-[u'http://example.com/']
-
-&gt;&gt;&gt; response.css('base::attr(href)').extract()
-[u'http://example.com/']
-
-&gt;&gt;&gt; response.xpath('//a[contains(@href, &quot;image&quot;)]/@href').extract()
-[u'image1.html',
-u'image2.html',
-u'image3.html',
-u'image4.html',
-u'image5.html']
-
-&gt;&gt;&gt; response.css('a[href*=image]::attr(href)').extract()
-[u'image1.html',
-u'image2.html',
-u'image3.html',
-u'image4.html',
-u'image5.html']
-
-&gt;&gt;&gt; response.xpath('//a[contains(@href, &quot;image&quot;)]/img/@src').extract()
-[u'image1_thumb.jpg',
-u'image2_thumb.jpg',
-u'image3_thumb.jpg',
-u'image4_thumb.jpg',
-u'image5_thumb.jpg']
-
-&gt;&gt;&gt; response.css('a[href*=image] img::attr(src)').extract()
-[u'image1_thumb.jpg',
-u'image2_thumb.jpg',
-u'image3_thumb.jpg',
-u'image4_thumb.jpg',
-u'image5_thumb.jpg']
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/01/hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/01/hadoop/" itemprop="url">hadoop</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T13:39:05+08:00">
-                2018-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>hadoop的集群是基于master/slave模式，namenode和jobtracker属于master，datanode和tasktracker属于slave，master只有一个，而slave有多个.</p>
-<p>SecondaryNameNode内存需求和NameNode在一个数量级上，所以通常secondary NameNode（运行在单独的物理机器上）和 NameNode 运行在不同的机器上。</p>
-<p>JobTracker对应于NameNode,TaskTracker对应于DataNode.</p>
-<p>DataNode和NameNode是针对数据存放来而言的.JobTracker和TaskTracker是对于MapReduce执行而言的.</p>
-<p>mapreduce中几个主要概念，mapreduce 整体上可以分为这么几条执行线索：</p>
-<p>jobclient，JobTracker与TaskTracker。</p>
-<p>1、JobClient会在用户端通过JobClient类将已经配置参数打包成jar文件的应用存储到hdfs，并把路径提交到Jobtracker,然后由JobTracker创建每一个Task（即 MapTask 和 ReduceTask） 并将它们分发到各个TaskTracker服务中去执行。</p>
-<p>2、JobTracker是一master服务，软件启动之后JobTracker接收Job，负责调度Job的每一个子任务。task运行于TaskTracker上，并监控它们，如果发现有失败的task就重新运行它。一般情况应该把JobTracker 部署在单独的机器上。</p>
-<p>3、TaskTracker是运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信，接收作业，并负责直接执行每一个任务。 TaskTracker 都需要运行在HDFS的DataNode上。</p>
-<p>secondaryNameNode: 他的目的使帮助 NameNode 合并编辑日志，减少 NameNode 启动时间</p>
-<p>列决几个Hadoop生态圈的组件并作简要概述
-Zookeeper:是一个开源的分布式应用程序协调服务,基于zookeeper可以实现同步服务，配置维护，命名服务。</p>
-<p>Flume:一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统。</p>
-<p>Hbase:是一个分布式的、面向列的开源数据库, 利用Hadoop HDFS作为其存储系统.</p>
-<p>Hive:基于Hadoop的一个数据仓库工具，可以将结构化的数据档映射为一张数据库表，并提供简单的sql 查询功能，可以将sql语句转换为MapReduce任务进行运行。</p>
-<p>Sqoop:将一个关系型数据库中的数据导进到Hadoop的 HDFS中，也可以将HDFS的数据导进到关系型数据库中。</p>
-<p>4 正常工作的Hadoop集群中Hadoop都分别需要启动哪些进程，它们的作用分别是什么?</p>
-<p>a) NameNode 是hadoop中的主服务器，管理文件系统名称空间和对集群中存储的文件的访问，保存有metadate</p>
-<p>b) SecondaryNameNode 不是NameNode的冗余守护进程，而是提供周期检查点检查点和清理服务。帮助NN合并edits log,减少NN启动时间</p>
-<p>c) DataNode 负责管理连接到节点的存储(一个集群中可以有多个节点)。 每个存储数据的节点运行一个datanode守护进程。</p>
-<p>d) ResourceManager(JobTracker),负责调度DataNode上的工作。每个DataNode有一个TaskTracker，执行实际工作。</p>
-<p>e) NodeManager (TaskTracker)执行任务</p>
-<p>4 HDFS 的存储机制是什么</p>
-<p>客户端通过把请求发送给NameNode active，NN会把文件切成1到N个固定大小的block(一般默认为128M)并上传到DataNode中。当所有block拷贝结束时，NN会立即通知客户端上传结果。但此时上传的流程还未结束。DN还需要根据配置信息的副本数量，在不同的机架节点上通过局域网做数据拷贝工作。</p>
-<p>5 Hadoop中的job和task之间的区别是什么</p>
-<p>JobTracker是一个master服务，软件启动之后，JobTracker接受Job，负责调度Job的每一个子任务task运行于TaskTracker上，并监控他们，如果发现有失败的task就重新运行它。一般情况应该把JobTracker部署在单独的机器上。</p>
-<p>TaskTracker是运行在多个节点上的slaver服务。TaskTracker主动与JobTracker通信，接收作业，并负责执行每一个任务</p>
-<p>7 如何决定一个job的map和reduce的数量</p>
-<pre><code>splitSize = max{minSize,min{maxSize,blockSize}}
-map的数量由处理的初级分成的block熟练决定，= total_size/split_size
-reduce的数量job.setNumReduceTasks(x);x 为reduce的数量
-</code></pre>
-<p>8 如何为一个Hadoop任务设置mappers的数量</p>
-<p>InputFormat在默认情况下会根据hadoop集群HDFS块大小进行分片，每一个分片会由一个map任务来进行处理，当然用户还是可以通过参数mapred.min.split.size 参数在作业提交客户端进行自定义设置。还有一个重要参数就是mapred.map.tasks, 这个参数设置的map数量仅仅是一个提示，只有当InputFormat决定了map任务的个数比mapred.map.tasks值小时才起作用。同样，Map任务的个数也能通过使用JobConf的conf.setNumMapTasks()来手动的设置。这个方法能够用来增加map任务的个数，但是不鞥设定任务的个数小于Hadoop系统通过分隔输入数据得到的值。</p>
-<p>9 如何为一个Hadoop任务设置要创建的reducer的数量</p>
-<p>纯粹的mapreduce task的reduce task数很简单，就是参数mapred.reduce.tasks 的值</p>
-<p>10 MapReduce 中排序发生的几个阶段</p>
-<p>4个阶段</p>
-<p>Splitting: 在进行map计算之前，mapreduce会根据输入文件计算输入分片(inputsplit),每个输入分片针对一个map任务。输入分片存储的并非数据本身，</p>
-<p>11 请描述Mapreduce中shuffle阶段的工作流程，如何优化shuffle阶段</p>
-<p>分区，排序，溢写，拷贝到对应reduce机器上，增加conbiner，压缩溢写的文件。</p>
-<p>12 Mapreduce中combiner的作用是什么，一般使用情景，哪些情况不需要？</p>
-<p>MR作业中的Map阶段会输出结果数据到磁盘中</p>
-<p>Combiner只适应于那种reduce的输入类型完全一直，且不影响最终结果的场景，比如累加，最大值等。也可以用于过滤数据，在map端将无效的数据过滤到</p>
-<p>combiner的作用就是在map端对输出先做一次合并，以减少传输到reducer的数据量</p>
-<p>combiner最基本是实现本地key的归并，具有类似本地reduce，那么所有的结果都是reduce</p>
-<p>使用combiner，先完成的map会在本地聚合，提升速度。</p>
-<pre><code>map--&gt; 本地reduce --&gt;集群reduce
-</code></pre>
-<p>13  如果没有定义partitioner，那数据在被送达reducer前是如何被分区的</p>
-<pre><code>如果没有自定义的partitioning，则默认的partition算法，即根据每一条数据的key的hascode 值 取模reduce的数量，得到的数字就是reducer 分区号
-</code></pre>
-<p>14 Map阶段结束后，Hadoop框架会处理：Partitioning，shuffle和sort，</p>
-<pre><code>map task上的shuffle结束，此时reduce task 上的shuffle开始，抓取fetch所属于自己分区的数据，同时将这些分区的数据进行排序sort(默认的排序是根据每一条数据的键的字典排序)，进而将数据进行合并merge，即根据key相同的，将其value组成一个集合，最后输出结果。
-</code></pre>
-<p>15 一个mr作业跑得比较慢，如何来优化，</p>
-<pre><code>数据倾斜
-	数据倾斜可能是partition不合理，导致部分partition中的数据过多，部分过少，通过分析数据，自定义分区解决。
-
-合理设置map和reduce数: 两个都不能设置太少，也不能设置太多。太少，会导致task等待，延长处理时间；太多，会导致map，reduce任务间竞争资源，造成处理超时等错误。
-
-设置map，reduce共存: 调整slowstart.completedmaps参数，是map运行到一定程度后，reduce也开始运行，减少reduce的等待时间。
-
-合并小文件: 在执行mr任务前将小文件进行合并，大量的小文件会产生大量的map任务，增大map任务装载次数，而任务的装载比较耗时，从而导致mr运行较慢
-
-减少spill次数
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/01/mysql-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/01/mysql-基础/" itemprop="url">mysql 基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T09:32:45+08:00">
-                2018-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/26/CKY/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/CKY/" itemprop="url">CKY</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T16:13:38+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>CKY(Cocke-Kasami-Younger) and Earley Parsing Algorithms</h2>
-<p><strong>Context Free Grammar</strong></p>
-<p>A Context-free Grammar(CFG) is a 4-tuple:
-$$G={N,\sum  ,P,S}$$</p>
-<p><img src="/img/nlp_cky1.png" alt=""></p>
-<p><strong>Chomsky Normal Form 乔姆斯基范式</strong></p>
-<p>A context-free grammar</p>
-<pre><code>A--&gt; \alpha
-A--&gt; BC
-Any CFG can be converted a weakly equivalent grammar in CNF
-</code></pre>
-<h2>Parsing Algorithm</h2>
-<pre><code>CFGs are basis for describing(syntactic) structure of NL sentences
-Thus- Parsing Algorithms are core of NL analysis systems
-Recognition vs. Parsing:
-	Recognition-deciding the membership in the language
-	Parsing- Recogintion+producing a parse tree for it
-Parsing is more difficult than recogintion(time complexity)
-Ambiguity - an input may have exponentially many parses.
-</code></pre>
-<h2>Parsing Algorithms</h2>
-<pre><code>Top-down vs bottom-up
-Top-down:(goal-driven): from the start symbol down
-Bottom-up:(data-driven): from the symbols up.
-
-Naive vs. dynamic programming
-Naive: enumerate everything
-backtracking: try something, discard partial solutions.
-Dynamic programming: save partial solutions in a table
-
-Example:
-CKY: bottom-up dynamic programming
-Earley parsing: top-down dynamic programming.
-</code></pre>
-<h2>CKY</h2>
-<pre><code>one of the earliest recogintion and parsing algorithms 
-The standard version of CKY can only recoginze languages defined by context-free grammars in Chomsky Normal Form(CNF)
-It is also possible to extend the CKY algorithm to handle some grammars which are not in CNF
-	Harder to understand
-Based on a &quot;dynamic programming&quot; approach:
-	Build solutions compositionally from sub-solutions
-Uses the grammar directly
-</code></pre>
-<p>Considers every possible consective(连续的，连贯的) subsequence of letters and sets $k \in T[i,j]$, if the sequence of letters starting frm i to j can be generated from the non-terminal K.</p>
-<p>Once it has considered sequences of length 1 , it goes on to sequences of length 2,and so on</p>
-<p>For subsequences of length 2 and greater, it considers every possible partition of the subsequence into two halves, and checks to see if there is some production A-&gt;BC sunch that B matches the first half and C matches the second half. If so, it records A as matching the whole subsequence.</p>
-<p>Once this process if completed, that sentence if recognnized by the grammar if the entire string is matched by the start symbol.</p>
-<p>**Observation: ** any portion of the input string spanning i to j can be split at k, and structure can then be built using sub-solutions spanning i to k and sub-solitions spanning k to j.</p>
-<p>**Meaning: ** Solution to problem [i,j] can constructed from solution to sub problem[i,k] and solution to sub problem [k,j]</p>
-<p><img src="/img/nlp_cky2.png" alt=""></p>
-<p><img src="/img/nlp_cky3.png" alt=""></p>
-<p>The algorithm is &quot;bottom-up&quot; in that we start with bottom of derivation tree.</p>
-<p><img src="/img/nlp_cky4.png" alt=""></p>
-<h2>The CKY Algorithm</h2>
-<pre><code>function CKY(word w,grammar P) returns table
-for i&lt;- from 1 to length(w) do
-	table[i-1,i] &lt;- {A| A-&gt;wi in P}
-for j &lt;- from 2 to length(w) do
-	for i &lt;- form j-2 down to 0 do
-		for k &lt;- i+1 to j-1 do
-			table[i,j] &lt;- table[i,j] 并 {A|A-&gt; BC in P,B in table[i,k],C in table[k,j]}
-</code></pre>
-<p><img src="/img/nlp_cky5.png" alt=""></p>
-<p>这种解析过程能够判断出句子的形式</p>
-<h2>Parsing results</h2>
-<pre><code>We keep the results for every wij in a table
-Note that we only need to fill in entries up to the diagonal
-Every entry in the table T[i,j] can contains up to r=|N| symbols (the size of non-terminal set)
-We can use lists or a Boolean n*n*r table
-We then want to find T[0,b,S] = true
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2526,8 +2501,8 @@ We then want to find T[0,b,S] = true
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
             
@@ -2539,8 +2514,8 @@ We then want to find T[0,b,S] = true
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">Tags</span>
                 
               </div>
             
@@ -2586,7 +2561,7 @@ We then want to find T[0,b,S] = true
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
