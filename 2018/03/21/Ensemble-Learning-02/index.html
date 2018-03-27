@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://niuwenchen.github.io/img/ens2_6.png">
 <meta property="og:image" content="http://niuwenchen.github.io/img/ens2_7.png">
 <meta property="og:image" content="http://niuwenchen.github.io/img/ens2_8.png">
-<meta property="og:updated_time" content="2018-03-22T06:01:54.853Z">
+<meta property="og:updated_time" content="2018-03-22T12:26:29.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ensemble Learning 02">
 <meta name="twitter:description" content="Boosting 2.2 Boostrapping and Bagging 有放回的抽样，每一个数据不被选中的概率是 0.368  boostrapping  	样本集是N个样本，随机选择N个，选择B次，得出B个学习器 	计算boostrap estimate 和accuracy Bagging(bootstrap aggregation自举汇聚法)  bagging * increases cl">
@@ -358,6 +358,7 @@ oob_decision_function_
 <p><img src="/img/ens2_8.png" alt=""></p>
 <p>第四行的h是一个阶跃函数，x&gt;0,y=1,x&lt;0,y=0;</p>
 <p>这里的一个点就是弱分类器h的确定。</p>
+<p>errm 就是 第m个分类器的加权错误率</p>
 <p>algorithm：这个参数只有AdaBoostClassifier有。主要原因是scikit-learn实现了两种Adaboost分类算法，SAMME和SAMME.R。两者的主要区别是弱学习器权重的度量，SAMME使用了和我们的原理篇里二元分类Adaboost算法的扩展，即用对样本集分类效果作为弱学习器权重，而SAMME.R使用了对样本集分类的预测概率大小来作为弱学习器权重。由于SAMME.R使用了概率度量的连续值，迭代一般比SAMME快，因此AdaBoostClassifier的默认算法algorithm的值也是SAMME.R。我们一般使用默认的SAMME.R就够了，但是要注意的是使用了SAMME.R， 则弱分类学习器参数base_estimator必须限制使用支持概率预测的分类器。SAMME算法则没有这个限制。</p>
 <p>下面进行一个尝试:基于单层决策树构建弱分类器</p>
 <pre><code>单层决策树(决策树桩)是一种简单的决策树: 仅仅基于单个特征来做决策。由于这棵树只有一次分裂过程，实际上就是一个树桩。
@@ -481,7 +482,7 @@ oob_decision_function_
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
@@ -494,7 +495,7 @@ oob_decision_function_
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">Tags</span>
                 
               </div>

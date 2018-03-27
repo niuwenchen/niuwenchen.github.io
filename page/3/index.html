@@ -229,6 +229,273 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/10-part-of-speech-Tagging/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/06/10-part-of-speech-Tagging/" itemprop="url">10 part of speech Tagging</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T16:51:47+08:00">
+                2018-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>Part-of-Speech Tagging</h2>
+<p>本章介绍Part-of_speech tagging. 介绍两种算法用于词性标注，HMM和MEMM</p>
+<h2>English Word Classes</h2>
+<p>词性标注可以被分成两部分: closed class type and open class types。clossed class 是那些有固定的格式，例如介词，几乎不会创造新的介词。相反名词和形容词是open classes，新的名词如iphone等。Cloesd class 单词一般是功能单词例如of,it,and,you，短，出现频次高，经常在语法构造中。</p>
+<p>syntactic句法的
+literal  照字面的
+metaphorical 隐喻性的
+semantic 语义的
+auxiliary  辅助的; 备用的，补充的; 附加的; 副的</p>
+<p>四个主要的open classes是:名词，动词，形容词，副词。</p>
+<pre><code>一些比较重要的closed classes：
+prepositions: 介词， on under over near by at from to 
+determiners: 限定词， a  an the
+pronouns: 代词，she who I others
+conjunctions:连词， and,but or as if when 
+auxiliary verbs:助动词 can may should are
+particles: up down on off in out 
+numerals: one two three first second third
+
+cardinal number: 基数
+existential 存在的
+verb past participle 动词过去分词
+possessive ending 所有格的结尾
+morpheme 形态词 词素
+</code></pre>
+<h2>The Penn Treebank Part-of_speech Tagset</h2>
+<p>Penn Treebank tagset
+<img src="/img/nlp10_0.png" alt=""></p>
+<p>词性标注为每一个单词放置一个词性</p>
+<pre><code>The/DT grand/JJ jury/NN commented/VBD on/IN a/DT number/NN of/IN other/JJ topics/NNS ./.
+There/EX are/VBP 70/CD children/NNS there/RB
+Preliminary/JJ findings/NNS were/VBD reported/VBN in/IN today/NN ’s/POS New/NNP England/NNP Journal/NNP of/IN Medicine/NNP ./.
+</code></pre>
+<p>语料库的词性标注像Treebank语料库对于统计标注算法十分重要。<strong>Brown</strong>语料库， <strong>WSJ</strong>,<strong>Switchboard</strong></p>
+<h2>Part-of-Speech Tagging</h2>
+<pre><code>Tagging is a disambiguation task;words are ambiguous- 
+have more than one possible part-of-speech---and the 
+goal is to find the correct tag for the situation. For
+example, the word book can be a verb(book that flight) 
+or a noun(as in hand me that book)
+
+complementizer 补语
+</code></pre>
+<p><img src="/img/nlp10_1.png" alt=""></p>
+<p>some of the most ambiguous rfequent words are that,back,down,put and set</p>
+<pre><code>earnings growth took a back/JJ seat
+a small building in the back/NN
+a clear majority of senators back/VBP the bill
+Dave began to back/VB toward the door
+enable the country to buy back/RP about the debt
+I was twenty-one back/RB then
+</code></pre>
+<p>一种词性标注最简单的baseline算法: 给出一个歧义单词，选择在语料库中出现最多的词性作为这个单词的词性。</p>
+<pre><code>Most Frequent Class Baseline: Always compare a classifier against a baseline at leat as good as the most frequent class baseline(assinging each token to the class it occurred in most often in the training set)
+</code></pre>
+<p>度量词性标注的标准是准确率: 人工定义的进行比较。WSJ语料库。如果我们在WSJ语料库上训练，剩下的在测试集上测试，most-frequent-tag baseline 能够达到准确率92.34%。</p>
+<h2>HMM Part-of-Speech Tagging</h2>
+<p>我们使用HMM在这里用作词性标注，也就是Viterbi 解码算法。</p>
+<h3>The basic equation of HMM Tagging</h3>
+<h3>Eatimating probabilities</h3>
+<p>在HMM词性标注方法中，不需要使用HMM的EM 算法，概率可以通过对训练集进行计数的方式直接估计。使用WSJ数据集，词性转移概率$p(t_{i}|t_{i-1})$，最大似然估计对转移概率的计算方式是数数。</p>
+<p>$$P(t_{i}|t_{i-1})=\frac{C(t_{i-1},t_{i})}{C(t_{i-1})}$$</p>
+<p>比如在WSJ语料库中，MD出现了13124次，后面跟VB出现了10471 次，MLE估计</p>
+<p>$$P(VB|MD)=\frac{C(MD,VB}{C(MD)} = 10471/13124 = 0.80$$</p>
+<p>发射概率$p(w_{i}|t_{i})$,代表了给定一个标记MD，然后和一个固定单词出现的概率。</p>
+<p>$$P(w_{i}|t_{i})=\frac{C(t_{i},w_{i})}{C(t_{i})}$$</p>
+<p>will 这个单词出现4046次，而MD出现了13124次</p>
+<p>$$P(will|MD)=\frac{C(MD,will)}{C(MD)}=0.31$$</p>
+<p><img src="/img/nlp10_2.png" alt=""></p>
+<p><img src="/img/nlp10_3.png" alt=""></p>
+<h3>Working through an example</h3>
+<p>现在用一个例子说明</p>
+<pre><code>Janet will back the hill
+Janet/NNP will/MD back/VB the/DT bill/NN
+</code></pre>
+<p><img src="/img/nlp10_4.png" alt=""></p>
+<p>下面是HMM的viterbi构造过程，</p>
+<p><img src="/img/nlp10_5.png" alt=""></p>
+<p>Viterbi算法伪代码
+<img src="/img/nlp10_6.png" alt=""></p>
+<p>在下图中，</p>
+<p><img src="/img/nlp10_7.png" alt=""></p>
+<h3>Extending the HMM Algorithm to Trigrams</h3>
+<p>实际的HMM词性标注对这个简单的模型都有许多扩展，之前的计算过程中概率只依赖前面一个词性</p>
+<p>$$P(t^{n}<em>{1})\approx \prod ^{n}</em>{i=1}P(t_{i}|t_{i-1})$$</p>
+<p>实际中，我们选择两个依赖</p>
+<p>$$P(t^{n}<em>{1})\approx \prod ^{n}</em>{i=1}P(t_{i}|t_{i-1},t_{i-2})$$</p>
+<p><img src="/img/nlp10_8.png" alt=""></p>
+<p>计算$\lambda $的过程如下，使用delete interpolation</p>
+<p><img src="/img/nlp10_9.png" alt=""></p>
+<h3>Unknown Words</h3>
+<p>一个好的词性标注模型体现在对未登录词的判定上。</p>
+<p>对于未登录词的词性标注最好的是 morphology(形态学)。单词以s结尾的更像是复数名词(NNS).-ed 是VBN,-able 是JJ。考虑后缀直到10个字母，计算每一个长度i的后缀对于给定词性的概率。</p>
+<h2>Maximum Entropy Markov Models</h2>
+<p>MEMM,基础是最大熵分类器(多分类逻辑回归)。因为基于逻辑回归，因此是一个判定式序列模型。而HMM是一个生成式序列模型。</p>
+<p>假如一个序列$W=w^{n}<em>{1}$并且序列的词性是$T=t^{n}</em>{1}$,在HMM中计算最好的序列是最大化P(T|W)，依靠贝叶斯规则和似然值P(W|T)</p>
+<p><img src="/img/nlp10_10.png" alt=""></p>
+<pre><code>生成式模型最终全部转换到了 贝叶斯公式
+</code></pre>
+<p>在MEMM中，直接计算先验P(T|W),不做任何形式的变化</p>
+<p><img src="/img/nlp10_11.png" alt=""></p>
+<pre><code>HMM计算似然值(观察到的单词依赖于标签)
+MEMM计算先验值(标签依赖于观察到的单词)
+</code></pre>
+<p><img src="/img/nlp10_12.png" alt=""></p>
+<h3>Feature in a MEMM</h3>
+<p>一个MEMM模型考虑两个特征(观察到的单词和前面的词性)</p>
+<pre><code>使用判别式模型是因为一个判别式模型容易处理多种混合的特征。在
+HMM中所有的计算都是基于P(tag|word),P(word|tag),如果我们
+想添加一些知识源，必须用一种方式将这些知识编码到两种概率中。在
+前面看到这种方式是可选的，如P(capitalization|tag)和P(syffix|tag)。
+</code></pre>
+<p><img src="/img/nlp10_13.png" alt=""></p>
+<p>一个基本的MEMM词性标注模型依赖于单词本身，邻近单词，前面的词性，可变的组合，使用特征模型如下。</p>
+<p><img src="/img/nlp10_14.png" alt=""></p>
+<p>特征模型位于候选集中的每一个实例</p>
+<pre><code>Janet/NNP will/MD back/VB the/DT bill/NN
+</code></pre>
+<p>当$w_{i}$是单词 back， 将会产生一下特征</p>
+<p><img src="/img/nlp10_15.png" alt=""></p>
+<p>当然其他的特征也是必须的，表达单词的拼写属性</p>
+<p><img src="/img/nlp10_16.png" alt=""></p>
+<p>计算公式
+<img src="/img/nlp10_17.png" alt=""></p>
+<pre><code>需要对LR公式特征计算过程进行一次模拟。
+</code></pre>
+<h3>Decoding and Training MEMMs</h3>
+<p>将MaxEnt分类器用于解码任务去发现序列的词性，最简单的方式是构建一个本地分类器，先对第一个单词构建词性标注，再依赖第一个单词对第二个单词进行词性标注。这就是贪婪解码算法。</p>
+<p><img src="/img/nlp10_18.png" alt=""></p>
+<p><img src="/img/nlp10_19.png" alt=""></p>
+<p><img src="/img/nlp10_20.png" alt=""></p>
+<h2>Summary</h2>
+<pre><code>This chapter introduced the idea of parts-of-speech and part-of-speech tagging.
+The main ideas:
+
+Languages generally have a relatively small set of closed class words that are often highly frequent, generally act as function words, and can be ambiguous
+in their part-of-speech tags. Open-class words generally include various kinds of nouns, verbs, adjectives. There are a number of part-of-speech coding schemes, based on tagsets of between 40 and 200 tags.
+
+Part-of-speech tagging is the process of assigning a part-of-speech label to each of a sequence of words.
+
+Two common approaches to sequence modeling are a generative approach,HMM tagging, and a discriminative approach, MEMM tagging.
+
+The probabilities in HMM taggers are estimated, not using EM, but directly by maximum likelihood estimation on hand-labeled training corpora. The Viterbi algorithm is used to find the most likely tag sequence
+
+Maximum entropy Markov model or MEMM taggers train logistic regression models to pick the best tag given an observation word and its context and the previous tags, and then use Viterbi to choose the best sequence of tags for the sentence. More complex augmentions of the MEMM exist, like the Conditional Random Field (CRF) tagger
+
+Modern taggers are generally run bidirectionally.
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/06/9-Hidden-Markov-Models/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1876,136 +2143,6 @@ src_tgt_dataset = src_tgt_dataset.map(
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/02/02/Google-s-Neural-Machine-Translation-System/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JackNiu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SpeechAndLanguageProcessing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/02/Google-s-Neural-Machine-Translation-System/" itemprop="url">Google's Neural Machine Translation System</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-02T11:27:18+08:00">
-                2018-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2>谷歌机器翻译系统</h2>
-<p>机器翻译是一个端对端学习方法。NMT系统在训练和翻译推断的方面都很昂贵，有时候需要很大的数据和很大的模型。GNMT模型包含8个encoder和8个decoder的LSTM网络，使用residual连接和attention连接在encoder和decoder之间。为了提高对稀有单词的处理，将单词分成一个有限的通用sub-word units(wordpieces)。</p>
-<p>This method provides a good balance between the flexibility of &quot;character&quot;-delimited models and the efficiency of &quot;word&quot;-delimited models,naturally haandles translation of rare words,and ultimately improves the overall acuracy of the system.</p>
-<p>Our beam search technique employs a length-normalization procedure and uses a coverage penalty,which encourages generation of an output sentence that is most likely to cover all the words in the source sentence.</p>
-<p>To directly optimize the translation BLEU scores, we consider refining the modlels by using reinforcement learning, but we found that the improvment in the BLEU scores did not reflect in the human evaluation.</p>
-<p>On the WMT'14 English-to-French and English-to-German benchmarks,GN&lt;T achieves competitive results to start-of-the-art.</p>
-<p>Using a human side-by-side evaluation on a set of isolated simple sentences, it reduces translation errors b an average 60% compared to Google's phrased-based production system</p>
-<h2>1 Introduction</h2>
-<p>Its architecture typically consists of two recurrent neural networks(RNNS),one to consume the input text sequence and one to generate translated output text. NMT is often accompanied by an attention mechanism which helps it cope effectively tirh long input sequences.</p>
-<h2>2 Realted Work</h2>
-<h2>3 Model Architecture</h2>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2056,7 +2193,7 @@ src_tgt_dataset = src_tgt_dataset.map(
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
@@ -2069,7 +2206,7 @@ src_tgt_dataset = src_tgt_dataset.map(
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">Tags</span>
                 
               </div>

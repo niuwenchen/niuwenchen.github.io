@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据仓库," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据仓库与数据挖掘概述 1 必背 数据仓库是面向主题的、集成的、稳定的、不同时间的数据集合，用于支持经营管理中的决策指定过程  数据仓库: 明确为决策支持服务的 数据库: 为事务处理服务  2 从数据库到数据仓库 1 如何将大量的数据库中的数据转化为辅助决策信息成为研究热点 2 异构环境数据的转换和共享 	数据库产品的增加，导致异构环境的数据的增加，如何实现这些异构环境数据的转换和共享成为研究热点">
+<meta name="keywords" content="数据仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据仓库基本概念">
+<meta property="og:url" content="http://niuwenchen.github.io/2018/03/27/数据仓库基本概念/index.html">
+<meta property="og:site_name" content="SpeechAndLanguageProcessing">
+<meta property="og:description" content="数据仓库与数据挖掘概述 1 必背 数据仓库是面向主题的、集成的、稳定的、不同时间的数据集合，用于支持经营管理中的决策指定过程  数据仓库: 明确为决策支持服务的 数据库: 为事务处理服务  2 从数据库到数据仓库 1 如何将大量的数据库中的数据转化为辅助决策信息成为研究热点 2 异构环境数据的转换和共享 	数据库产品的增加，导致异构环境的数据的增加，如何实现这些异构环境数据的转换和共享成为研究热点">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://niuwenchen.github.io/img/kdd1.png">
+<meta property="og:updated_time" content="2018-03-27T11:36:23.163Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据仓库基本概念">
+<meta name="twitter:description" content="数据仓库与数据挖掘概述 1 必背 数据仓库是面向主题的、集成的、稳定的、不同时间的数据集合，用于支持经营管理中的决策指定过程  数据仓库: 明确为决策支持服务的 数据库: 为事务处理服务  2 从数据库到数据仓库 1 如何将大量的数据库中的数据转化为辅助决策信息成为研究热点 2 异构环境数据的转换和共享 	数据库产品的增加，导致异构环境的数据的增加，如何实现这些异构环境数据的转换和共享成为研究热点">
+<meta name="twitter:image" content="http://niuwenchen.github.io/img/kdd1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://niuwenchen.github.io/2018/03/27/数据仓库基本概念/"/>
+
+
+
+
+
+  <title>数据仓库基本概念 | SpeechAndLanguageProcessing</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SpeechAndLanguageProcessing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">translate and learning language model</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://niuwenchen.github.io/2018/03/27/数据仓库基本概念/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JackNiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SpeechAndLanguageProcessing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据仓库基本概念</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-27T09:18:36+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2>数据仓库与数据挖掘概述</h2>
+<p>1 必背</p>
+<pre><code>数据仓库是面向主题的、集成的、稳定的、不同时间的数据集合，用于支持经营管理中的决策指定过程
+
+数据仓库: 明确为决策支持服务的
+数据库: 为事务处理服务
+</code></pre>
+<p>2 从数据库到数据仓库</p>
+<pre><code>1 如何将大量的数据库中的数据转化为辅助决策信息成为研究热点
+2 异构环境数据的转换和共享
+	数据库产品的增加，导致异构环境的数据的增加，如何实现这些异构环境数据的转换和共享成为研究热点
+3 利用数据进行事务处理转变为利用数据支持决策
+	数据库用于事务处理，若要达到辅助决策，需要更多的数据。例如，如何利用历史数据的分析进行预测。对大量数据的综合得到宏观信息等都需要大量的数据
+</code></pre>
+<p>3 DB数据和DW数据</p>
+<pre><code>传统数据库用于事务处理，也叫操作处理，是指对数据库联机进行日常操作，即对一个或一组记录的查询和修改，主要是为企业特定的应用服务的。用户关心的是响应时间，数据的安全性和完整性。数据仓库用于决策分析，是建立决策支持系统(DSS)的基础
+</code></pre>
+<p>4 DB数据和DW数据的对比表</p>
+<pre><code>DB数据			DW数据
+细节的			综合的或提炼的
+在存取时准去的	代表过去的数据
+可更新的			不更新
+操作需求事先可知道		操作需求事先不知道
+事务驱动			分析驱动
+面向应用			面向分析
+一次操作数据量小	一次操作数据量大
+支持日常操作		支持决策需求
+</code></pre>
+<h2>数据仓库的特点</h2>
+<p>1 数据仓库是面向主题的</p>
+<pre><code>主题是数据归类的标准，每一个主题基本对应一个宏观的分析领域
+例如，保险公司数据仓库的主题为: 客户、政策、保险金、索赔等
+
+基于应用的数据库组织则完全不同，他的数据只是为处理具体应用而组织在一起的。保险公司按应用组织的数据库有: 汽车保险、生命保险、健康保险和伤亡保险
+</code></pre>
+<p>2 数据仓库是集成的</p>
+<pre><code>数据进入数据仓库之前，必须经过加工与集成。对不同来源的数据进行
+数据结构统一和编码。统一原始数据中的所有矛盾过之处，如字段的同
+名异义，异名同义，单位不统一，字长不统一。总之，将原始数据结构
+做一个从面向应用到面向主题的大转变
+</code></pre>
+<p>3 数据仓库是稳定的</p>
+<pre><code>数据仓库中包括了大量的历史数据。数据经继承进入数据仓库后是极少或者根本不更新的
+</code></pre>
+<p>4 数据仓库是随时间增长的</p>
+<pre><code>数据仓库是数据时限是5~10年，故数据的编码包含时间项，需标明数据的历史使其，有助于 DSS(决策支持系统) 进行时间趋势分析
+
+数据库只包含当前数据，即存储当前时间的正确的有效数据。
+</code></pre>
+<p>5 数据仓库中的数据量很大</p>
+<pre><code>通常的数据仓库数据量为10GB，相当于一般数据库100M的100倍。
+数据仓库中 数据的比重为索引和综合数据占2/3,原始数据占1/3
+</code></pre>
+<p>6 数据仓库软硬件要求较高</p>
+<pre><code>需要一个巨大的硬件平台
+需要一个并行的数据库系统
+</code></pre>
+<h2>知识发现和数据挖掘概念</h2>
+<p>KDD(从数据库中发现知识)研究的问题: 定性知识和定量知识的发现，(2)知识发现方法， (3) 知识发现的应用等</p>
+<h3>知识发现和数据挖掘的定义</h3>
+<p>KDD被认为是从数据库中发现有用知识的整个过程。数据挖掘被认为是KDD过程中的一个特定步骤，用专门算法从数据中抽取模式(Pattern)</p>
+<pre><code>KDD是从数据集中识别出有效的、新颖的、潜在有用的，以及最终可理解的模式的高级处理过程
+</code></pre>
+<h3>KDD过程定义</h3>
+<p>KDD是从数据集中识别出有效的、新颖的、潜在有用的，以及最终可理解的高级处理过程。</p>
+<p>数据集:数据库记录的集合F; 模式: 用语言L表示的F中部分记录的表达式E，它所描述的数据集是集合F的一个子集FE,我们表达式E为模式； 有效、新颖、潜在有用、可理解：表示发现的模式应该是新的，将来有实用价值，能被用户所理解。</p>
+<p>KDD过程图如图1.1 所示</p>
+<p><img src="/img/kdd1.png" alt=""></p>
+<p>KDD过程可以概括为三部分: 数据准备,数据挖掘,结果的解释和评估。</p>
+<p>1 数据准备</p>
+<pre><code>数据选取，数据预处理，数据变换等三个子步骤
+数据选取：确定发现任务的操作对象，即目标数据(Target Data),是根据用户的需要从原始数据库中抽取的一组数据。
+数据预处理:一般包括消除噪声、推导计算缺值数据、消除重复记录、完成数据类型转换(如把连续值型数据转换为离散型数据，以便用于符号归纳；或是把离散型数据转换为连续型数据，以便用于神经网络计算)等。
+数据变换是削减数据维数或者降维，即从初始特征中找出真正有用的特征以减少数据挖掘时需要考虑的特征或变量个数。
+</code></pre>
+<p>2 数据挖掘</p>
+<pre><code>数据挖掘阶段首先要确定挖掘的任务或目的，如数据分类、聚类、关联规则发现或序列模式发现等。确定了挖掘任务后，就要决定使用什么样的挖掘算法。 
+两个因素:
+	一是不同的数据有不同的特定，因此需要用与之相关的算法来挖掘；
+	二是用户或实际运行系统的要求，有的用户可能希望获取描述型的、容易理解的知识(采用规则表示的挖掘方法显然要好于神经网络之类的方法)，而有的用户只是希望获取预测准确度尽可能高的预测型知识，选择了挖掘算法后，就可以实施数据挖掘操作，换取有用的模式。
+</code></pre>
+<p>3 结果的解释和评估</p>
+<pre><code>数据挖掘阶段发现出来的模式，经过评估，可能存在冗余或者无关的模式，这时需要将其剔除；也有可能模式不满足用户要求，这是需要退回到发现过程前面的阶段，如重新选择数据、采用新的数据变换方法、设定新的参数值，甚至换一种挖掘算法得到。
+</code></pre>
+<p>数据挖掘仅仅是整个过程中的一个步骤。数据挖掘质量的好坏有两个要素: 一是所采用的数据挖掘技术的有效性，二是用于挖掘的数据的质量和数量(数据量的大小)。 如果选择了错误的数据或不适当的属性，或对数据进行了不适当的转换，则挖掘的结果不会成功。</p>
+<p>整个挖掘过程是一个不断反馈的过程。 比如，用户在挖掘图中发现选择的数据不太满意，或使用的数据挖掘技术产生不了期望的结果。 这时，用户需要重复先前的过程，甚至从头重新开始。</p>
+<h3>数据挖掘任务</h3>
+<p>数据挖掘任务有六项:关联分析、时序模式、聚类、分类、偏差检测以及预测</p>
+<p>1 关联分析</p>
+<pre><code>关联规则 Apriori
+一般用支持度和可信度两个阈值来淘汰哪些无用的关联规则。
+
+支持度表示该规则所代表的事例栈全部事例的百分比。
+可行度表示该规则所代表事例满足前提条件事件的百分比，如买面包又买牛奶的顾客占买面包顾客中的90%,可信度为90%。
+</code></pre>
+<p>2 时序模式</p>
+<pre><code>通过时间序列搜索出重复发生概率较高的模式。这里强调时间序列的影响。
+在时序模式中，需要找出在某个最小时间内出现比率一直高于某一最小百分比(阈值)的规则。这些规则会随着形式的变化做适当的调整。
+
+时序模式中，一个有重要影响的方法是&quot;相似时序&quot;。 用&quot;相似时序&quot;的方法，要按时间顺序查看时间事件数据库，从中找出另一个或多个相似的时序事件。
+例如在零售市场上，找到另一个有相似销售的部门，在股票中找到有相似波动的股票
+</code></pre>
+<p>3 聚类</p>
+<pre><code>在同一个类别中，个体之间的距离较小，不同类别上的个体之间的距离偏大。 聚类增强了人们对客观现实的认识，通过聚类简历宏观概念。
+
+聚类方法包括统计分析方法、机器学习方法和神经网络方法等
+
+在统计分析方法中，聚类分析是基于距离的距离，如欧式距离，海明距离等。这种聚类分析方法是一种基于全局比较的聚类，需要考察所有的个体才能决定类的划分。
+
+在机器学习方法中，聚类是无监督学习，在这里距离是根据概念的描述确定的，顾聚类也称为概念聚类，当聚类对象动态增加时，概念聚类则称为概念形成。
+
+在升级网络中，自组织神经网络方法用于聚类，这是一种无监督学习方法。当给定距离阈值后，各样本按阈值进行聚类。
+</code></pre>
+<p>4 分类</p>
+<pre><code>分类是找出一个类别的概念描述，代表了这类数据的整体信息，即该类的内部描述，一般用规则或决策树模式表示。该模式能把数据库中的元组影射到给定类别中的一个。
+
+一个类可以用特征描述和类别描述。 
+分类是利用训练样本集通过有关算法求得
+建立分类决策树的方法，典型的有ID3,C4.5等算法
+
+目前，分类方法的研究成功较多，判别方法的好坏，可以从下述3个方面进行: 
+(1) 预测准确度(对非样本数据的判别准确度); 
+(2) 计算复杂度(方法实现时对时间和空间的复杂度)
+(3) 模式的简洁度(在同样效果的情况下，希望决策树小或规则少)
+</code></pre>
+<p>5 偏差检测</p>
+<pre><code>从数据分析中发现异常情况
+(1) 分类中的反常实例
+(2) 模式的例外
+(3) 观察结果对模型预测的偏差
+(4) 量值随时间的变化
+
+偏差检测的基本方法是寻找观察结果与参照之间的差别。观察结果常常是某一个域的值或多个域值的汇总。参照是给定模型的预测、外部的标准答案
+</code></pre>
+<p>6 预测</p>
+<pre><code>预测是利用历史数据找出变化规律，建立模型，并用此模型来预测未来数据的种类，特征等
+
+典型的方法是回归分析，即利用大量的历史数据，以时间为变量建立线性或非线性回归方程等。
+</code></pre>
+<h3>数据挖掘分类</h3>
+<p>1 按数据库类型分类</p>
+<pre><code>在关系数据库中挖掘知识。关系数据挖掘、模糊数据挖掘、历史数据挖掘和空间数据挖掘等
+</code></pre>
+<p>2 按数据挖掘对象分类</p>
+<pre><code>文本数据挖掘、多媒体数据挖掘和Web网数据挖掘。 
+</code></pre>
+<p>3 数据挖掘任务分类</p>
+<p>4 数据挖掘方法和技术分类</p>
+<pre><code>归纳学习类
+仿生物技术类
+公式发现类
+统计分析类
+模糊数学类
+可视化技术类
+</code></pre>
+<h3>1.2.4 数据挖掘对象</h3>
+<p>1 关系数据库</p>
+<p>2 文本</p>
+<pre><code>(1) 关键词和特征提取
+关键词的提取对于掌握该文本的内容至关重要
+(2) 相似检索
+(3) 文本聚类
+	关键词的相似匹配是对文本聚类的一种方法
+(4) 文本分类
+	分类器算法
+</code></pre>
+<p>3 图像与视频数据</p>
+<pre><code>(1) 图像与视频特征提取
+(2) 基于内容的相似检索
+(3) 视频镜头的编辑与组织
+</code></pre>
+<p>4 Web数据</p>
+<h3>1.2.5 数据挖掘的知识表示</h3>
+<p>数据挖掘各种方法获得的知识的表示形式主要有6种: 规则，决策树，知识基(浓缩数据)，网络权值，公式和案例</p>
+<p>1 规则</p>
+<pre><code>规则知识由前提条件和结论两部分组成，前提条件由字段项(属性)取值的合取(交)和析取(并)组合而成，结论为决策字段项(属性)的取值或类别组成
+</code></pre>
+<p>2 决策树</p>
+<pre><code>数据挖掘的信息论方法所获得的知识一般表示为决策树
+ID3方法的决策树是由信息量最大的字段(属性)作为根节点，它的各个取值为分支，对各个分枝所划分的数据元组子集，重复建树过程，扩展决策树，最后得到相同类别的子集，以该类别作为叶节点。
+</code></pre>
+<p>3 知识基(浓缩数据)</p>
+<pre><code>数据挖掘方法能计算出数据库中字段项(属性)的重要程度，对于不重要的字段可以删除，对数据库中的元组(记录)能按一定的原则合并，这样，通过数据挖掘的方法能大大压缩数据库的元组和字段项，最后得到浓缩数据，称为知识基，它是原数据库的精华，很容易转换成规则知识。
+</code></pre>
+<p>4 网络权值</p>
+<p>5 公式</p>
+<p>6 案例</p>
+<pre><code>案例是指人们经历过的一次完整的事件。当人们要解决一个新问题时，总是先回顾自己以前处理过的类似事件(案例)，利用以前案例中解决问题的方法或者处理的结果，作为参考并进行适当的修改，以解决当前新问题。
+
+利用这种思想建立起基于案例推理(Case Based Reasoning,CBR)。CBR的基础是案例库，在案例库中存放这大量成功或失败的案例。CBR利用相似检索技术，对新问题到案例库中搜索相似案例，再经过对旧案例的修改来解决新问题。
+
+问题描述: 对求解的问题及周围世界或环境的所有特征的描述
+解描述: 对问题求解方案的描述
+效果描述: 描述解决方案后的结果情况，是失败还是成功。
+</code></pre>
+<h2>数据挖掘方法和技术</h2>
+<p>归纳学习方法，仿生物技术，公式发现，统计分析方法，模糊数学方法和可视化技术</p>
+<p>###1.3.1 归纳学习方法
+归纳学习方法是目前重点研究的方向，研究成果较多，从采用的技术上看，分为信息论方法(决策树方法)和集合论方法两大类。</p>
+<ol>
+<li>
+<p>信息论方法</p>
+<p>利用信息论的原理建立决策树
+ID3: 信息增益</p>
+</li>
+<li>
+<p>集合论方法</p>
+<p>关联规则挖掘</p>
+</li>
+</ol>
+<h3>1.3.2 仿生物技术</h3>
+<p>1 神经网络算法</p>
+<pre><code>神经网络方法
+1 前馈式网络
+2 反馈式网络
+3 自组织网络
+</code></pre>
+<p>2 遗传算法</p>
+<pre><code>繁殖: 旧种群选择出生命力强的个体产生新种群的后代
+交叉: 交叉是指选择两个不同个体的部分，形成新个体
+变异: 变异是指对某些个体的某些基因进行变异
+</code></pre>
+<h3>1.3.3 公式发现</h3>
+<h3>1.3.4 统计分析方法</h3>
+<pre><code>1 常用统计 最大值，最小值，总和和平均值
+2 相关分析
+	相关分析是指通过求变量间的相关系数来确定变量间的相关程度
+3 回归分析
+	回归分析是指通过建立回归方程(线性或非线性)以满足变量间的数量关系，再利用回归方程进行预测。
+
+4 假设检验
+	假设检验是指在总体存在某些不确定情况时，为了推断总体的某些性质，剔除关于总体的某些假设，对此假设利用置信区间来检验，即任何落在置信区间之外的假设判断为拒绝，任何落在置信区间之内的假设判断为接受
+5 聚类分析
+
+6 判别分析
+</code></pre>
+<h3>1.3.5 模糊数学方法</h3>
+<h3>1.3.6 可视化技术</h3>
+<p>DSS 决策支持系统</p>
+<p>习题:</p>
+<pre><code>1 数据仓库的定义是什么
+2 数据仓库兴起的原因是什么
+3 数据库数据和数据仓库有什么不同
+4 数据仓库的特点是什么
+5 画出数据仓库结构图，说明各层数据的内容
+6 数据集市的含义是什么，有什么特点
+7 知识发现过程由哪三部分组成，每部分的工作是什么
+8 数据挖掘的任务有哪些，每项任务的含义是什么
+9 聚类与分类有什么不同
+10 数据挖掘的对象有哪些，各自的特点是什么
+11 数据挖掘的知识表示有哪些
+12 规则知识与决策树知识和知识基是等价的吗
+13 人类社会的知识表示什么，与计算机中的知识表示有什么不同
+14 为什么要研究计算机中的知识表示
+15 数据挖掘的归纳学习方法有哪几种，各方法的含义是什么
+16 数据挖掘的仿生物技术有哪几种？ 各方法的含义是什么
+17 公式发现与曲线拟合有什么不同，公式发现所得的公式与曲线拟合得到的公式有什么不同
+18 公式发现中的BACON方法与FDD方法的基本思想是什么
+19 统计分析方法所处理的数据主要属于哪种类型
+20 人工智能的机器学习与数据挖掘有什么关系
+21 数据库中的数据挖掘与数据仓库中的数据挖掘有什么不同
+22 新决策支持系统的组成有哪些，与传统的决策支持系统有什么不同
+23 综合决策支持系统的组成有哪些，为什么要研究综合决策支持系统
+24 什么是商业智能
+25 如何理解商业智能与新决策支持系统的相同和不同之处
+26 什么是知识管理，知识管理的基础是什么
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据仓库/" rel="tag"># 数据仓库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/22/frature-importance/" rel="next" title="frature_importance">
+                <i class="fa fa-chevron-left"></i> frature_importance
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">JackNiu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">Artikel</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">Tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">数据仓库与数据挖掘概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">数据仓库的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">知识发现和数据挖掘概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">知识发现和数据挖掘的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.2.</span> <span class="nav-text">KDD过程定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.</span> <span class="nav-text">数据挖掘任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.4.</span> <span class="nav-text">数据挖掘分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.5.</span> <span class="nav-text">1.2.4 数据挖掘对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.6.</span> <span class="nav-text">1.2.5 数据挖掘的知识表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">数据挖掘方法和技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.1.</span> <span class="nav-text">1.3.2 仿生物技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.2.</span> <span class="nav-text">1.3.3 公式发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.3.</span> <span class="nav-text">1.3.4 统计分析方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.4.</span> <span class="nav-text">1.3.5 模糊数学方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.5.</span> <span class="nav-text">1.3.6 可视化技术</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackNiu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
